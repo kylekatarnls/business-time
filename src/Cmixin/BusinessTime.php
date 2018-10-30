@@ -9,13 +9,14 @@ class BusinessTime extends BusinessDay
 {
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     protected static $defaultOpeningHours = null;
-    protected $openingHours = null;
 
-    public static function enable($carbonClass = null, $defaultOpeningHours = null)
+    protected static function convertOpeningHours($defaultOpeningHours)
     {
         if ($defaultOpeningHours instanceof OpeningHours) {
-            static::$defaultOpeningHours = $defaultOpeningHours;
-        } elseif (is_array($defaultOpeningHours)) {
+            return $defaultOpeningHours;
+        }
+
+        if (is_array($defaultOpeningHours)) {
             $hours = [];
             foreach ($defaultOpeningHours as $key => $value) {
                 if (is_int($key)) {
@@ -27,11 +28,41 @@ class BusinessTime extends BusinessDay
                 }
                 $hours[$key] = $value;
             }
-            static::$defaultOpeningHours = OpeningHours::create($hours);
-        } elseif($defaultOpeningHours) {
-            throw new InvalidArgumentException('$defaultOpeningHours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.');
+            return OpeningHours::create($hours);
+        }
+
+        throw new InvalidArgumentException('Opening hours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.');
+    }
+
+    public static function setDefaultOpeningHours($defaultOpeningHours)
+    {
+        static::$defaultOpeningHours = static::convertOpeningHours($defaultOpeningHours);
+    }
+
+    public static function enable($carbonClass = null, $defaultOpeningHours = null)
+    {
+        if($defaultOpeningHours) {
+            static::setDefaultOpeningHours($defaultOpeningHours);
         }
 
         return parent::enable($carbonClass);
+    }
+
+    public function setOpeningHours()
+    {
+        return function ($openingHours) {
+            $this->openingHours = static::convertOpeningHours($openingHours);
+        };
+    }
+
+    public function getOpeningHours()
+    {
+        return function () {
+            if ($openingHours = $this->openingHours ?? static::$defaultOpeningHours) {
+                return $openingHours;
+            }
+
+            throw new InvalidArgumentException('Opening hours has not be set.');
+        };
     }
 }
