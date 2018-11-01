@@ -187,13 +187,13 @@ class BusinessTime extends BusinessDay
 
         return function () use ($mixin, $carbonClass) {
             if (isset($this)) {
-                return $this->getOpeningHours()->isClosedAt($this)|| $this->isHoliday();
+                return $this->getOpeningHours()->isClosedAt($this) || $this->isHoliday();
             }
 
             $getOpeningHours = $mixin->getOpeningHours();
             $now = $carbonClass::now();
 
-            return $getOpeningHours()->isClosedAt($now)|| $now->isHoliday();
+            return $getOpeningHours()->isClosedAt($now) || $now->isHoliday();
         };
     }
 }
