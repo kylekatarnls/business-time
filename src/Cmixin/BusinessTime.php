@@ -92,16 +92,16 @@ class BusinessTime extends BusinessDay
         return function ($openingHours) use ($mixin, $carbonClass, &$staticOpeningHoursStorage) {
             $convertOpeningHours = $mixin->convertOpeningHours();
 
-            if (isset($this)) {
-                $storage = call_user_func($mixin->getOpeningHoursStorage());
-                $storage[$this] = $convertOpeningHours($openingHours);
+            if (!isset($this)) {
+                $staticOpeningHoursStorage[$carbonClass] = $convertOpeningHours($openingHours);
 
-                return $this;
+                return null;
             }
 
-            $staticOpeningHoursStorage[$carbonClass] = $convertOpeningHours($openingHours);
+            $storage = call_user_func($mixin->getOpeningHoursStorage());
+            $storage[$this] = $convertOpeningHours($openingHours);
 
-            return null;
+            return $this;
         };
     }
 
@@ -112,14 +112,16 @@ class BusinessTime extends BusinessDay
         $mixin = $this;
 
         return function () use ($carbonClass, &$staticOpeningHoursStorage, $mixin) {
-            if (isset($this)) {
-                $storage = call_user_func($mixin->getOpeningHoursStorage());
-                unset($storage[$this]);
+            if (!isset($this)) {
+                unset($staticOpeningHoursStorage[$carbonClass]);
 
-                return $this;
+                return null;
             }
 
-            unset($staticOpeningHoursStorage[$carbonClass]);
+            $storage = call_user_func($mixin->getOpeningHoursStorage());
+            unset($storage[$this]);
+
+            return $this;
         };
     }
 
@@ -240,6 +242,21 @@ class BusinessTime extends BusinessDay
         };
     }
 
+    public function safeCallOnOpeningHours()
+    {
+        return function ($method, ...$arguments) {
+            $openingHours = $this->getOpeningHours();
+            $result = $this->getOpeningHours()->$method(...$arguments);
+            foreach ($openingHours->forWeek() as &$day) {
+                foreach ($day as &$timeRange) {
+                    reset($timeRange);
+                }
+            }
+
+            return $result;
+        };
+    }
+
     public function nextOpen()
     {
         $carbonClass = static::getCarbonClass();
@@ -247,7 +264,7 @@ class BusinessTime extends BusinessDay
 
         return function () use ($mixin, $carbonClass) {
             if (isset($this)) {
-                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours('nextOpen', $this->toDateTime()));
             }
 
             return $carbonClass::now()->nextOpen();
@@ -261,7 +278,7 @@ class BusinessTime extends BusinessDay
 
         return function () use ($mixin, $carbonClass) {
             if (isset($this)) {
-                return $carbonClass::instance($this->getOpeningHours()->nextClose($this->toDateTime()));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours('nextClose', $this->toDateTime()));
             }
 
             return $carbonClass::now()->nextClose();
@@ -275,7 +292,12 @@ class BusinessTime extends BusinessDay
 
         return function () use ($mixin, $carbonClass) {
             if (isset($this)) {
-                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+                $date = $this;
+                do {
+                    $date = $date->nextOpen();
+                } while ($date->isHoliday());
+
+                return $date;
             }
 
             return $carbonClass::now()->nextOpenExcludingHolidays();
@@ -289,7 +311,12 @@ class BusinessTime extends BusinessDay
 
         return function () use ($mixin, $carbonClass) {
             if (isset($this)) {
-                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+                $date = $this->nextClose();
+                while ($date->isHoliday()) {
+                    $date = $date->nextClose();
+                }
+
+                return $date;
             }
 
             return $carbonClass::now()->nextCloseIncludingHolidays();
