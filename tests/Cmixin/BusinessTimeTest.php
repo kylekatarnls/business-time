@@ -87,6 +87,9 @@ class BusinessTimeTest extends TestCase
     public function testUndefinedOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
+        if (!method_exists($carbon, 'resetMacros')) {
+            $this->markTestSkipped('This test needs Carbon 2.1.0');
+        }
         $carbon::resetMacros();
         BusinessTime::enable($carbon);
         $carbon::getOpeningHours();

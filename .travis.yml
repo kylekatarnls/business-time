@@ -18,7 +18,9 @@ matrix:
     env: setup=lowest
   - php: 7.2
   - php: 7.3
-    env: setup=lowest
+    env:
+    - setup=lowest
+    - coverage=true
   - php: 7.3
 
 before_install:
@@ -37,12 +39,13 @@ script:
 - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml
 
 after_script:
-- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+- if [[ $coverage = 'true' ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- if [[ $coverage = 'true' ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 env:
   global:
+  - coverage=false
   - setup=stable
   - CC_TEST_REPORTER_ID=2f446df54ef96ab372a9c759e44e248327faa4797fe093039fb712217a39af87

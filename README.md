@@ -7,7 +7,7 @@ Carbon mixin to handle business days and opening hours
 [![Code Climate](https://codeclimate.com/github/kylekatarnls/business-time/badges/gpa.svg)](https://codeclimate.com/github/kylekatarnls/business-time)
 [![Test Coverage](https://codeclimate.com/github/kylekatarnls/business-time/badges/coverage.svg)](https://codeclimate.com/github/kylekatarnls/business-time/coverage)
 [![Issue Count](https://codeclimate.com/github/kylekatarnls/business-time/badges/issue_count.svg)](https://codeclimate.com/github/kylekatarnls/business-time)
-[![StyleCI](https://styleci.io/repos/129502391/shield?branch=master)](https://styleci.io/repos/129502391)
+[![StyleCI](https://styleci.io/repos/155368756/shield?branch=master)](https://styleci.io/repos/155368756)
 
 ## Install
 
