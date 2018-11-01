@@ -4,12 +4,26 @@ namespace Cmixin;
 
 use InvalidArgumentException;
 use Spatie\OpeningHours\OpeningHours;
+use SplObjectStorage;
 
 class BusinessTime extends BusinessDay
 {
+    protected static $staticOpeningHoursStorage = [];
+    protected static $openingHoursStorage = null;
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
-    public $openingHours = null;
+    public function getOpeningHoursStorage()
+    {
+        if (!static::$openingHoursStorage) {
+            static::$openingHoursStorage = new SplObjectStorage();
+        }
+
+        $openingHoursStorage = static::$openingHoursStorage;
+
+        return function () use ($openingHoursStorage) {
+            return $openingHoursStorage;
+        };
+    }
 
     public function normalizeDay()
     {
@@ -29,14 +43,15 @@ class BusinessTime extends BusinessDay
 
     public function convertOpeningHours()
     {
-        return function ($defaultOpeningHours) {
+        $normalizeDay = static::normalizeDay();
+
+        return function ($defaultOpeningHours) use ($normalizeDay) {
             if ($defaultOpeningHours instanceof OpeningHours) {
                 return $defaultOpeningHours;
             }
 
             if (is_array($defaultOpeningHours)) {
                 $hours = [];
-                $normalizeDay = static::normalizeDay();
                 foreach ($defaultOpeningHours as $key => $value) {
                     $hours[$normalizeDay($key)] = $value;
                 }
@@ -62,7 +77,7 @@ class BusinessTime extends BusinessDay
 
         if ($defaultOpeningHours) {
             $convertOpeningHours = $mixin->convertOpeningHours();
-            $mixin->openingHours = $convertOpeningHours($defaultOpeningHours);
+            static::$staticOpeningHoursStorage[$carbonClass] = $convertOpeningHours($defaultOpeningHours);
         }
 
         return $mixin;
@@ -70,26 +85,54 @@ class BusinessTime extends BusinessDay
 
     public function setOpeningHours()
     {
+        $carbonClass = static::getCarbonClass();
+        $staticOpeningHoursStorage = &static::$staticOpeningHoursStorage;
         $mixin = $this;
 
-        return function ($openingHours) use ($mixin) {
+        return function ($openingHours) use ($mixin, $carbonClass, &$staticOpeningHoursStorage) {
             $convertOpeningHours = $mixin->convertOpeningHours();
 
-            $handler = isset($this) ? $this : $mixin;
-            $handler->openingHours = $convertOpeningHours($openingHours);
+            if (isset($this)) {
+                $storage = call_user_func($mixin->getOpeningHoursStorage());
+                $storage[$this] = $convertOpeningHours($openingHours);
 
-            return isset($this) ? $this : null;
+                return $this;
+            }
+
+            $staticOpeningHoursStorage[$carbonClass] = $convertOpeningHours($openingHours);
+
+            return null;
+        };
+    }
+
+    public function resetOpeningHours()
+    {
+        $carbonClass = static::getCarbonClass();
+        $staticOpeningHoursStorage = &static::$staticOpeningHoursStorage;
+        $mixin = $this;
+
+        return function () use ($carbonClass, &$staticOpeningHoursStorage, $mixin) {
+            if (isset($this)) {
+                $storage = call_user_func($mixin->getOpeningHoursStorage());
+                unset($storage[$this]);
+
+                return $this;
+            }
+
+            unset($staticOpeningHoursStorage[$carbonClass]);
         };
     }
 
     public function getOpeningHours()
     {
+        $carbonClass = static::getCarbonClass();
+        $staticOpeningHoursStorage = &static::$staticOpeningHoursStorage;
         $mixin = $this;
 
-        return function () use ($mixin) {
-            $openingHours = isset($this) ? ($this->openingHours ?? null) : null;
+        return function () use ($mixin, $carbonClass, &$staticOpeningHoursStorage) {
+            $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
 
-            if ($openingHours = $openingHours ?: $mixin->openingHours) {
+            if ($openingHours = $openingHours ?: ($staticOpeningHoursStorage[$carbonClass] ?? null)) {
                 return $openingHours;
             }
 
@@ -194,6 +237,62 @@ class BusinessTime extends BusinessDay
             $now = $carbonClass::now();
 
             return $getOpeningHours()->isClosedAt($now) || $now->isHoliday();
+        };
+    }
+
+    public function nextOpen()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+            }
+
+            return $carbonClass::now()->nextOpen();
+        };
+    }
+
+    public function nextClose()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $carbonClass::instance($this->getOpeningHours()->nextClose($this->toDateTime()));
+            }
+
+            return $carbonClass::now()->nextClose();
+        };
+    }
+
+    public function nextOpenExcludingHolidays()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+            }
+
+            return $carbonClass::now()->nextOpenExcludingHolidays();
+        };
+    }
+
+    public function nextCloseIncludingHolidays()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $carbonClass::instance($this->getOpeningHours()->nextOpen($this->toDateTime()));
+            }
+
+            return $carbonClass::now()->nextCloseIncludingHolidays();
         };
     }
 }
