@@ -22,14 +22,15 @@ First load the mixin in some global bootstrap place of your app:
 ```php
 <?php
 
+use Carbon\Carbon;
 use Cmixin\BusinessTime;
 
-BusinessTime::enable('Carbon\Carbon');
+BusinessTime::enable(Carbon::class);
 // Or if you use Laravel:
 // BusinessDay::enable('Illuminate\Support\Carbon');
 
 // As a second argument you can set default opening hours:
-BusinessTime::enable('Carbon\Carbon', [
+BusinessTime::enable(Carbon::class, [
   'monday' => ['09:00-12:00', '13:00-18:00'],
   'tuesday' => ['09:00-12:00', '13:00-18:00'],
   'wednesday' => ['09:00-12:00'],
@@ -48,3 +49,75 @@ BusinessTime::enable('Carbon\Carbon', [
 
 Business days methods are now available on any Carbon instance
 used anywhere later.
+
+## Features
+
+By enabling `BusinessTime` you automatically benefit on every holidays features of `BusinessDay`,
+see https://github.com/kylekatarnls/business-day
+
+As soon as you set opening hours (using the second parameter of `BusinessTime::enable()`,
+`Carbon::setOpeningHours([...])` or `$carbonDate->setOpeningHours([...])`), you'll be able to retrieve opening hours
+on any Carbon instance or statically (`$carbonDate->getOpeningHours()` or `Carbon::getOpeningHours()`) as an
+instance of `OpeningHours` (`spatie/opening-hours`),
+see https://github.com/spatie/opening-hours for complete list of features of this class.
+
+Then with opening hours, you'll get the following methods directly available on Carbon instances:
+
+### isOpenOn
+
+Allows to know if the business is usually on open on a given day.
+
+```php
+Carbon::isOpenOn('monday') // Returns true if default opening hours include monday
+                           // Carbon::MONDAY would also works
+
+$date->isOpenOn('monday') // Returns true $date opening hours include monday, if $date has no opening hours set,
+                          // if will fallback to default opening hours you set globally
+``` 
+
+### isClosedOn
+
+Opposite of isOpenOn
+
+```php
+Carbon::isClosedOn('monday')
+$date->isClosedOn('monday')
+``` 
+
+### isOpen
+
+Allows to know if the business is usually on open at a given moment.
+
+```php
+Carbon::isOpen()       // returns true if the business is now open
+$carbonDate->isOpen()  // returns true if the business is open at the current date and time
+``` 
+
+### isClosed
+
+Opposite of isOpen
+
+```php
+Carbon::isClosed()       // returns true if the business is now closed
+$carbonDate->isClosed()  // returns true if the business is closed at the current date and time
+``` 
+
+### isOpenExcludingHolidays
+
+Allows to know if the business is usually on open at a given moment and not an holidays.
+
+```php
+Carbon::setHolidaysRegion('us-national');
+Carbon::isOpenExcludingHolidays()       // returns true if the business is now open and not an holiday
+$carbonDate->isOpenExcludingHolidays()  // returns true if the business is open and not an holiday at the current date and time
+``` 
+
+### isClosedIncludingHolidays
+
+Opposite of isOpenExcludingHolidays
+
+```php
+Carbon::setHolidaysRegion('us-national');
+Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
+$carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
+``` 
