@@ -228,38 +228,38 @@ class BusinessTimeTest extends TestCase
     {
         $carbon = static::CARBON_CLASS;
         $carbon::setTestNow('2018-11-01 08:00:00');
-        $this->assertSame('2018-11-01 09:00',$carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-01 09:00',$carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-01 09:00:00');
-        $this->assertSame('2018-11-01 13:00',$carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-01 13:00',$carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
 
         $carbon::setHolidaysRegion('fr-national');
-        $this->assertSame('2018-11-02 09:00',$carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-02 09:00',$carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-02 09:00:00');
-        $this->assertSame('2018-11-02 13:00',$carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-02 13:00',$carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 13:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 13:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
     }
 
     public function testNextCloseIncludingHolidays()
     {
         $carbon = static::CARBON_CLASS;
         $carbon::setTestNow('2018-11-01 08:00:00');
-        $this->assertSame('2018-11-01 12:00',$carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-01 12:00',$carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-02 08:00:00');
-        $this->assertSame('2018-11-02 12:00',$carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-02 12:00',$carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-01 09:00:00');
-        $this->assertSame('2018-11-01 12:00',$carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-01 12:00',$carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
 
         $carbon::setHolidaysRegion('fr-national');
-        $this->assertSame('2018-11-02 12:00',$carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-02 12:00',$carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-02 09:00:00');
-        $this->assertSame('2018-11-02 12:00',$carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-11-02 12:00',$carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-02 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
     }
 }
