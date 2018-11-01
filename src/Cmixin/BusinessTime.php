@@ -87,7 +87,7 @@ class BusinessTime extends BusinessDay
         $mixin = $this;
 
         return function () use ($mixin) {
-            $openingHours = isset($this) ? $this->openingHours : null;
+            $openingHours = isset($this) ? ($this->openingHours ?? null) : null;
 
             if ($openingHours = $openingHours ?: $mixin->openingHours) {
                 return $openingHours;
@@ -102,12 +102,13 @@ class BusinessTime extends BusinessDay
         $mixin = $this;
 
         return function ($day) use ($mixin) {
+            $normalizeDay = $mixin->normalizeDay();
+
             if (isset($this)) {
-                return $this->getOpeningHours()->isOpenOn($this->normalizeDay($day));
+                return $this->getOpeningHours()->isOpenOn($normalizeDay($day));
             }
 
             $getOpeningHours = $mixin->getOpeningHours();
-            $normalizeDay = $mixin->normalizeDay();
 
             return $getOpeningHours()->isOpenOn($normalizeDay($day));
         };
@@ -118,14 +119,81 @@ class BusinessTime extends BusinessDay
         $mixin = $this;
 
         return function ($day) use ($mixin) {
+            $normalizeDay = $mixin->normalizeDay();
+
             if (isset($this)) {
-                return $this->getOpeningHours()->isClosedOn($this->normalizeDay($day));
+                return $this->getOpeningHours()->isClosedOn($normalizeDay($day));
             }
 
             $getOpeningHours = $mixin->getOpeningHours();
-            $normalizeDay = $mixin->normalizeDay();
 
             return $getOpeningHours()->isClosedOn($normalizeDay($day));
+        };
+    }
+
+    public function isOpen()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isOpenAt($this);
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+
+            return $getOpeningHours()->isOpenAt($carbonClass::now());
+        };
+    }
+
+    public function isClosed()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isClosedAt($this);
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+
+            return $getOpeningHours()->isClosedAt($carbonClass::now());
+        };
+    }
+
+    public function isOpenExcludingHolidays()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isOpenAt($this) && !$this->isHoliday();
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+            $now = $carbonClass::now();
+
+            return $getOpeningHours()->isOpenAt($now) && !$now->isHoliday();
+        };
+    }
+
+    public function isClosedIncludingHolidays()
+    {
+        $carbonClass = static::getCarbonClass();
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isClosedAt($this)|| $this->isHoliday();
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+            $now = $carbonClass::now();
+
+            return $getOpeningHours()->isClosedAt($now)|| $now->isHoliday();
         };
     }
 }
