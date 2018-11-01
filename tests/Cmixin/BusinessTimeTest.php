@@ -46,12 +46,14 @@ class BusinessTimeTest extends TestCase
     public function testOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
-        $carbon::setOpeningHours([
+        $this->assertNull($carbon::setOpeningHours([
             $carbon::SUNDAY => ['08:00-10:40'],
-        ]);
-        $date = $carbon::now()->setOpeningHours([
+        ]));
+        $now = $carbon::now();
+        $date = $now->setOpeningHours([
             $carbon::TUESDAY => ['12:30-15:00'],
         ]);
+        $this->assertSame($date, $now);
         $this->assertTrue($carbon::isOpenOn('sunday'));
         $this->assertTrue($carbon::isClosedOn('tuesday'));
         $this->assertTrue($date->isOpenOn('tuesday'));
