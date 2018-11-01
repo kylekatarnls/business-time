@@ -2,13 +2,14 @@
 
 namespace Tests\Cmixin;
 
+use Carbon\Carbon;
 use Cmixin\BusinessTime;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
 
 class BusinessTimeTest extends TestCase
 {
-    const CARBON_CLASS = 'Carbon\Carbon';
+    const CARBON_CLASS = Carbon::class;
 
     protected function setUp()
     {
@@ -60,6 +61,9 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::isClosedOn('tuesday'));
         $this->assertTrue($date->isOpenOn('tuesday'));
         $this->assertTrue($date->isClosedOn('sunday'));
+        $date->resetOpeningHours();
+        $this->assertTrue($date->isOpenOn('sunday'));
+        $this->assertTrue($date->isClosedOn('tuesday'));
 
         $carbon::setOpeningHours([
             -1 => ['08:00-10:40'],
@@ -86,11 +90,18 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::enable());
     }
 
+    public function testConvertOpeningHours()
+    {
+        $carbon = static::CARBON_CLASS;
+        $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours([]));
+        $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours(OpeningHours::create([])));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Opening hours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.
      */
-    public function testConvertOpeningHours()
+    public function testBadOpeningHoursInput()
     {
         $carbon = static::CARBON_CLASS;
         $carbon::convertOpeningHours($carbon::now());
@@ -103,10 +114,7 @@ class BusinessTimeTest extends TestCase
     public function testUndefinedOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
-        if (!method_exists($carbon, 'resetMacros')) {
-            $this->markTestSkipped('This test needs Carbon 2.1.0');
-        }
-        $carbon::resetMacros();
+        $carbon::resetOpeningHours();
         BusinessTime::enable($carbon);
         $carbon::getOpeningHours();
     }
@@ -176,5 +184,34 @@ class BusinessTimeTest extends TestCase
         $carbon::setTestNow('2018-11-02 09:00:00');
         $this->assertFalse($carbon::isClosedIncludingHolidays());
         $this->assertFalse($carbon::now()->isClosedIncludingHolidays());
+    }
+
+    public function testNextOpen()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-05 08:00:00');
+        $this->assertSame('2018-11-05 09:00', $carbon::nextOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-05 09:00', $carbon::now()->nextOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-05 13:00', $carbon::nextOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-05 13:00', $carbon::now()->nextOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-12 09:00', $carbon::nextOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-12 09:00', $carbon::now()->nextOpen()->format('Y-m-d H:i'));
+    }
+
+    public function testNextClose()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-05 08:00:00');
+        $this->assertSame('2018-11-05 12:00', $carbon::nextClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-05 12:00', $carbon::now()->nextClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-05 12:00', $carbon::nextClose()->format('Y-m-d H:i'));
+        // Waiting for https://github.com/spatie/opening-hours/issues/73 to be fixed
+        // $this->assertSame('2018-11-05 12:00', $carbon::now()->nextClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-12 12:00', $carbon::nextClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-12 12:00', $carbon::now()->nextClose()->format('Y-m-d H:i'));
     }
 }
