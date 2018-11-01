@@ -3,12 +3,18 @@
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
          colors="true"
-         forceCoversAnnotation="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+
+    <filter>
+        <whitelist>
+            <directory>src/Cmixin</directory>
+        </whitelist>
+    </filter>
+
     <testsuites>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests</directory>

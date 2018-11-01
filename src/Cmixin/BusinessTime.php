@@ -8,66 +8,92 @@ use Spatie\OpeningHours\OpeningHours;
 class BusinessTime extends BusinessDay
 {
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    protected static $defaultOpeningHours = null;
 
-    public static function normalizeDay($day)
+    public $openingHours = null;
+
+    public function normalizeDay()
     {
-        if (is_int($day)) {
-            $day %= 7;
-            if ($day < 0) {
-                $day += 7;
+        return function ($day) {
+            if (is_int($day)) {
+                $day %= 7;
+                if ($day < 0) {
+                    $day += 7;
+                }
+
+                return static::$days[$day];
             }
 
-            return static::$days[$day];
-        }
-
-        return $day;
+            return $day;
+        };
     }
 
-    protected static function convertOpeningHours($defaultOpeningHours)
+    public function convertOpeningHours()
     {
-        if ($defaultOpeningHours instanceof OpeningHours) {
-            return $defaultOpeningHours;
-        }
-
-        if (is_array($defaultOpeningHours)) {
-            $hours = [];
-            foreach ($defaultOpeningHours as $key => $value) {
-                $hours[static::normalizeDay($key)] = $value;
+        return function ($defaultOpeningHours) {
+            if ($defaultOpeningHours instanceof OpeningHours) {
+                return $defaultOpeningHours;
             }
-            return OpeningHours::create($hours);
-        }
 
-        throw new InvalidArgumentException('Opening hours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.');
-    }
+            if (is_array($defaultOpeningHours)) {
+                $hours = [];
+                $normalizeDay = static::normalizeDay();
+                foreach ($defaultOpeningHours as $key => $value) {
+                    $hours[$normalizeDay($key)] = $value;
+                }
+                return OpeningHours::create($hours);
+            }
 
-    public static function setDefaultOpeningHours($defaultOpeningHours)
-    {
-        static::$defaultOpeningHours = static::convertOpeningHours($defaultOpeningHours);
+            throw new InvalidArgumentException('Opening hours parameter should be a '.
+                OpeningHours::class.
+                ' instance or an array.');
+        };
     }
 
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
-        if($defaultOpeningHours) {
-            static::setDefaultOpeningHours($defaultOpeningHours);
+        if ($carbonClass === null) {
+            return function () {
+                return true;
+            };
         }
 
-        return parent::enable($carbonClass);
+        $mixin = parent::enable($carbonClass);
+
+        if ($defaultOpeningHours) {
+            $convertOpeningHours = $mixin->convertOpeningHours();
+            $mixin->openingHours = $convertOpeningHours($defaultOpeningHours);
+        }
+
+        return $mixin;
     }
 
     public function setOpeningHours()
     {
-        return function ($openingHours) {
-            $this->openingHours = static::convertOpeningHours($openingHours);
+        $mixin = $this;
 
-            return $this;
+        return function ($openingHours) use ($mixin) {
+            $convertOpeningHours = $mixin->convertOpeningHours();
+
+            if (isset($this)) {
+                $this->openingHours = $convertOpeningHours($openingHours);
+
+                return $this;
+            }
+
+            $mixin->openingHours = $convertOpeningHours($openingHours);
+
+            return null;
         };
     }
 
     public function getOpeningHours()
     {
-        return function () {
-            if ($openingHours = $this->openingHours ?? static::$defaultOpeningHours) {
+        $mixin = $this;
+
+        return function () use ($mixin) {
+            $openingHours = isset($this) ? $this->openingHours : null;
+
+            if ($openingHours = $openingHours ?: $mixin->openingHours) {
                 return $openingHours;
             }
 
@@ -75,26 +101,35 @@ class BusinessTime extends BusinessDay
         };
     }
 
-    public static function retrieveOpeningHours($date)
-    {
-        if ($date) {
-            return $date->getOpeningHours();
-        }
-
-        return static::$defaultOpeningHours;
-    }
-
     public function isOpenOn()
     {
-        return function ($day) {
-            return $this->getOpeningHours()->isOpenOn(static::normalizeDay($day));
+        $mixin = $this;
+
+        return function ($day) use ($mixin) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isOpenOn($this->normalizeDay($day));
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+            $normalizeDay = $mixin->normalizeDay();
+
+            return $getOpeningHours()->isOpenOn($normalizeDay($day));
         };
     }
 
     public function isClosedOn()
     {
-        return function ($day) {
-            return $this->getOpeningHours()->isClosedOn(static::normalizeDay($day));
+        $mixin = $this;
+
+        return function ($day) use ($mixin) {
+            if (isset($this)) {
+                return $this->getOpeningHours()->isClosedOn($this->normalizeDay($day));
+            }
+
+            $getOpeningHours = $mixin->getOpeningHours();
+            $normalizeDay = $mixin->normalizeDay();
+
+            return $getOpeningHours()->isClosedOn($normalizeDay($day));
         };
     }
 }
