@@ -121,3 +121,41 @@ Carbon::setHolidaysRegion('us-national');
 Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
 $carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
 ``` 
+
+### nextOpen
+
+Go to next open-business time.
+
+```php
+Carbon::nextOpen()       // go to next open time from now
+$carbonDate->nextOpen()  // go to next open time from $carbonDate
+``` 
+
+### nextClose
+
+Go to next closed-business time.
+
+```php
+Carbon::nextClose()       // go to next close time from now
+$carbonDate->nextClose()  // go to next close time from $carbonDate
+``` 
+
+### nextOpenExcludingHolidays
+
+Go to next open time (considering holidays as closed time).
+
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::isOpenExcludingHolidays();
+echo $carbonDate->isOpenExcludingHolidays();
+``` 
+
+### nextCloseIncludingHolidays
+
+Go to next closed time (considering holidays as closed time).
+
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::nextCloseIncludingHolidays();
+echo $carbonDate->nextCloseIncludingHolidays();
+``` 
