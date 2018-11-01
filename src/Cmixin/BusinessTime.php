@@ -40,6 +40,7 @@ class BusinessTime extends BusinessDay
                 foreach ($defaultOpeningHours as $key => $value) {
                     $hours[$normalizeDay($key)] = $value;
                 }
+
                 return OpeningHours::create($hours);
             }
 
@@ -74,15 +75,10 @@ class BusinessTime extends BusinessDay
         return function ($openingHours) use ($mixin) {
             $convertOpeningHours = $mixin->convertOpeningHours();
 
-            if (isset($this)) {
-                $this->openingHours = $convertOpeningHours($openingHours);
+            $handler = isset($this) ? $this : $mixin;
+            $handler->openingHours = $convertOpeningHours($openingHours);
 
-                return $this;
-            }
-
-            $mixin->openingHours = $convertOpeningHours($openingHours);
-
-            return null;
+            return isset($this) ? $this : null;
         };
     }
 
