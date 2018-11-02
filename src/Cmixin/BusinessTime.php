@@ -8,6 +8,11 @@ use SplObjectStorage;
 
 class BusinessTime extends BusinessDay
 {
+    const NEXT_OPEN_METHOD = 'nextOpen';
+    const NEXT_CLOSE_METHOD = 'nextClose';
+    const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
+    const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
+
     protected static $staticOpeningHoursStorage = [];
     protected static $openingHoursStorage = null;
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -257,14 +262,17 @@ class BusinessTime extends BusinessDay
         };
     }
 
-    public function getCalleeAsMethod($callee = 'nextOpen')
+    public function getCalleeAsMethod($callee = self::NEXT_OPEN_METHOD)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
 
         return function () use ($callee, $mixin, $carbonClass) {
             if (isset($this)) {
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, $this->toDateTime()));
+                /** @var \BusinessTime\CarbonWithBusinessTimeMethods $self */
+                $self = $this;
+
+                return $self->setDateTimeFrom($self->safeCallOnOpeningHours($callee, $self->toDateTime()));
             }
 
             return $carbonClass::now()->$callee();
@@ -273,15 +281,15 @@ class BusinessTime extends BusinessDay
 
     public function nextOpen()
     {
-        return $this->getCalleeAsMethod('nextOpen');
+        return $this->getCalleeAsMethod(static::NEXT_OPEN_METHOD);
     }
 
     public function nextClose()
     {
-        return $this->getCalleeAsMethod('nextClose');
+        return $this->getCalleeAsMethod(static::NEXT_CLOSE_METHOD);
     }
 
-    public function getMethodLoopOnHoliday($method = 'nextOpen', $fallbackMethod = 'nextOpenExcludingHolidays')
+    public function getMethodLoopOnHoliday($method = self::NEXT_OPEN_METHOD, $fallbackMethod = self::NEXT_OPEN_HOLIDAYS_METHOD)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
@@ -302,11 +310,11 @@ class BusinessTime extends BusinessDay
 
     public function nextOpenExcludingHolidays()
     {
-        return $this->getMethodLoopOnHoliday('nextOpen', 'nextOpenExcludingHolidays');
+        return $this->getMethodLoopOnHoliday(static::NEXT_OPEN_METHOD, static::NEXT_OPEN_HOLIDAYS_METHOD);
     }
 
     public function nextCloseIncludingHolidays()
     {
-        return $this->getMethodLoopOnHoliday('nextClose', 'nextCloseIncludingHolidays');
+        return $this->getMethodLoopOnHoliday(static::NEXT_CLOSE_METHOD, static::NEXT_CLOSE_HOLIDAYS_METHOD);
     }
 }
