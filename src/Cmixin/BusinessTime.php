@@ -252,6 +252,7 @@ class BusinessTime extends BusinessDay
         return function ($method, ...$arguments) {
             $openingHours = $this->getOpeningHours();
             $result = $this->getOpeningHours()->$method(...$arguments);
+            /** @var OpeningHours $openingHours */
             foreach ($openingHours->forWeek() as &$day) {
                 foreach ($day as &$timeRange) {
                     reset($timeRange);
@@ -262,17 +263,15 @@ class BusinessTime extends BusinessDay
         };
     }
 
-    public function getCalleeAsMethod($callee = self::NEXT_OPEN_METHOD)
+    public function getCalleeAsMethod($callee = null)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
 
         return function () use ($callee, $mixin, $carbonClass) {
             if (isset($this)) {
-                /** @var \BusinessTime\CarbonWithBusinessTimeMethods $self */
-                $self = $this;
-
-                return $self->setDateTimeFrom($self->safeCallOnOpeningHours($callee, $self->toDateTime()));
+                /** @var \Carbon\Carbon|static $this */
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, $this->toDateTime()));
             }
 
             return $carbonClass::now()->$callee();
@@ -289,7 +288,7 @@ class BusinessTime extends BusinessDay
         return $this->getCalleeAsMethod(static::NEXT_CLOSE_METHOD);
     }
 
-    public function getMethodLoopOnHoliday($method = self::NEXT_OPEN_METHOD, $fallbackMethod = self::NEXT_OPEN_HOLIDAYS_METHOD)
+    public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
