@@ -270,7 +270,7 @@ class BusinessTime extends BusinessDay
 
         return function () use ($callee, $mixin, $carbonClass) {
             if (isset($this)) {
-                /** @var \Carbon\Carbon|static $this */
+                /* @var \Carbon\Carbon|static $this */
                 return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, $this->toDateTime()));
             }
 
