@@ -18,10 +18,9 @@ matrix:
     env: setup=lowest
   - php: 7.2
   - php: 7.3
-    env:
-    - setup=lowest
-    - coverage=true
+    env: setup=lowest
   - php: 7.3
+    env: coverage=true
 
 before_install:
 - travis_retry composer self-update
