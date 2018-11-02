@@ -8,6 +8,11 @@ use SplObjectStorage;
 
 class BusinessTime extends BusinessDay
 {
+    const NEXT_OPEN_METHOD = 'nextOpen';
+    const NEXT_CLOSE_METHOD = 'nextClose';
+    const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
+    const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
+
     protected static $staticOpeningHoursStorage = [];
     protected static $openingHoursStorage = null;
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -247,6 +252,7 @@ class BusinessTime extends BusinessDay
         return function ($method, ...$arguments) {
             $openingHours = $this->getOpeningHours();
             $result = $this->getOpeningHours()->$method(...$arguments);
+            /** @var OpeningHours $openingHours */
             foreach ($openingHours->forWeek() as &$day) {
                 foreach ($day as &$timeRange) {
                     reset($timeRange);
@@ -257,69 +263,57 @@ class BusinessTime extends BusinessDay
         };
     }
 
-    public function nextOpen()
+    public function getCalleeAsMethod($callee = null)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
 
-        return function () use ($mixin, $carbonClass) {
+        return function () use ($callee, $mixin, $carbonClass) {
             if (isset($this)) {
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours('nextOpen', $this->toDateTime()));
+                /* @var \Carbon\Carbon|static $this */
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, $this->toDateTime()));
             }
 
-            return $carbonClass::now()->nextOpen();
+            return $carbonClass::now()->$callee();
         };
+    }
+
+    public function nextOpen()
+    {
+        return $this->getCalleeAsMethod(static::NEXT_OPEN_METHOD);
     }
 
     public function nextClose()
     {
-        $carbonClass = static::getCarbonClass();
-        $mixin = $this;
-
-        return function () use ($mixin, $carbonClass) {
-            if (isset($this)) {
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours('nextClose', $this->toDateTime()));
-            }
-
-            return $carbonClass::now()->nextClose();
-        };
+        return $this->getCalleeAsMethod(static::NEXT_CLOSE_METHOD);
     }
 
-    public function nextOpenExcludingHolidays()
+    public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
 
-        return function () use ($mixin, $carbonClass) {
+        return function () use ($mixin, $carbonClass, $method, $fallbackMethod) {
             if (isset($this)) {
                 $date = $this;
                 do {
-                    $date = $date->nextOpen();
+                    $date = $date->$method();
                 } while ($date->isHoliday());
 
                 return $date;
             }
 
-            return $carbonClass::now()->nextOpenExcludingHolidays();
+            return $carbonClass::now()->$fallbackMethod();
         };
+    }
+
+    public function nextOpenExcludingHolidays()
+    {
+        return $this->getMethodLoopOnHoliday(static::NEXT_OPEN_METHOD, static::NEXT_OPEN_HOLIDAYS_METHOD);
     }
 
     public function nextCloseIncludingHolidays()
     {
-        $carbonClass = static::getCarbonClass();
-        $mixin = $this;
-
-        return function () use ($mixin, $carbonClass) {
-            if (isset($this)) {
-                $date = $this->nextClose();
-                while ($date->isHoliday()) {
-                    $date = $date->nextClose();
-                }
-
-                return $date;
-            }
-
-            return $carbonClass::now()->nextCloseIncludingHolidays();
-        };
+        return $this->getMethodLoopOnHoliday(static::NEXT_CLOSE_METHOD, static::NEXT_CLOSE_HOLIDAYS_METHOD);
     }
 }
