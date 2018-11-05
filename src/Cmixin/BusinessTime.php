@@ -3,24 +3,9 @@
 namespace Cmixin;
 
 use BusinessTime\MixinBase;
-use InvalidArgumentException;
-use SplObjectStorage;
 
 class BusinessTime extends MixinBase
 {
-    public function getOpeningHoursStorage()
-    {
-        if (!static::$openingHoursStorage) {
-            static::$openingHoursStorage = new SplObjectStorage();
-        }
-
-        $storage = static::$openingHoursStorage;
-
-        return function () use ($storage) {
-            return $storage;
-        };
-    }
-
     public function setOpeningHours()
     {
         $carbonClass = static::getCarbonClass();
@@ -63,20 +48,12 @@ class BusinessTime extends MixinBase
         };
     }
 
-    public function getOpeningHours()
+    public function getLocalOpeningHours()
     {
-        $carbonClass = static::getCarbonClass();
-        $staticOpeningHours = &static::$staticOpeningHours;
         $mixin = $this;
 
-        return function () use ($mixin, $carbonClass, &$staticOpeningHours) {
-            $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
-
-            if ($openingHours = $openingHours ?: ($staticOpeningHours[$carbonClass] ?? null)) {
-                return $openingHours;
-            }
-
-            throw new InvalidArgumentException('Opening hours has not be set.');
+        return function () use ($mixin) {
+            return (isset($this) ? $this : $mixin)->getOpeningHours();
         };
     }
 
@@ -86,14 +63,9 @@ class BusinessTime extends MixinBase
 
         return function ($day) use ($mixin) {
             $normalizeDay = $mixin->normalizeDay();
+            $getter = $mixin->getLocalOpeningHours();
 
-            if (isset($this)) {
-                return $this->getOpeningHours()->isOpenOn($normalizeDay($day));
-            }
-
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->isOpenOn($normalizeDay($day));
+            return $getter->call(isset($this) ? $this : $mixin)->isOpenOn($normalizeDay($day));
         };
     }
 
@@ -103,14 +75,9 @@ class BusinessTime extends MixinBase
 
         return function ($day) use ($mixin) {
             $normalizeDay = $mixin->normalizeDay();
+            $getter = $mixin->getLocalOpeningHours();
 
-            if (isset($this)) {
-                return $this->getOpeningHours()->isClosedOn($normalizeDay($day));
-            }
-
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->isClosedOn($normalizeDay($day));
+            return $getter->call(isset($this) ? $this : $mixin)->isClosedOn($normalizeDay($day));
         };
     }
 
