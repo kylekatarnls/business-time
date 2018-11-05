@@ -5,6 +5,7 @@ namespace BusinessTime;
 use Cmixin\BusinessDay;
 use InvalidArgumentException;
 use Spatie\OpeningHours\OpeningHours;
+use SplObjectStorage;
 
 class MixinBase extends BusinessDay
 {
@@ -73,6 +74,36 @@ class MixinBase extends BusinessDay
         }
 
         return $mixin;
+    }
+
+    public function getOpeningHoursStorage()
+    {
+        if (!static::$openingHoursStorage) {
+            static::$openingHoursStorage = new SplObjectStorage();
+        }
+
+        $storage = static::$openingHoursStorage;
+
+        return function () use ($storage) {
+            return $storage;
+        };
+    }
+
+    public function getOpeningHours()
+    {
+        $carbonClass = static::getCarbonClass();
+        $staticStorage = &static::$staticOpeningHours;
+        $mixin = $this;
+
+        return function () use ($mixin, $carbonClass, &$staticStorage) {
+            $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
+
+            if ($openingHours = $openingHours ?: ($staticStorage[$carbonClass] ?? null)) {
+                return $openingHours;
+            }
+
+            throw new InvalidArgumentException('Opening hours has not be set.');
+        };
     }
 
     public function safeCallOnOpeningHours()

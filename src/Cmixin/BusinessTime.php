@@ -3,24 +3,9 @@
 namespace Cmixin;
 
 use BusinessTime\MixinBase;
-use InvalidArgumentException;
-use SplObjectStorage;
 
 class BusinessTime extends MixinBase
 {
-    public function getOpeningHoursStorage()
-    {
-        if (!static::$openingHoursStorage) {
-            static::$openingHoursStorage = new SplObjectStorage();
-        }
-
-        $storage = static::$openingHoursStorage;
-
-        return function () use ($storage) {
-            return $storage;
-        };
-    }
-
     public function setOpeningHours()
     {
         $carbonClass = static::getCarbonClass();
@@ -63,87 +48,49 @@ class BusinessTime extends MixinBase
         };
     }
 
-    public function getOpeningHours()
-    {
-        $carbonClass = static::getCarbonClass();
-        $staticOpeningHours = &static::$staticOpeningHours;
-        $mixin = $this;
-
-        return function () use ($mixin, $carbonClass, &$staticOpeningHours) {
-            $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
-
-            if ($openingHours = $openingHours ?: ($staticOpeningHours[$carbonClass] ?? null)) {
-                return $openingHours;
-            }
-
-            throw new InvalidArgumentException('Opening hours has not be set.');
-        };
-    }
-
-    public function isOpenOn()
+    public function isOpenOn($method = null)
     {
         $mixin = $this;
+        $method = preg_replace('/^.*::/', '', $method ?: __METHOD__);
 
-        return function ($day) use ($mixin) {
+        return function ($day) use ($mixin, $method) {
             $normalizeDay = $mixin->normalizeDay();
 
             if (isset($this)) {
-                return $this->getOpeningHours()->isOpenOn($normalizeDay($day));
+                return $this->getOpeningHours()->$method($normalizeDay($day));
             }
 
             $getOpeningHours = $mixin->getOpeningHours();
 
-            return $getOpeningHours()->isOpenOn($normalizeDay($day));
+            return $getOpeningHours()->$method($normalizeDay($day));
         };
     }
 
     public function isClosedOn()
     {
-        $mixin = $this;
-
-        return function ($day) use ($mixin) {
-            $normalizeDay = $mixin->normalizeDay();
-
-            if (isset($this)) {
-                return $this->getOpeningHours()->isClosedOn($normalizeDay($day));
-            }
-
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->isClosedOn($normalizeDay($day));
-        };
+        return $this->isOpenOn(__METHOD__);
     }
 
-    public function isOpen()
+    public function isOpen($method = null)
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
+        $method = preg_replace('/^.*::/', '', $method ?: __METHOD__).'At';
 
-        return function () use ($mixin, $carbonClass) {
+        return function () use ($mixin, $carbonClass, $method) {
             if (isset($this)) {
-                return $this->getOpeningHours()->isOpenAt($this);
+                return $this->getOpeningHours()->$method($this);
             }
 
             $getOpeningHours = $mixin->getOpeningHours();
 
-            return $getOpeningHours()->isOpenAt($carbonClass::now());
+            return $getOpeningHours()->$method($carbonClass::now());
         };
     }
 
     public function isClosed()
     {
-        $carbonClass = static::getCarbonClass();
-        $mixin = $this;
-
-        return function () use ($mixin, $carbonClass) {
-            if (isset($this)) {
-                return $this->getOpeningHours()->isClosedAt($this);
-            }
-
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->isClosedAt($carbonClass::now());
-        };
+        return $this->isOpen(__METHOD__);
     }
 
     public function isOpenExcludingHolidays()
