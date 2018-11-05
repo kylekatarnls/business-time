@@ -92,13 +92,13 @@ class MixinBase extends BusinessDay
     public function getOpeningHours()
     {
         $carbonClass = static::getCarbonClass();
-        $staticOpeningHours = &static::$staticOpeningHours;
+        $staticStorage = &static::$staticOpeningHours;
         $mixin = $this;
 
-        return function () use ($mixin, $carbonClass, &$staticOpeningHours) {
+        return function () use ($mixin, $carbonClass, &$staticStorage) {
             $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
 
-            if ($openingHours = $openingHours ?: ($staticOpeningHours[$carbonClass] ?? null)) {
+            if ($openingHours = $openingHours ?: ($staticStorage[$carbonClass] ?? null)) {
                 return $openingHours;
             }
 
