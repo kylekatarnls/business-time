@@ -48,7 +48,7 @@ class MixinBase extends BusinessDay
                     $hours[$normalizeDay($key)] = $value;
                 }
 
-                return OpeningHours::create($hours);
+                return (new OpeningHours())->fill($hours);
             }
 
             throw new InvalidArgumentException('Opening hours parameter should be a '.
