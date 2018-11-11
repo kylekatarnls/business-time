@@ -9,6 +9,8 @@ Carbon mixin to handle business days and opening hours
 [![Issue Count](https://codeclimate.com/github/kylekatarnls/business-time/badges/issue_count.svg)](https://codeclimate.com/github/kylekatarnls/business-time)
 [![StyleCI](https://styleci.io/repos/155368756/shield?branch=master)](https://styleci.io/repos/155368756)
 
+[Professionally supported nesbot/carbon is now available](https://tidelift.com/subscription/pkg/packagist-nesbot-carbon?utm_source=packagist-nesbot-carbon&utm_medium=referral&utm_campaign=readme)
+
 ## Install
 
 ```
