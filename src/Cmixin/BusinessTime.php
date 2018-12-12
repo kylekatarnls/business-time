@@ -51,10 +51,8 @@ class BusinessTime extends MixinBase
     public function getCurrentDayOpeningHours()
     {
         $carbonClass = static::getCarbonClass();
-        $staticOpeningHours = &static::$staticOpeningHours;
-        $mixin = $this;
 
-        return function () use ($mixin, $carbonClass, &$staticOpeningHours) {
+        return function () use ($carbonClass) {
             $date = isset($this) ? $this : $carbonClass::now();
 
             return $date->getOpeningHours()->forDate($date);

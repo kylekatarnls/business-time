@@ -82,12 +82,21 @@ BusinessTime::enable(Carbon::class, [
   'exceptions' => [
     function (Carbon $date) {
       if ($date->isHoliday()) {
+        // Or use ->isObservedHoliday() and set observed holidays:
+        // https://github.com/kylekatarnls/business-day#setobservedholidayszone
         switch ($date->getHolidayId()) {
           // If the ID "christmas" exists in the selected holidays region and matches the current date:
           case 'christmas':
             return ['10:00-12:00'];
           default:
             return []; // All other holidays are closed all day long
+            // Here you can also pass context data:
+            return [
+              'hours' => [],
+              'data'  => [
+                'reason' => 'Today is ' . $date->getHolidayName(),
+              ],
+            ];
         }
       }
       // Else, typical day => use days of week settings
