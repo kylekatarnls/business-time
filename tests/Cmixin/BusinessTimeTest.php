@@ -290,12 +290,11 @@ class BusinessTimeTest extends TestCase
         ]);
         $carbon::resetHolidays();
         $carbon::setHolidaysRegion('fr-national');
-        $date = $carbon::parse('2018-12-15');
-//        var_dump($date->getOpeningHours()->forDate($date));
-//        exit;
-//        $this->assertSame($date, $date->getOpeningHours()->forDate($date));
-//        $this->assertSame($date, $date->nextClose());
-//        $this->assertSame($date, $date->nextOpenExcludingHolidays());
-//        $this->assertSame($date, $date->nextCloseIncludingHolidays());
+        $date = $carbon::parse('2018-12-25');
+        $this->assertSame('10:00-12:00', strval($date->getOpeningHours()->forDate($date)));
+        $date = $carbon::parse('2018-01-01');
+        $this->assertSame('', strval($date->getCurrentDayOpeningHours()));
+        $date = $carbon::parse('2018-01-02');
+        $this->assertSame('09:00-12:00,13:00-18:00', strval($date->getCurrentDayOpeningHours()));
     }
 }
