@@ -262,4 +262,40 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2018-11-02 12:00', $carbon::nextCloseIncludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-02 12:00', $carbon::now()->nextCloseIncludingHolidays()->format('Y-m-d H:i'));
     }
+
+    public function testFilterCallback()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'     => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'    => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'  => ['09:00-12:00'],
+            'thursday'   => ['09:00-12:00', '13:00-18:00'],
+            'friday'     => ['09:00-12:00', '13:00-20:00'],
+            'saturday'   => ['09:00-12:00', '13:00-16:00'],
+            'sunday'     => [],
+            'exceptions' => [
+                function ($date) use ($carbon) {
+                    $this->assertInstanceOf($carbon, $date);
+
+                    if ($date->getHolidayId() === 'christmas') {
+                        return ['10:00-12:00'];
+                    }
+
+                    if ($date->isHoliday()) {
+                        return [];
+                    }
+                },
+            ],
+        ]);
+        $carbon::resetHolidays();
+        $carbon::setHolidaysRegion('fr-national');
+        $date = $carbon::parse('2018-12-15');
+//        var_dump($date->getOpeningHours()->forDate($date));
+//        exit;
+//        $this->assertSame($date, $date->getOpeningHours()->forDate($date));
+//        $this->assertSame($date, $date->nextClose());
+//        $this->assertSame($date, $date->nextOpenExcludingHolidays());
+//        $this->assertSame($date, $date->nextCloseIncludingHolidays());
+    }
 }
