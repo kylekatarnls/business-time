@@ -65,6 +65,52 @@ see https://github.com/spatie/opening-hours for complete list of features of thi
 
 Then with opening hours, you'll get the following methods directly available on Carbon instances:
 
+### Holidays
+
+By default, holidays has no particular opening hours, it will use the opening hours of the current day of week, but
+you can use a custom exception to link automatically holidays to custom opening hours:
+
+```php
+BusinessTime::enable(Carbon::class, [
+  'monday' => ['09:00-12:00', '13:00-18:00'],
+  'tuesday' => ['09:00-12:00', '13:00-18:00'],
+  'wednesday' => ['09:00-12:00'],
+  'thursday' => ['09:00-12:00', '13:00-18:00'],
+  'friday' => ['09:00-12:00', '13:00-20:00'],
+  'saturday' => ['09:00-12:00', '13:00-16:00'],
+  'sunday' => [],
+  'exceptions' => [
+    function (Carbon $date) {
+      if ($date->isHoliday()) {
+        // Or use ->isObservedHoliday() and set observed holidays:
+        // https://github.com/kylekatarnls/business-day#setobservedholidayszone
+        switch ($date->getHolidayId()) {
+          // If the ID "christmas" exists in the selected holidays region and matches the current date:
+          case 'christmas':
+            return ['10:00-12:00'];
+          default:
+            return []; // All other holidays are closed all day long
+            // Here you can also pass context data:
+            return [
+              'hours' => [],
+              'data'  => [
+                'reason' => 'Today is ' . $date->getHolidayName(),
+              ],
+            ];
+        }
+      }
+      // Else, typical day => use days of week settings
+    },
+  ],
+]);
+
+Carbon::setHolidaysRegion('us-national');
+Carbon::parse('2018-12-25 11:00')->isOpen(); // true  matches custom opening hours of Christmas
+Carbon::parse('2018-12-25 13:00')->isOpen(); // false
+Carbon::parse('2019-01-01 11:00')->isOpen(); // false closed all day long
+Carbon::parse('2019-01-02 11:00')->isOpen(); // true  not an holiday in us-national region, so it's open as any common wednesday
+```
+
 ### isOpenOn
 
 Allows to know if the business is usually on open on a given day.
@@ -93,6 +139,11 @@ Allows to know if the business is usually on open at a given moment.
 ```php
 Carbon::isOpen()       // returns true if the business is now open
 $carbonDate->isOpen()  // returns true if the business is open at the current date and time
+
+if (Carbon::isOpen()) {
+  $closingTime = Carbon::nextClose()->isoFormat('LT');
+  echo "It's now open and until $closingTime.";
+}
 ``` 
 
 ### isClosed
@@ -102,26 +153,11 @@ Opposite of isOpen
 ```php
 Carbon::isClosed()       // returns true if the business is now closed
 $carbonDate->isClosed()  // returns true if the business is closed at the current date and time
-``` 
 
-### isOpenExcludingHolidays
-
-Allows to know if the business is usually on open at a given moment and not an holidays.
-
-```php
-Carbon::setHolidaysRegion('us-national');
-Carbon::isOpenExcludingHolidays()       // returns true if the business is now open and not an holiday
-$carbonDate->isOpenExcludingHolidays()  // returns true if the business is open and not an holiday at the current date and time
-``` 
-
-### isClosedIncludingHolidays
-
-Opposite of isOpenExcludingHolidays
-
-```php
-Carbon::setHolidaysRegion('us-national');
-Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
-$carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
+if (Carbon::isClosed()) {
+  $openingTime = Carbon::nextClose()->calendar();
+  echo "It's now closed and will re-open $openingTime.";
+}
 ``` 
 
 ### nextOpen
@@ -142,9 +178,67 @@ Carbon::nextClose()       // go to next close time from now
 $carbonDate->nextClose()  // go to next close time from $carbonDate
 ``` 
 
+### getCurrentDayOpeningHours
+
+Returns the opening hours current day settings (first matching exception or else current weekday settings).
+
+```php
+BusinessTime::enable(Carbon::class, [
+  'monday' => [
+    'data' => [
+      'remarks' => 'Extra evening on Monday',
+    ],
+    'hours' => [
+        '09:00-12:00',
+        '13:00-18:00',
+        '19:00-20:00',
+    ]
+  ],
+  // ...
+]);
+
+$todayRanges = Carbon::getCurrentDayOpeningHours(); // Equivalent to Carbon::now()->getCurrentDayOpeningHours()
+// You can also get opening hours of any other day: Carbon::parse('2018-01-16')->getCurrentDayOpeningHours()
+
+echo '<h1>Today office open hours</h1>';
+$data = $todayRanges->getData();
+if (is_array($data) && isset($data['remarks'])) {
+  echo '<p><em>' . $data['remarks'] . '</em></p>';
+}
+// $todayRanges is iterable on every time range of the day.
+foreach ($todayRanges as $range) {
+  // TimeRange object have start, end and data properties but can also be implicitly converted as strings:
+  echo '<p><time>' . $range . '</time></p>';
+}
+// $todayRanges can also be directly dumped as string
+echo '<p>' . $todayRanges . '</p>';
+```
+
+### isOpenExcludingHolidays
+
+Allows to know if the business is usually on open at a given moment and not an holidays. But prefer to handle holidays
+with a dedicated exception for a finest setting. [See Holidays section](#Holidays)
+
+```php
+Carbon::setHolidaysRegion('us-national');
+Carbon::isOpenExcludingHolidays()       // returns true if the business is now open and not an holiday
+$carbonDate->isOpenExcludingHolidays()  // returns true if the business is open and not an holiday at the current date and time
+``` 
+
+### isClosedIncludingHolidays
+
+Opposite of [isOpenExcludingHolidays](#isOpenExcludingHolidays)
+
+```php
+Carbon::setHolidaysRegion('us-national');
+Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
+$carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
+``` 
+
 ### nextOpenExcludingHolidays
 
-Go to next open time (considering holidays as closed time).
+Go to next open time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
+exception for a finest setting. [See Holidays section](#Holidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');
@@ -154,7 +248,8 @@ echo $carbonDate->isOpenExcludingHolidays();
 
 ### nextCloseIncludingHolidays
 
-Go to next closed time (considering holidays as closed time).
+Go to next closed time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
+exception for a finest setting. [See Holidays section](#Holidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');

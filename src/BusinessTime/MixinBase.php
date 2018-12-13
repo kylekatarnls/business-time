@@ -109,16 +109,7 @@ class MixinBase extends BusinessDay
     public function safeCallOnOpeningHours()
     {
         return function ($method, ...$arguments) {
-            $openingHours = $this->getOpeningHours();
-            $result = $this->getOpeningHours()->$method(...$arguments);
-            /** @var OpeningHours $openingHours */
-            foreach ($openingHours->forWeek() as &$day) {
-                foreach ($day as &$timeRange) {
-                    reset($timeRange);
-                }
-            }
-
-            return $result;
+            return $this->getOpeningHours()->$method(...$arguments);
         };
     }
 
