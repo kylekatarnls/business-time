@@ -120,7 +120,7 @@ class MixinBase extends BusinessDay
         return function () use ($callee, $carbonClass) {
             if (isset($this)) {
                 /* @var \Carbon\Carbon|static $this */
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, $this->toDateTime()));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, clone $this));
             }
 
             return $carbonClass::now()->$callee();
