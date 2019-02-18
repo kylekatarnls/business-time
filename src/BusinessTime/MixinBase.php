@@ -76,6 +76,48 @@ class MixinBase extends BusinessDay
         return $mixin;
     }
 
+    public function setOpeningHours()
+    {
+        $carbonClass = static::getCarbonClass();
+        $staticStorage = &static::$staticOpeningHours;
+        $mixin = $this;
+
+        return function ($openingHours) use ($mixin, $carbonClass, &$staticStorage) {
+            $convertOpeningHours = $mixin->convertOpeningHours();
+
+            if (!isset($this)) {
+                $staticStorage[$carbonClass] = $convertOpeningHours($openingHours);
+
+                return null;
+            }
+
+            $storage = call_user_func($mixin->getOpeningHoursStorage());
+            $storage[$this] = $convertOpeningHours($openingHours);
+
+            return $this;
+        };
+    }
+
+    public function resetOpeningHours()
+    {
+        $carbonClass = static::getCarbonClass();
+        $staticStorage = &static::$staticOpeningHours;
+        $mixin = $this;
+
+        return function () use ($carbonClass, &$staticStorage, $mixin) {
+            if (!isset($this)) {
+                unset($staticStorage[$carbonClass]);
+
+                return null;
+            }
+
+            $storage = call_user_func($mixin->getOpeningHoursStorage());
+            unset($storage[$this]);
+
+            return $this;
+        };
+    }
+
     public function getOpeningHoursStorage()
     {
         if (!static::$openingHoursStorage) {
