@@ -13,7 +13,7 @@ Carbon mixin to handle business days and opening hours
 
 ## Install
 
-```
+```shell
 composer require cmixin/business-time
 ```
 
@@ -55,13 +55,13 @@ used anywhere later.
 ## Features
 
 By enabling `BusinessTime` you automatically benefit on every holidays features of `BusinessDay`,
-see https://github.com/kylekatarnls/business-day
+see [cmixin/business-day](https://github.com/kylekatarnls/business-day)
 
 As soon as you set opening hours (using the second parameter of `BusinessTime::enable()`,
 `Carbon::setOpeningHours([...])` or `$carbonDate->setOpeningHours([...])`), you'll be able to retrieve opening hours
 on any Carbon instance or statically (`$carbonDate->getOpeningHours()` or `Carbon::getOpeningHours()`) as an
 instance of `OpeningHours` (`spatie/opening-hours`),
-see https://github.com/spatie/opening-hours for complete list of features of this class.
+see [spatie/opening-hours](https://github.com/spatie/opening-hours) for complete list of features of this class.
 
 Then with opening hours, you'll get the following methods directly available on Carbon instances:
 
