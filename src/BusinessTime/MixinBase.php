@@ -66,7 +66,14 @@ class MixinBase extends BusinessDay
             };
         }
 
-        $mixin = parent::enable($carbonClass);
+        $region = null;
+        $holidays = null;
+
+        if (is_string($defaultOpeningHours)) {
+            list($region, $holidays, $defaultOpeningHours) = array_pad(func_get_args(), 3, null);
+        }
+
+        $mixin = parent::enable($carbonClass, $region, $holidays);
 
         if ($defaultOpeningHours) {
             $convertOpeningHours = $mixin->convertOpeningHours();
