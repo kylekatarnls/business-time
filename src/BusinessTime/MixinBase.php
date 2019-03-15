@@ -62,6 +62,22 @@ class MixinBase extends BusinessDay
         };
     }
 
+    protected static function parseHolidaysArray($holidays = null)
+    {
+        $region = null;
+
+        if (is_array($holidays) && isset($holidays[static::REGION_OPTION_KEY])) {
+            $region = $holidays[static::REGION_OPTION_KEY];
+            unset($holidays[static::REGION_OPTION_KEY]);
+
+            if (isset($holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY])) {
+                $holidays = $holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY];
+            }
+        }
+
+        return [$region, $holidays];
+    }
+
     protected static function extractHolidaysFromOptions($defaultOpeningHours = null)
     {
         $region = null;
@@ -70,16 +86,7 @@ class MixinBase extends BusinessDay
         if (is_string($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
             $region = $defaultOpeningHours[static::HOLIDAYS_OPTION_KEY];
         } elseif (is_iterable($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
-            $holidays = $defaultOpeningHours[static::HOLIDAYS_OPTION_KEY];
-
-            if (is_array($holidays) && isset($holidays[static::REGION_OPTION_KEY])) {
-                $region = $holidays[static::REGION_OPTION_KEY];
-                unset($holidays[static::REGION_OPTION_KEY]);
-
-                if (isset($holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY])) {
-                    $holidays = $holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY];
-                }
-            }
+            [$region, $holidays] = static::parseHolidaysArray($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY]);
         }
 
         unset($defaultOpeningHours['holidays']);
