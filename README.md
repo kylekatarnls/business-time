@@ -256,3 +256,33 @@ Carbon::setHolidaysRegion('us-national');
 echo Carbon::nextCloseIncludingHolidays();
 echo $carbonDate->nextCloseIncludingHolidays();
 ``` 
+
+### Note about timezones
+
+When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
+`->isHoliday()` returns `true` from `Carbon::parse('2010-01-01 00:00:00.000000)` to
+`Carbon::parse('2010-01-01 23:59:59.999999)` no matter the timezone you set for those `Carbon`
+instance.
+
+If you want to know if it's holiday or business day in somewhere else in the world, you have
+to convert it:
+```php
+Carbon::parse('2010-01-01 02:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // false
+Carbon::parse('2010-01-01 12:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // true
+```
+
+The same goes for opening hours, let's say you want to know if you call center based in Toronto is
+available from Tokyo at a given hour (Tokyo timezone), you would get something like:
+```php
+// Opening hours in Toronto
+BusinessTime::enable(Carbon::class, [
+  'monday' => ['08:00-20:00'],
+  'tuesday' => ['08:00-20:00'],
+  'wednesday' => ['08:00-20:00'],
+  'thursday' => ['08:00-20:00'],
+]);
+// Can I call the hotline if it's Tuesday 19:30 in Tokyo? > No
+Carbon::parse('2019-03-05 20:30', 'Asia/Tokyo')->setTimezone('America/Toronto')->isOpen() // false
+// Can I call the hotline if it's Tuesday 22:30 in Tokyo? > Yes
+Carbon::parse('2019-03-05 22:30', 'Asia/Tokyo')->setTimezone('America/Toronto')->isOpen() // true
+```
