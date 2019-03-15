@@ -71,9 +71,38 @@ class MixinBase extends BusinessDay
 
         if (is_string($defaultOpeningHours)) {
             list($region, $holidays, $defaultOpeningHours) = array_pad(func_get_args(), 3, null);
+        } elseif (is_array($defaultOpeningHours) && isset($defaultOpeningHours['holidays'])) {
+            if (is_string($defaultOpeningHours['holidays'])) {
+                $region = $defaultOpeningHours['holidays'];
+            } elseif (is_iterable($defaultOpeningHours['holidays'])) {
+                $holidays = $defaultOpeningHours['holidays'];
+
+                if (is_array($holidays) && isset($holidays['region'])) {
+                    $region = $holidays['region'];
+                    unset($holidays['region']);
+
+                    if (isset($holidays['with'])) {
+                        $holidays = $holidays['with'];
+                    }
+                }
+            }
+
+            unset($defaultOpeningHours['holidays']);
         }
 
-        $mixin = parent::enable($carbonClass, $region, $holidays);
+        $mixin = parent::enable($carbonClass);
+
+        if ($holidays && !$region) {
+            $region = 'custom-holidays';
+        }
+
+        if ($region) {
+            $carbonClass::setHolidaysRegion($region);
+
+            if ($holidays) {
+                $carbonClass::addHolidays($region, $holidays);
+            }
+        }
 
         if ($defaultOpeningHours) {
             $convertOpeningHours = $mixin->convertOpeningHours();

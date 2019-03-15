@@ -46,6 +46,13 @@ BusinessTime::enable(Carbon::class, [
     '01-01' => [], // Recurring on each 1st of january
     '12-25' => ['09:00-12:00'], // Recurring on each 25th of december
   ],
+  'holidays' => [
+    'region' => 'us-ny', // Load the official list of holidays from USA - New York
+    'with' => [
+      'labor-day' => null, // Remove the Labor Day (so the business is open)
+      'company-special-holiday' => '04-07', // Add some custom holiday of your company 
+    ],
+  ],
 ]);
 ```
 
@@ -214,25 +221,25 @@ foreach ($todayRanges as $range) {
 echo '<p>' . $todayRanges . '</p>';
 ```
 
-### isOpenExcludingHolidays
+### isBusinessOpen / isOpenExcludingHolidays
 
-Allows to know if the business is usually on open at a given moment and not an holidays. But prefer to handle holidays
+Allows to know if the business is usually on open at a given moment and not an holidays. But you also can handle holidays
 with a dedicated exception for a finest setting. [See Holidays section](#Holidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');
-Carbon::isOpenExcludingHolidays()       // returns true if the business is now open and not an holiday
-$carbonDate->isOpenExcludingHolidays()  // returns true if the business is open and not an holiday at the current date and time
+Carbon::isBusinessOpen()       // returns true if the business is now open and not an holiday
+$carbonDate->isBusinessOpen()  // returns true if the business is open and not an holiday at the current date and time
 ``` 
 
-### isClosedIncludingHolidays
+### isBusinessClosed / isClosedIncludingHolidays
 
 Opposite of [isOpenExcludingHolidays](#isOpenExcludingHolidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');
-Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
-$carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
+Carbon::isBusinessClosed()       // returns true if the business is now closed or an holiday
+$carbonDate->isBusinessClosed()  // returns true if the business is closed or an holiday at the current date and time
 ``` 
 
 ### nextOpenExcludingHolidays

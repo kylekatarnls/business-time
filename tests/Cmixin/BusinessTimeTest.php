@@ -298,4 +298,58 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2018-01-02');
         $this->assertSame('09:00-12:00,13:00-18:00', (string) $date->getCurrentDayOpeningHours());
     }
+
+    public function testReadmeCode()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday' => ['09:00-12:00', '13:00-18:00'],
+            'tuesday' => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00'],
+            'thursday' => ['09:00-12:00', '13:00-18:00'],
+            'friday' => ['09:00-12:00', '13:00-20:00'],
+            'saturday' => ['09:00-12:00', '13:00-16:00'],
+            'sunday' => [],
+            'exceptions' => [
+                '2016-11-11' => ['09:00-12:00'],
+                '2016-12-25' => [],
+                '01-01' => [], // Recurring on each 1st of january
+                '12-25' => ['09:00-12:00'], // Recurring on each 25th of december
+            ],
+            'holidays' => [
+                'region' => 'us-ny', // Load the official list of holidays from USA - New York
+                'with' => [
+                    'labor-day' => null, // Remove the Labor Day (so the business is open)
+                    'company-special-holiday' => '04-07', // Add some custom holiday of your company
+                ],
+            ],
+        ]);
+
+        $date = $carbon::parse('2020-04-07 10:00');
+        self::assertTrue($date->isBusinessClosed());
+        $date = $carbon::parse('2020-04-08 10:00');
+        self::assertTrue($date->isBusinessOpen());
+
+        BusinessTime::enable($carbon, [
+            'monday' => ['09:00-12:00', '13:00-18:00'],
+            'tuesday' => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00'],
+            'thursday' => ['09:00-12:00', '13:00-18:00'],
+            'friday' => ['09:00-12:00', '13:00-20:00'],
+            'saturday' => ['09:00-12:00', '13:00-16:00'],
+            'sunday' => [],
+            'exceptions' => [
+                '2016-11-11' => ['09:00-12:00'],
+                '2016-12-25' => [],
+                '01-01' => [], // Recurring on each 1st of january
+                '12-25' => ['09:00-12:00'], // Recurring on each 25th of december
+            ],
+            'holidays' => 'fr-national',
+        ]);
+
+        $date = $carbon::parse('2020-07-14 10:00');
+        self::assertTrue($date->isBusinessClosed());
+        $date = $carbon::parse('2020-07-15 10:00');
+        self::assertTrue($date->isBusinessOpen());
+    }
 }
