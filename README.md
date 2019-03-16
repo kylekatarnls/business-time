@@ -46,6 +46,13 @@ BusinessTime::enable(Carbon::class, [
     '01-01' => [], // Recurring on each 1st of january
     '12-25' => ['09:00-12:00'], // Recurring on each 25th of december
   ],
+  'holidays' => [
+    'region' => 'us-ny', // Load the official list of holidays from USA - New York
+    'with' => [
+      'labor-day' => null, // Remove the Labor Day (so the business is open)
+      'company-special-holiday' => '04-07', // Add some custom holiday of your company 
+    ],
+  ],
 ]);
 ```
 
@@ -214,25 +221,25 @@ foreach ($todayRanges as $range) {
 echo '<p>' . $todayRanges . '</p>';
 ```
 
-### isOpenExcludingHolidays
+### isBusinessOpen / isOpenExcludingHolidays
 
-Allows to know if the business is usually on open at a given moment and not an holidays. But prefer to handle holidays
+Allows to know if the business is usually on open at a given moment and not an holidays. But you also can handle holidays
 with a dedicated exception for a finest setting. [See Holidays section](#Holidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');
-Carbon::isOpenExcludingHolidays()       // returns true if the business is now open and not an holiday
-$carbonDate->isOpenExcludingHolidays()  // returns true if the business is open and not an holiday at the current date and time
+Carbon::isBusinessOpen()       // returns true if the business is now open and not an holiday
+$carbonDate->isBusinessOpen()  // returns true if the business is open and not an holiday at the current date and time
 ``` 
 
-### isClosedIncludingHolidays
+### isBusinessClosed / isClosedIncludingHolidays
 
 Opposite of [isOpenExcludingHolidays](#isOpenExcludingHolidays)
 
 ```php
 Carbon::setHolidaysRegion('us-national');
-Carbon::isClosedIncludingHolidays()       // returns true if the business is now closed or an holiday
-$carbonDate->isClosedIncludingHolidays()  // returns true if the business is closed or an holiday at the current date and time
+Carbon::isBusinessClosed()       // returns true if the business is now closed or an holiday
+$carbonDate->isBusinessClosed()  // returns true if the business is closed or an holiday at the current date and time
 ``` 
 
 ### nextOpenExcludingHolidays
@@ -256,3 +263,33 @@ Carbon::setHolidaysRegion('us-national');
 echo Carbon::nextCloseIncludingHolidays();
 echo $carbonDate->nextCloseIncludingHolidays();
 ``` 
+
+### Note about timezones
+
+When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
+`->isHoliday()` returns `true` from `Carbon::parse('2010-01-01 00:00:00.000000)` to
+`Carbon::parse('2010-01-01 23:59:59.999999)` no matter the timezone you set for those `Carbon`
+instance.
+
+If you want to know if it's holiday or business day in somewhere else in the world, you have
+to convert it:
+```php
+Carbon::parse('2010-01-01 02:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // false
+Carbon::parse('2010-01-01 12:30', 'Europe/Paris')->setTimezone('America/Toronto')->isHoliday() // true
+```
+
+The same goes for opening hours, let's say you want to know if you call center based in Toronto is
+available from Tokyo at a given hour (Tokyo timezone), you would get something like:
+```php
+// Opening hours in Toronto
+BusinessTime::enable(Carbon::class, [
+  'monday' => ['08:00-20:00'],
+  'tuesday' => ['08:00-20:00'],
+  'wednesday' => ['08:00-20:00'],
+  'thursday' => ['08:00-20:00'],
+]);
+// Can I call the hotline if it's Tuesday 19:30 in Tokyo? > No
+Carbon::parse('2019-03-05 20:30', 'Asia/Tokyo')->setTimezone('America/Toronto')->isOpen() // false
+// Can I call the hotline if it's Tuesday 22:30 in Tokyo? > Yes
+Carbon::parse('2019-03-05 22:30', 'Asia/Tokyo')->setTimezone('America/Toronto')->isOpen() // true
+```

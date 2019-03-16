@@ -14,6 +14,10 @@ class MixinBase extends BusinessDay
     const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
     const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
 
+    const HOLIDAYS_OPTION_KEY = 'holidays';
+    const REGION_OPTION_KEY = 'region';
+    const ADDITIONAL_HOLIDAYS_OPTION_KEY = 'with';
+
     protected static $staticOpeningHours = [];
     protected static $openingHoursStorage = null;
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -58,6 +62,56 @@ class MixinBase extends BusinessDay
         };
     }
 
+    protected static function parseHolidaysArray($holidays = null)
+    {
+        $region = null;
+
+        if (is_array($holidays) && isset($holidays[static::REGION_OPTION_KEY])) {
+            $region = $holidays[static::REGION_OPTION_KEY];
+            unset($holidays[static::REGION_OPTION_KEY]);
+
+            if (isset($holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY])) {
+                $holidays = $holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY];
+            }
+        }
+
+        return [$region, $holidays];
+    }
+
+    protected static function extractHolidaysFromOptions($defaultOpeningHours = null)
+    {
+        $region = null;
+        $holidays = null;
+
+        if (is_string($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
+            $region = $defaultOpeningHours[static::HOLIDAYS_OPTION_KEY];
+        } elseif (is_iterable($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
+            [$region, $holidays] = static::parseHolidaysArray($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY]);
+        }
+
+        unset($defaultOpeningHours['holidays']);
+
+        return [$region, $holidays, $defaultOpeningHours];
+    }
+
+    protected static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
+    {
+        $region = null;
+        $holidays = null;
+
+        if (is_string($defaultOpeningHours)) {
+            [$region, $holidays, $defaultOpeningHours] = array_pad($arguments, 3, null);
+        } elseif (is_array($defaultOpeningHours) && isset($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
+            [$region, $holidays, $defaultOpeningHours] = static::extractHolidaysFromOptions($defaultOpeningHours);
+        }
+
+        if ($holidays && !$region) {
+            $region = 'custom-holidays';
+        }
+
+        return [$region, $holidays, $defaultOpeningHours];
+    }
+
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
         if ($carbonClass === null) {
@@ -66,7 +120,18 @@ class MixinBase extends BusinessDay
             };
         }
 
+        $arguments = array_slice(func_get_args(), 1);
+        [$region, $holidays, $defaultOpeningHours] = static::getOpeningHoursOptions($defaultOpeningHours, $arguments);
+
         $mixin = parent::enable($carbonClass);
+
+        if ($region) {
+            $carbonClass::setHolidaysRegion($region);
+
+            if ($holidays) {
+                $carbonClass::addHolidays($region, $holidays);
+            }
+        }
 
         if ($defaultOpeningHours) {
             $convertOpeningHours = $mixin->convertOpeningHours();
