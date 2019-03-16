@@ -62,7 +62,7 @@ class BusinessTime extends MixinBase
         return $this->isOpen(__METHOD__);
     }
 
-    public function isOpenExcludingHolidays()
+    public function isBusinessOpen()
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
@@ -79,7 +79,12 @@ class BusinessTime extends MixinBase
         };
     }
 
-    public function isClosedIncludingHolidays()
+    public function isOpenExcludingHolidays()
+    {
+        return $this->isBusinessOpen();
+    }
+
+    public function isBusinessClosed()
     {
         $carbonClass = static::getCarbonClass();
         $mixin = $this;
@@ -94,6 +99,11 @@ class BusinessTime extends MixinBase
 
             return $getOpeningHours()->isClosedAt($now) || $now->isHoliday();
         };
+    }
+
+    public function isClosedIncludingHolidays()
+    {
+        return $this->isBusinessClosed();
     }
 
     public function nextOpen()
