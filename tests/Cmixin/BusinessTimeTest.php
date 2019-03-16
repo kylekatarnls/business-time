@@ -313,14 +313,14 @@ class BusinessTimeTest extends TestCase
             'exceptions' => [
                 '2016-11-11' => ['09:00-12:00'],
                 '2016-12-25' => [],
-                '01-01'      => [], // Recurring on each 1st of january
-                '12-25'      => ['09:00-12:00'], // Recurring on each 25th of december
+                '01-01'      => [],
+                '12-25'      => ['09:00-12:00'],
             ],
             'holidays'   => [
-                'region' => 'us-ny', // Load the official list of holidays from USA - New York
+                'region' => 'us-national',
                 'with'   => [
-                    'labor-day'               => null, // Remove the Labor Day (so the business is open)
-                    'company-special-holiday' => '04-07', // Add some custom holiday of your company
+                    'labor-day'               => null,
+                    'company-special-holiday' => '07/04',
                 ],
             ],
         ]);
@@ -329,6 +329,8 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($date->isBusinessClosed());
         $date = $carbon::parse('2020-04-08 10:00');
         self::assertTrue($date->isBusinessOpen());
+        $date = $carbon::parse('2020-07-04 10:00');
+        self::assertTrue($date->isBusinessClosed());
 
         BusinessTime::enable($carbon, [
             'monday'     => ['09:00-12:00', '13:00-18:00'],
@@ -341,8 +343,8 @@ class BusinessTimeTest extends TestCase
             'exceptions' => [
                 '2016-11-11' => ['09:00-12:00'],
                 '2016-12-25' => [],
-                '01-01'      => [], // Recurring on each 1st of january
-                '12-25'      => ['09:00-12:00'], // Recurring on each 25th of december
+                '01-01'      => [],
+                '12-25'      => ['09:00-12:00'],
             ],
             'holidays'   => 'fr-national',
         ]);
