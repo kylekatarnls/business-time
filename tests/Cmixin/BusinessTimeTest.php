@@ -325,11 +325,11 @@ class BusinessTimeTest extends TestCase
             ],
         ]);
 
-        $date = $carbon::parse('2020-04-07 10:00');
+        $date = $carbon::parse('2021-04-07 10:00');
         self::assertTrue($date->isBusinessClosed());
-        $date = $carbon::parse('2020-04-08 10:00');
+        $date = $carbon::parse('2021-04-08 10:00');
         self::assertTrue($date->isBusinessOpen());
-        $date = $carbon::parse('2020-07-04 10:00');
+        $date = $carbon::parse('2021-07-04 10:00');
         self::assertTrue($date->isBusinessClosed());
 
         BusinessTime::enable($carbon, [
