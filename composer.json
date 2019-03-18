@@ -3,6 +3,7 @@
   "description": "Carbon mixin to handle business days and opening hours",
   "type": "library",
   "require": {
+    "php": ">=7.1",
     "cmixin/business-day": "^1.1",
     "nesbot/carbon": "^2.0",
     "spatie/opening-hours": "^2.0"
