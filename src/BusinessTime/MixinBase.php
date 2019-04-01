@@ -62,7 +62,7 @@ class MixinBase extends BusinessDay
         };
     }
 
-    protected static function parseHolidaysArray($holidays = null)
+    private static function parseHolidaysArray($holidays = null)
     {
         $region = null;
 
@@ -78,7 +78,7 @@ class MixinBase extends BusinessDay
         return [$region, $holidays];
     }
 
-    protected static function extractHolidaysFromOptions($defaultOpeningHours = null)
+    private static function extractHolidaysFromOptions($defaultOpeningHours = null)
     {
         $region = null;
         $holidays = null;
@@ -94,7 +94,7 @@ class MixinBase extends BusinessDay
         return [$region, $holidays, $defaultOpeningHours];
     }
 
-    protected static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
+    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
     {
         $region = null;
         $holidays = null;
