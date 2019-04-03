@@ -8,10 +8,8 @@ class BusinessTime extends MixinBase
 {
     public function getCurrentDayOpeningHours()
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function () use ($carbonClass) {
-            $date = isset($this) ? $this : $carbonClass::now();
+        return function () {
+            $date = isset($this) ? $this : static::now();
 
             return $date->getOpeningHours()->forDate($date);
         };
@@ -23,15 +21,10 @@ class BusinessTime extends MixinBase
         $method = preg_replace('/^.*::/', '', $method ?: __METHOD__);
 
         return function ($day) use ($mixin, $method) {
-            $normalizeDay = $mixin->normalizeDay();
+            $day = static::normalizeDay($day);
+            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
 
-            if (isset($this)) {
-                return $this->getOpeningHours()->$method($normalizeDay($day));
-            }
-
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->$method($normalizeDay($day));
+            return $openingHours->$method($day);
         };
     }
 
@@ -42,18 +35,14 @@ class BusinessTime extends MixinBase
 
     public function isOpen($method = null)
     {
-        $carbonClass = static::getCarbonClass();
         $mixin = $this;
         $method = preg_replace('/^.*::/', '', $method ?: __METHOD__).'At';
 
-        return function () use ($mixin, $carbonClass, $method) {
-            if (isset($this)) {
-                return $this->getOpeningHours()->$method($this);
-            }
+        return function () use ($mixin, $method) {
+            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
+            $date = isset($this) ? $this : static::now();
 
-            $getOpeningHours = $mixin->getOpeningHours();
-
-            return $getOpeningHours()->$method($carbonClass::now());
+            return $openingHours->$method($date);
         };
     }
 
@@ -68,14 +57,10 @@ class BusinessTime extends MixinBase
         $mixin = $this;
 
         return function () use ($mixin, $carbonClass) {
-            if (isset($this)) {
-                return $this->getOpeningHours()->isOpenAt($this) && !$this->isHoliday();
-            }
+            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
+            $date = isset($this) ? $this : static::now();
 
-            $getOpeningHours = $mixin->getOpeningHours();
-            $now = $carbonClass::now();
-
-            return $getOpeningHours()->isOpenAt($now) && !$now->isHoliday();
+            return $openingHours->isOpenAt($date) && !$date->isHoliday();
         };
     }
 
@@ -90,14 +75,10 @@ class BusinessTime extends MixinBase
         $mixin = $this;
 
         return function () use ($mixin, $carbonClass) {
-            if (isset($this)) {
-                return $this->getOpeningHours()->isClosedAt($this) || $this->isHoliday();
-            }
+            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
+            $date = isset($this) ? $this : static::now();
 
-            $getOpeningHours = $mixin->getOpeningHours();
-            $now = $carbonClass::now();
-
-            return $getOpeningHours()->isClosedAt($now) || $now->isHoliday();
+            return $openingHours->isClosedAt($date) || $date->isHoliday();
         };
     }
 
