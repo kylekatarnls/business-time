@@ -31,6 +31,12 @@ BusinessTime::enable(Carbon::class);
 // Or if you use Laravel:
 // BusinessDay::enable('Illuminate\Support\Carbon');
 
+// And you can enable multiple classes at once:
+BusinessTime::enable([
+    Carbon::class,
+    CarbonImmutable::class,
+]);
+
 // As a second argument you can set default opening hours:
 BusinessTime::enable(Carbon::class, [
   'monday' => ['09:00-12:00', '13:00-18:00'],

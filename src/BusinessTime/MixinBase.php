@@ -18,9 +18,22 @@ class MixinBase extends BusinessDay
     const REGION_OPTION_KEY = 'region';
     const ADDITIONAL_HOLIDAYS_OPTION_KEY = 'with';
 
-    protected static $staticOpeningHours = [];
-    protected static $openingHoursStorage = null;
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+    /**
+     * @var OpeningHours|null
+     */
+    public $openingHours;
+
+    /**
+     * @var SplObjectStorage
+     */
+    public $localOpeningHours;
+
+    public function __construct()
+    {
+        $this->localOpeningHours = new SplObjectStorage();
+    }
 
     public function normalizeDay()
     {
@@ -34,23 +47,22 @@ class MixinBase extends BusinessDay
                 return static::$days[$day];
             }
 
-            return $day;
+            return strtolower($day);
         };
     }
 
     public function convertOpeningHours()
     {
-        $normalizeDay = static::normalizeDay();
-
-        return function ($defaultOpeningHours) use ($normalizeDay) {
+        return function ($defaultOpeningHours) {
             if ($defaultOpeningHours instanceof OpeningHours) {
                 return $defaultOpeningHours;
             }
 
             if (is_array($defaultOpeningHours)) {
                 $hours = [];
+
                 foreach ($defaultOpeningHours as $key => $value) {
-                    $hours[$normalizeDay($key)] = $value;
+                    $hours[static::normalizeDay($key)] = $value;
                 }
 
                 return (new OpeningHours())->fill($hours);
@@ -123,41 +135,43 @@ class MixinBase extends BusinessDay
         $arguments = array_slice(func_get_args(), 1);
         [$region, $holidays, $defaultOpeningHours] = static::getOpeningHoursOptions($defaultOpeningHours, $arguments);
 
-        $mixin = parent::enable($carbonClass);
+        $isArray = is_array($carbonClass);
+        $carbonClasses = (array) $carbonClass;
+        $mixins = array();
 
-        if ($region) {
-            $carbonClass::setHolidaysRegion($region);
+        foreach ($carbonClasses as $carbonClass) {
+            /* @var static $mixin */
+            $mixin = parent::enable($carbonClass);
+            $carbonClass::mixin($mixin);
 
-            if ($holidays) {
-                $carbonClass::addHolidays($region, $holidays);
+            if ($region) {
+                $carbonClass::setHolidaysRegion($region);
+
+                if ($holidays) {
+                    $carbonClass::addHolidays($region, $holidays);
+                }
+            }
+
+            if ($defaultOpeningHours) {
+                $mixin->openingHours = $carbonClass::convertOpeningHours($defaultOpeningHours);
             }
         }
 
-        if ($defaultOpeningHours) {
-            $convertOpeningHours = $mixin->convertOpeningHours();
-            static::$staticOpeningHours[$carbonClass] = $convertOpeningHours($defaultOpeningHours);
-        }
-
-        return $mixin;
+        return $isArray ? $mixins : $mixin;
     }
 
     public function setOpeningHours()
     {
-        $carbonClass = static::getCarbonClass();
-        $staticStorage = &static::$staticOpeningHours;
         $mixin = $this;
 
-        return function ($openingHours) use ($mixin, $carbonClass, &$staticStorage) {
-            $convertOpeningHours = $mixin->convertOpeningHours();
-
+        return function ($openingHours) use ($mixin, &$staticStorage) {
             if (!isset($this)) {
-                $staticStorage[$carbonClass] = $convertOpeningHours($openingHours);
+                $mixin->openingHours = static::convertOpeningHours($openingHours);
 
                 return null;
             }
 
-            $storage = call_user_func($mixin->getOpeningHoursStorage());
-            $storage[$this] = $convertOpeningHours($openingHours);
+            $mixin->localOpeningHours[$this] = static::convertOpeningHours($openingHours);
 
             return $this;
         };
@@ -165,48 +179,32 @@ class MixinBase extends BusinessDay
 
     public function resetOpeningHours()
     {
-        $carbonClass = static::getCarbonClass();
-        $staticStorage = &static::$staticOpeningHours;
         $mixin = $this;
 
-        return function () use ($carbonClass, &$staticStorage, $mixin) {
+        return function () use ($mixin) {
             if (!isset($this)) {
-                unset($staticStorage[$carbonClass]);
+                $mixin->openingHours = null;
 
                 return null;
             }
 
-            $storage = call_user_func($mixin->getOpeningHoursStorage());
-            unset($storage[$this]);
+            unset($mixin->localOpeningHours[$this]);
 
             return $this;
         };
     }
 
-    public function getOpeningHoursStorage()
-    {
-        if (!static::$openingHoursStorage) {
-            static::$openingHoursStorage = new SplObjectStorage();
-        }
-
-        $storage = static::$openingHoursStorage;
-
-        return function () use ($storage) {
-            return $storage;
-        };
-    }
-
     public function getOpeningHours()
     {
-        $carbonClass = static::getCarbonClass();
-        $staticStorage = &static::$staticOpeningHours;
         $mixin = $this;
 
-        return function () use ($mixin, $carbonClass, &$staticStorage) {
-            $openingHours = isset($this) ? (call_user_func($mixin->getOpeningHoursStorage())[$this] ?? null) : null;
+        return function () use ($mixin) {
+            if (isset($this, $mixin->localOpeningHours[$this])) {
+                return $mixin->localOpeningHours[$this];
+            }
 
-            if ($openingHours = $openingHours ?: ($staticStorage[$carbonClass] ?? null)) {
-                return $openingHours;
+            if (isset($mixin->openingHours)) {
+                return $mixin->openingHours;
             }
 
             throw new InvalidArgumentException('Opening hours has not be set.');
@@ -222,23 +220,19 @@ class MixinBase extends BusinessDay
 
     public function getCalleeAsMethod($callee = null)
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function () use ($callee, $carbonClass) {
+        return function () use ($callee) {
             if (isset($this)) {
                 /* @var \Carbon\Carbon|static $this */
                 return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, clone $this));
             }
 
-            return $carbonClass::now()->$callee();
+            return static::now()->$callee();
         };
     }
 
     public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
-        $carbonClass = static::getCarbonClass();
-
-        return function () use ($carbonClass, $method, $fallbackMethod) {
+        return function () use ($method, $fallbackMethod) {
             if (isset($this)) {
                 $date = $this;
                 do {
@@ -248,7 +242,7 @@ class MixinBase extends BusinessDay
                 return $date;
             }
 
-            return $carbonClass::now()->$fallbackMethod();
+            return static::now()->$fallbackMethod();
         };
     }
 }
