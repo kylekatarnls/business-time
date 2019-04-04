@@ -119,7 +119,7 @@ class BusinessTimeTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Opening hours has not be set.
+     * @expectedExceptionMessage Opening hours have not be set.
      */
     public function testUndefinedOpeningHours()
     {
