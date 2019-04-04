@@ -18,25 +18,40 @@ class MixinBase extends BusinessDay
     const REGION_OPTION_KEY = 'region';
     const ADDITIONAL_HOLIDAYS_OPTION_KEY = 'with';
 
+    const LOCAL_MODE = 'local';
+    const GLOBAL_MODE = 'global';
+
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
     /**
-     * @var OpeningHours|null
+     * @var \Spatie\OpeningHours\OpeningHours|null
      */
-    public $openingHours;
+    protected $openingHours;
 
     /**
-     * @var SplObjectStorage
+     * @var \SplObjectStorage<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface, \Spatie\OpeningHours\OpeningHours>
      */
-    public $localOpeningHours;
+    protected $localOpeningHours;
 
     public function __construct()
     {
         $this->localOpeningHours = new SplObjectStorage();
     }
 
+    /**
+     * Returns day English name in lower case.
+     *
+     * @return \Closure<string>
+     */
     public function normalizeDay()
     {
+        /**
+         * Returns day English name in lower case.
+         *
+         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as string with any case.
+         *
+         * @return string
+         */
         return function ($day) {
             if (is_int($day)) {
                 $day %= 7;
@@ -51,8 +66,24 @@ class MixinBase extends BusinessDay
         };
     }
 
+    /**
+     * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
+     * a new one from array definition given).
+     *
+     * @return \Closure<\Spatie\OpeningHours\OpeningHours>
+     */
     public function convertOpeningHours()
     {
+        /**
+         * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
+         * a new one from array definition given).
+         *
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         *
+         * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
+         *
+         * @return \Spatie\OpeningHours\OpeningHours
+         */
         return function ($defaultOpeningHours) {
             if ($defaultOpeningHours instanceof OpeningHours) {
                 return $defaultOpeningHours;
@@ -137,7 +168,7 @@ class MixinBase extends BusinessDay
 
         $isArray = is_array($carbonClass);
         $carbonClasses = (array) $carbonClass;
-        $mixins = array();
+        $mixins = [];
 
         foreach ($carbonClasses as $carbonClass) {
             /* @var static $mixin */
@@ -160,81 +191,208 @@ class MixinBase extends BusinessDay
         return $isArray ? $mixins : $mixin;
     }
 
-    public function setOpeningHours()
+    /**
+     * Set the opening hours for the class/instance.
+     *
+     * @param null $mode
+     * @param null $openingHours
+     * @param null $context
+     *
+     * @return \Closure<$this|null>|null
+     */
+    public function setOpeningHours($mode = null, $openingHours = null, $context = null)
     {
         $mixin = $this;
 
-        return function ($openingHours) use ($mixin, &$staticStorage) {
-            if (!isset($this)) {
-                $mixin->openingHours = static::convertOpeningHours($openingHours);
+        switch ($mode) {
+            case static::GLOBAL_MODE:
+                $this->openingHours = $openingHours;
 
                 return null;
-            }
 
-            $mixin->localOpeningHours[$this] = static::convertOpeningHours($openingHours);
+            case static::LOCAL_MODE:
+                $mixin->localOpeningHours[$context] = $openingHours;
 
-            return $this;
-        };
+                return null;
+
+            default:
+
+                /**
+                 * Set the opening hours for the class/instance.
+                 *
+                 * @param \Spatie\OpeningHours\OpeningHours|array $openingHours
+                 *
+                 * @return $this|null
+                 */
+                return function ($openingHours) use ($mixin, &$staticStorage) {
+                    $openingHours = static::convertOpeningHours($openingHours);
+
+                    if (isset($this)) {
+                        $mixin->setOpeningHours($mixin::LOCAL_MODE, $openingHours, $this);
+
+                        return $this;
+                    }
+
+                    $mixin->setOpeningHours($mixin::GLOBAL_MODE, $openingHours);
+
+                    return null;
+                };
+        }
     }
 
-    public function resetOpeningHours()
+    /**
+     * Reset the opening hours for the class/instance.
+     *
+     * @return \Closure<$this|null>|null
+     */
+    public function resetOpeningHours($mode = null, $context = null)
     {
         $mixin = $this;
 
-        return function () use ($mixin) {
-            if (!isset($this)) {
+        switch ($mode) {
+            case static::GLOBAL_MODE:
                 $mixin->openingHours = null;
 
                 return null;
-            }
 
-            unset($mixin->localOpeningHours[$this]);
+            case static::LOCAL_MODE:
+                unset($mixin->localOpeningHours[$context]);
 
-            return $this;
-        };
+                return null;
+
+            default:
+
+                /**
+                 * Reset the opening hours for the class/instance.
+                 *
+                 * @return $this|null
+                 */
+                return function () use ($mixin) {
+                    if (isset($this)) {
+                        $mixin->resetOpeningHours($mixin::LOCAL_MODE, $this);
+
+                        return $this;
+                    }
+
+                    $mixin->resetOpeningHours($mixin::GLOBAL_MODE);
+
+                    return null;
+                };
+        }
     }
 
-    public function getOpeningHours()
+    /**
+     * Get the opening hours of the class/instance.
+     *
+     * @return \Closure<\Spatie\OpeningHours\OpeningHours>|\Spatie\OpeningHours\OpeningHours
+     */
+    public function getOpeningHours($mode = null, $context = null)
     {
         $mixin = $this;
 
-        return function () use ($mixin) {
-            if (isset($this, $mixin->localOpeningHours[$this])) {
-                return $mixin->localOpeningHours[$this];
-            }
+        switch ($mode) {
+            case static::GLOBAL_MODE:
+                return $this->openingHours;
 
-            if (isset($mixin->openingHours)) {
-                return $mixin->openingHours;
-            }
+            case static::LOCAL_MODE:
+                return $this->localOpeningHours[$context] ?? null;
 
-            throw new InvalidArgumentException('Opening hours has not be set.');
-        };
+            default:
+
+                /**
+                 * Get the opening hours of the class/instance.
+                 *
+                 * @throws \InvalidArgumentException if Opening hours have not be set
+                 *
+                 * @return \Spatie\OpeningHours\OpeningHours
+                 */
+                return function () use ($mixin) {
+                    if (isset($this) && ($openingHours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this))) {
+                        return $openingHours;
+                    }
+
+                    if ($openingHours = $mixin->getOpeningHours($mixin::GLOBAL_MODE)) {
+                        return $openingHours;
+                    }
+
+                    throw new InvalidArgumentException('Opening hours have not be set.');
+                };
+        }
     }
 
+    /**
+     * @internal
+     *
+     * Call a method on the OpeningHours of the current instance.
+     *
+     * @return \Closure<mixed>
+     */
     public function safeCallOnOpeningHours()
     {
+        /**
+         * Call a method on the OpeningHours of the current instance.
+         *
+         * @return mixed
+         */
         return function ($method, ...$arguments) {
             return $this->getOpeningHours()->$method(...$arguments);
         };
     }
 
+    /**
+     * @internal
+     *
+     * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
+     * return a date, then convert it into a Carbon/sub-class instance.
+     *
+     * @param string $callee
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
     public function getCalleeAsMethod($callee = null)
     {
-        return function () use ($callee) {
+        /**
+         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
+         * return a date, then convert it into a Carbon/sub-class instance.
+         *
+         * @param string $method
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        return function ($method = null) use ($callee) {
+            $method = is_string($method) ? $method : $callee;
+
             if (isset($this)) {
                 /* @var \Carbon\Carbon|static $this */
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($callee, clone $this));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $this));
             }
 
-            return static::now()->$callee();
+            return static::now()->$method();
         };
     }
 
+    /**
+     * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+     *
+     * @param string $method
+     * @param string $fallbackMethod
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
     public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
+        /**
+         * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+         *
+         * @param string $method
+         * @param string $fallbackMethod
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
         return function () use ($method, $fallbackMethod) {
             if (isset($this)) {
                 $date = $this;
+
                 do {
                     $date = $date->$method();
                 } while ($date->isHoliday());
