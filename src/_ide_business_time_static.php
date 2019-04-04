@@ -135,7 +135,7 @@ namespace Carbon
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -149,7 +149,7 @@ namespace Carbon
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -161,7 +161,7 @@ namespace Carbon
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -173,7 +173,7 @@ namespace Carbon
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -185,7 +185,7 @@ namespace Carbon
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -197,7 +197,7 @@ namespace Carbon
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -205,13 +205,14 @@ namespace Carbon
          *
          * Returns day English name in lower case.
          *
-         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as string with any case.
+         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
+         *                        string with any case.
          *
          * @return string
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:55
+            // Content, see src/BusinessTime/MixinBase.php:59
         }
 
         /**
@@ -220,7 +221,8 @@ namespace Carbon
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -228,7 +230,7 @@ namespace Carbon
          */
         public static function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:87
+            // Content, see src/BusinessTime/MixinBase.php:92
         }
 
         /**
@@ -237,7 +239,8 @@ namespace Carbon
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -245,7 +248,7 @@ namespace Carbon
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:161
+            // Content, see src/BusinessTime/MixinBase.php:166
         }
 
         /**
@@ -259,7 +262,7 @@ namespace Carbon
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:227
+            // Content, see src/BusinessTime/MixinBase.php:231
         }
 
         /**
@@ -271,7 +274,7 @@ namespace Carbon
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:270
+            // Content, see src/BusinessTime/MixinBase.php:273
         }
 
         /**
@@ -285,7 +288,7 @@ namespace Carbon
          */
         public static function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:309
+            // Content, see src/BusinessTime/MixinBase.php:311
         }
 
         /**
@@ -297,7 +300,7 @@ namespace Carbon
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:337
+            // Content, see src/BusinessTime/MixinBase.php:339
         }
 
         /**
@@ -312,7 +315,7 @@ namespace Carbon
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -327,7 +330,7 @@ namespace Carbon
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
     }
 }
@@ -467,7 +470,7 @@ namespace Carbon
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -481,7 +484,7 @@ namespace Carbon
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -493,7 +496,7 @@ namespace Carbon
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -505,7 +508,7 @@ namespace Carbon
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -517,7 +520,7 @@ namespace Carbon
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -529,7 +532,7 @@ namespace Carbon
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -537,13 +540,14 @@ namespace Carbon
          *
          * Returns day English name in lower case.
          *
-         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as string with any case.
+         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
+         *                        string with any case.
          *
          * @return string
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:55
+            // Content, see src/BusinessTime/MixinBase.php:59
         }
 
         /**
@@ -552,7 +556,8 @@ namespace Carbon
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -560,7 +565,7 @@ namespace Carbon
          */
         public static function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:87
+            // Content, see src/BusinessTime/MixinBase.php:92
         }
 
         /**
@@ -569,7 +574,8 @@ namespace Carbon
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -577,7 +583,7 @@ namespace Carbon
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:161
+            // Content, see src/BusinessTime/MixinBase.php:166
         }
 
         /**
@@ -591,7 +597,7 @@ namespace Carbon
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:227
+            // Content, see src/BusinessTime/MixinBase.php:231
         }
 
         /**
@@ -603,7 +609,7 @@ namespace Carbon
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:270
+            // Content, see src/BusinessTime/MixinBase.php:273
         }
 
         /**
@@ -617,7 +623,7 @@ namespace Carbon
          */
         public static function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:309
+            // Content, see src/BusinessTime/MixinBase.php:311
         }
 
         /**
@@ -629,7 +635,7 @@ namespace Carbon
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:337
+            // Content, see src/BusinessTime/MixinBase.php:339
         }
 
         /**
@@ -644,7 +650,7 @@ namespace Carbon
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -659,7 +665,7 @@ namespace Carbon
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
     }
 }
@@ -799,7 +805,7 @@ namespace Illuminate\Support
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -813,7 +819,7 @@ namespace Illuminate\Support
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -825,7 +831,7 @@ namespace Illuminate\Support
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -837,7 +843,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -849,7 +855,7 @@ namespace Illuminate\Support
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -861,7 +867,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -869,13 +875,14 @@ namespace Illuminate\Support
          *
          * Returns day English name in lower case.
          *
-         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as string with any case.
+         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
+         *                        string with any case.
          *
          * @return string
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:55
+            // Content, see src/BusinessTime/MixinBase.php:59
         }
 
         /**
@@ -884,7 +891,8 @@ namespace Illuminate\Support
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -892,7 +900,7 @@ namespace Illuminate\Support
          */
         public static function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:87
+            // Content, see src/BusinessTime/MixinBase.php:92
         }
 
         /**
@@ -901,7 +909,8 @@ namespace Illuminate\Support
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -909,7 +918,7 @@ namespace Illuminate\Support
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:161
+            // Content, see src/BusinessTime/MixinBase.php:166
         }
 
         /**
@@ -923,7 +932,7 @@ namespace Illuminate\Support
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:227
+            // Content, see src/BusinessTime/MixinBase.php:231
         }
 
         /**
@@ -935,7 +944,7 @@ namespace Illuminate\Support
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:270
+            // Content, see src/BusinessTime/MixinBase.php:273
         }
 
         /**
@@ -949,7 +958,7 @@ namespace Illuminate\Support
          */
         public static function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:309
+            // Content, see src/BusinessTime/MixinBase.php:311
         }
 
         /**
@@ -961,7 +970,7 @@ namespace Illuminate\Support
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:337
+            // Content, see src/BusinessTime/MixinBase.php:339
         }
 
         /**
@@ -976,7 +985,7 @@ namespace Illuminate\Support
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:362
+            // Content, see src/BusinessTime/MixinBase.php:364
         }
 
         /**
@@ -991,7 +1000,7 @@ namespace Illuminate\Support
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:392
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
     }
 }
