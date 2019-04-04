@@ -30,9 +30,9 @@ class MixinBase extends BusinessDay
 
     /**
      * @var \SplObjectStorage<
-     *     \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
-     *     \Spatie\OpeningHours\OpeningHours
-     * >
+     *                         \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
+     *                         \Spatie\OpeningHours\OpeningHours
+     *                         >
      */
     protected $localOpeningHours;
 
