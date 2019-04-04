@@ -29,7 +29,10 @@ class MixinBase extends BusinessDay
     protected $openingHours;
 
     /**
-     * @var \SplObjectStorage<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface, \Spatie\OpeningHours\OpeningHours>
+     * @var \SplObjectStorage<
+     *     \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
+     *     \Spatie\OpeningHours\OpeningHours
+     * >
      */
     protected $localOpeningHours;
 
@@ -48,7 +51,8 @@ class MixinBase extends BusinessDay
         /**
          * Returns day English name in lower case.
          *
-         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as string with any case.
+         * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
+         *                        string with any case.
          *
          * @return string
          */
@@ -78,7 +82,8 @@ class MixinBase extends BusinessDay
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
          *
-         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array definition
+         * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+         *                                                                     definition
          *
          * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
@@ -216,7 +221,6 @@ class MixinBase extends BusinessDay
                 return null;
 
             default:
-
                 /**
                  * Set the opening hours for the class/instance.
                  *
@@ -261,7 +265,6 @@ class MixinBase extends BusinessDay
                 return null;
 
             default:
-
                 /**
                  * Reset the opening hours for the class/instance.
                  *
@@ -298,7 +301,6 @@ class MixinBase extends BusinessDay
                 return $this->localOpeningHours[$context] ?? null;
 
             default:
-
                 /**
                  * Get the opening hours of the class/instance.
                  *
@@ -307,12 +309,12 @@ class MixinBase extends BusinessDay
                  * @return \Spatie\OpeningHours\OpeningHours
                  */
                 return function () use ($mixin) {
-                    if (isset($this) && ($openingHours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this))) {
-                        return $openingHours;
+                    if (isset($this) && ($hours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this))) {
+                        return $hours;
                     }
 
-                    if ($openingHours = $mixin->getOpeningHours($mixin::GLOBAL_MODE)) {
-                        return $openingHours;
+                    if ($hours = $mixin->getOpeningHours($mixin::GLOBAL_MODE)) {
+                        return $hours;
                     }
 
                     throw new InvalidArgumentException('Opening hours have not be set.');
