@@ -80,6 +80,19 @@ class BusinessTimeTest extends TestCase
         ]);
         $this->assertTrue($carbon::isOpenOn('saturday'));
         $this->assertTrue($carbon::isClosedOn('sunday'));
+
+        $carbon::setOpeningHours([
+            'monday' => ['08:00-10:40'],
+            'holidays' => [
+                'region' => 'fr',
+                'with' => [
+                    'foo' => '09-07',
+                ],
+            ],
+        ]);
+        $this->assertTrue($carbon::isOpenOn('monday'));
+        $this->assertSame('fr-national', $carbon::getHolidaysRegion());
+        $this->assertSame('foo', $carbon::parse('2010-09-07')->getHolidayId());
     }
 
     public function testGetOpeningHours()

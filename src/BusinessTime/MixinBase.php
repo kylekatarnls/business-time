@@ -110,56 +110,6 @@ class MixinBase extends BusinessDay
         };
     }
 
-    private static function parseHolidaysArray($holidays = null)
-    {
-        $region = null;
-
-        if (is_array($holidays) && isset($holidays[static::REGION_OPTION_KEY])) {
-            $region = $holidays[static::REGION_OPTION_KEY];
-            unset($holidays[static::REGION_OPTION_KEY]);
-
-            if (isset($holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY])) {
-                $holidays = $holidays[static::ADDITIONAL_HOLIDAYS_OPTION_KEY];
-            }
-        }
-
-        return [$region, $holidays];
-    }
-
-    private static function extractHolidaysFromOptions($defaultOpeningHours = null)
-    {
-        $region = null;
-        $holidays = null;
-
-        if (is_string($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
-            $region = $defaultOpeningHours[static::HOLIDAYS_OPTION_KEY];
-        } elseif (is_iterable($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
-            [$region, $holidays] = static::parseHolidaysArray($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY]);
-        }
-
-        unset($defaultOpeningHours['holidays']);
-
-        return [$region, $holidays, $defaultOpeningHours];
-    }
-
-    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
-    {
-        $region = null;
-        $holidays = null;
-
-        if (is_string($defaultOpeningHours)) {
-            [$region, $holidays, $defaultOpeningHours] = array_pad($arguments, 3, null);
-        } elseif (is_array($defaultOpeningHours) && isset($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
-            [$region, $holidays, $defaultOpeningHours] = static::extractHolidaysFromOptions($defaultOpeningHours);
-        }
-
-        if ($holidays && !$region) {
-            $region = 'custom-holidays';
-        }
-
-        return [$region, $holidays, $defaultOpeningHours];
-    }
-
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
         if ($carbonClass === null) {
@@ -169,7 +119,7 @@ class MixinBase extends BusinessDay
         }
 
         $arguments = array_slice(func_get_args(), 1);
-        [$region, $holidays, $defaultOpeningHours] = static::getOpeningHoursOptions($defaultOpeningHours, $arguments);
+        [$region, $holidays, $defaultOpeningHours] = self::getOpeningHoursOptions($defaultOpeningHours, $arguments);
 
         $isArray = is_array($carbonClass);
         $carbonClasses = (array) $carbonClass;
@@ -179,14 +129,7 @@ class MixinBase extends BusinessDay
             /* @var static $mixin */
             $mixin = parent::enable($carbonClass);
             $carbonClass::mixin($mixin);
-
-            if ($region) {
-                $carbonClass::setHolidaysRegion($region);
-
-                if ($holidays) {
-                    $carbonClass::addHolidays($region, $holidays);
-                }
-            }
+            self::setRegionAndHolidays($carbonClass, $region, $holidays);
 
             if ($defaultOpeningHours) {
                 $mixin->openingHours = $carbonClass::convertOpeningHours($defaultOpeningHours);
@@ -199,28 +142,31 @@ class MixinBase extends BusinessDay
     /**
      * Set the opening hours for the class/instance.
      *
-     * @param null $mode
-     * @param null $openingHours
-     * @param null $context
+     * @param string|null                            $mode
+     * @param string|null                            $carbonClass
+     * @param \Spatie\OpeningHours\OpeningHours|null $openingHours
+     * @param \DateTimeInterface|null                $context
      *
      * @return \Closure<$this|null>|null
      */
-    public function setOpeningHours($mode = null, $openingHours = null, $context = null)
+    public function setOpeningHours($mode = null, $carbonClass = null, $openingHours = null, $context = null)
     {
-        $mixin = $this;
-
         switch ($mode) {
             case static::GLOBAL_MODE:
                 $this->openingHours = $openingHours;
+                self::setHolidaysFromOpeningHours($carbonClass, $openingHours);
 
                 return null;
 
             case static::LOCAL_MODE:
-                $mixin->localOpeningHours[$context] = $openingHours;
+                $this->localOpeningHours[$context] = $openingHours;
+                self::setHolidaysFromOpeningHours($carbonClass, $openingHours);
 
                 return null;
 
             default:
+                $mixin = $this;
+
                 /**
                  * Set the opening hours for the class/instance.
                  *
@@ -229,15 +175,27 @@ class MixinBase extends BusinessDay
                  * @return $this|null
                  */
                 return function ($openingHours) use ($mixin, &$staticStorage) {
+                    [$region, $holidays, $openingHours] = (new DefinitionParser($mixin, $openingHours))->getSetterParameters();
+
+                    /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
                     $openingHours = static::convertOpeningHours($openingHours);
 
+                    if ($region) {
+                        $openingHours->setData([
+                            $mixin::HOLIDAYS_OPTION_KEY => [
+                                $mixin::REGION_OPTION_KEY => $region,
+                                $mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
+                            ],
+                        ]);
+                    }
+
                     if (isset($this)) {
-                        $mixin->setOpeningHours($mixin::LOCAL_MODE, $openingHours, $this);
+                        $mixin->setOpeningHours($mixin::LOCAL_MODE, static::class, $openingHours, $this);
 
                         return $this;
                     }
 
-                    $mixin->setOpeningHours($mixin::GLOBAL_MODE, $openingHours);
+                    $mixin->setOpeningHours($mixin::GLOBAL_MODE, static::class, $openingHours);
 
                     return null;
                 };
@@ -251,20 +209,20 @@ class MixinBase extends BusinessDay
      */
     public function resetOpeningHours($mode = null, $context = null)
     {
-        $mixin = $this;
-
         switch ($mode) {
             case static::GLOBAL_MODE:
-                $mixin->openingHours = null;
+                $this->openingHours = null;
 
                 return null;
 
             case static::LOCAL_MODE:
-                unset($mixin->localOpeningHours[$context]);
+                unset($this->localOpeningHours[$context]);
 
                 return null;
 
             default:
+                $mixin = $this;
+
                 /**
                  * Reset the opening hours for the class/instance.
                  *
@@ -291,8 +249,6 @@ class MixinBase extends BusinessDay
      */
     public function getOpeningHours($mode = null, $context = null)
     {
-        $mixin = $this;
-
         switch ($mode) {
             case static::GLOBAL_MODE:
                 return $this->openingHours;
@@ -301,6 +257,8 @@ class MixinBase extends BusinessDay
                 return $this->localOpeningHours[$context] ?? null;
 
             default:
+                $mixin = $this;
+
                 /**
                  * Get the opening hours of the class/instance.
                  *
@@ -404,5 +362,44 @@ class MixinBase extends BusinessDay
 
             return static::now()->$fallbackMethod();
         };
+    }
+
+    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
+    {
+        $region = null;
+        $holidays = null;
+        $parser = new DefinitionParser(static::class, $defaultOpeningHours);
+
+        if (is_string($defaultOpeningHours)) {
+            [$region, $holidays, $defaultOpeningHours] = array_pad($arguments, 3, null);
+        } elseif (is_array($defaultOpeningHours) && isset($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
+            [$region, $holidays, $defaultOpeningHours] = $parser->extractHolidaysFromOptions($defaultOpeningHours);
+        }
+
+        $region = $parser->getRegionOrFallback($region, $holidays);
+
+        return [$region, $holidays, $defaultOpeningHours];
+    }
+
+    private static function setRegionAndHolidays($carbonClass, $region, $holidays)
+    {
+        /* @var \Carbon\Carbon $carbonClass */
+        if ($region) {
+            $carbonClass::setHolidaysRegion($region);
+
+            if ($holidays) {
+                $carbonClass::addHolidays($region, $holidays);
+            }
+        }
+    }
+
+    private static function setHolidaysFromOpeningHours($carbonClass, OpeningHours $openingHours)
+    {
+        $data = ($openingHours->getData() ?: [])[static::HOLIDAYS_OPTION_KEY] ?? [];
+        self::setRegionAndHolidays(
+            $carbonClass,
+            $data[static::REGION_OPTION_KEY] ?? null,
+            $data[static::ADDITIONAL_HOLIDAYS_OPTION_KEY] ?? null
+        );
     }
 }
