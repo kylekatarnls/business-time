@@ -28,5 +28,7 @@ class ServiceProviderTest extends TestCase
 
         $this->assertFalse(Carbon::parse('2019-04-08')->isHoliday());
         $this->assertSame('08:00', Carbon::parse('2019-04-08')->nextOpen()->format('H:i'));
+
+        $this->assertNull($service->register());
     }
 }
