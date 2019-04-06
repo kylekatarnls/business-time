@@ -175,19 +175,8 @@ class MixinBase extends BusinessDay
                  * @return $this|null
                  */
                 return function ($openingHours) use ($mixin, &$staticStorage) {
-                    [$region, $holidays, $openingHours] = (new DefinitionParser($mixin, $openingHours))->getSetterParameters();
-
-                    /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
-                    $openingHours = static::convertOpeningHours($openingHours);
-
-                    if ($region) {
-                        $openingHours->setData([
-                            $mixin::HOLIDAYS_OPTION_KEY => [
-                                $mixin::REGION_OPTION_KEY              => $region,
-                                $mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
-                            ],
-                        ]);
-                    }
+                    $parser = new DefinitionParser($mixin, $openingHours);
+                    $openingHours = $parser->getEmbeddedOpeningHours(static::class);
 
                     if (isset($this)) {
                         $mixin->setOpeningHours($mixin::LOCAL_MODE, static::class, $openingHours, $this);

@@ -31,5 +31,12 @@
   "minimum-stability": "dev",
   "scripts": {
     "types": "php types.php"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "BusinessTime\\Laravel\\ServiceProvider"
+      ]
+    }
   }
 }
