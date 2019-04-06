@@ -183,7 +183,7 @@ class MixinBase extends BusinessDay
                     if ($region) {
                         $openingHours->setData([
                             $mixin::HOLIDAYS_OPTION_KEY => [
-                                $mixin::REGION_OPTION_KEY => $region,
+                                $mixin::REGION_OPTION_KEY              => $region,
                                 $mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
                             ],
                         ]);

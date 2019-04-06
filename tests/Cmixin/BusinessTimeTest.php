@@ -82,10 +82,10 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::isClosedOn('sunday'));
 
         $carbon::setOpeningHours([
-            'monday' => ['08:00-10:40'],
+            'monday'   => ['08:00-10:40'],
             'holidays' => [
                 'region' => 'fr',
-                'with' => [
+                'with'   => [
                     'foo' => '09-07',
                 ],
             ],
