@@ -84,9 +84,9 @@ class BusinessTimeTest extends TestCase
         $carbon::setOpeningHours([
             'monday'   => ['08:00-10:40'],
             'holidays' => [
-                'region' => 'fr',
+                'region' => 'fr-national',
                 'with'   => [
-                    'foo' => '09-07',
+                    'foo' => '07/09',
                 ],
             ],
         ]);
