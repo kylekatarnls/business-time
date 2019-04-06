@@ -91,7 +91,7 @@ class BusinessTimeTest extends TestCase
             ],
         ]);
         $this->assertTrue($carbon::isOpenOn('monday'));
-        $this->assertSame('fr-national', $carbon::getHolidaysRegion());
+        $this->assertSame('national-day', $carbon::parse('2010-07-14')->getHolidayId());
         $this->assertSame('foo', $carbon::parse('2010-09-07')->getHolidayId());
     }
 
