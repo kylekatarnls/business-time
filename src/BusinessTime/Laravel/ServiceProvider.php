@@ -23,14 +23,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         if (is_array($config)) {
-            BusinessTime::enable(
-                array_filter([
-                    Carbon::class,
-                    CarbonImmutable::class,
-                    Date::class,
-                ], 'class_exists'),
-                $config
-            );
+            $classes = array_filter([
+                Carbon::class,
+                CarbonImmutable::class,
+                Illuminate\Support\Carbon::class,
+            ], 'class_exists');
+
+            // @codeCoverageIgnoreStart
+            if (class_exists(Date::class) &&
+                (($now = Date::now()) instanceof \DateTimeInterface) &&
+                !in_array($class = get_class($now), $classes)) {
+                $classes[] = $class;
+            }
+            // @codeCoverageIgnoreEnd
+
+            BusinessTime::enable($classes, $config);
         }
     }
 
