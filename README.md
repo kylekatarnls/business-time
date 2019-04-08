@@ -276,6 +276,27 @@ echo Carbon::nextBusinessClose();
 echo $carbonDate->nextBusinessClose();
 ``` 
 
+### Laravel
+
+To enable business-time globally in Laravel, set default openning hours and holidays settings in the config file
+**config/carbon.php** (create this file if it does not exist yet):
+
+```php
+<?php return [
+  'opening-hours' => [
+    'monday' => ['08:00-12:00', '14:00-19:00'],
+    'wednesday' => ['09:00-19:00'],
+  ],
+  'holidays' => [
+    'region' => 'us',
+    'with' => [
+      'boss-birthday' => '09-26',
+      'last-monday'   => '= last Monday of October',
+    ],
+  ],
+];
+```
+
 ### Note about timezones
 
 When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
