@@ -60,13 +60,13 @@ class DefinitionParser
     {
         $region = null;
         $holidays = null;
-        $openingHours = $this->openingHours;
+        $hours = $this->openingHours;
 
-        if (is_array($openingHours) && isset($openingHours[$this->mixin::HOLIDAYS_OPTION_KEY])) {
-            [$region, $holidays, $openingHours] = self::extractHolidaysFromOptions($openingHours);
+        if (is_array($hours) && isset($hours[$this->mixin::HOLIDAYS_OPTION_KEY])) {
+            [$region, $holidays, $hours] = self::extractHolidaysFromOptions($hours);
         }
 
-        return [$this->getRegionOrFallback($region, $holidays), $holidays, $openingHours];
+        return [$this->getRegionOrFallback($region, $holidays), $holidays, $hours];
     }
 
     public function getRegionOrFallback($region, $holidays)
@@ -76,5 +76,28 @@ class DefinitionParser
         }
 
         return $region;
+    }
+
+    /**
+     * @param string $carbonClass
+     *
+     * @return \Spatie\OpeningHours\OpeningHours
+     */
+    public function getEmbeddedOpeningHours($carbonClass)
+    {
+        [$region, $holidays, $openingHours] = $this->getSetterParameters();
+        /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
+        $openingHours = $carbonClass::convertOpeningHours($openingHours);
+
+        if ($region) {
+            $openingHours->setData([
+                $this->mixin::HOLIDAYS_OPTION_KEY => [
+                    $this->mixin::REGION_OPTION_KEY              => $region,
+                    $this->mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
+                ],
+            ]);
+        }
+
+        return $openingHours;
     }
 }
