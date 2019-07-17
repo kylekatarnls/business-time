@@ -7,13 +7,89 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessTime::getCurrentDayOpeningHours
          *
-         * Get OpeningHours instance of the current instance or class.
+         * Get OpeningHoursForDay instance of the current instance or class.
          *
-         * @return \Spatie\OpeningHours\OpeningHours
+         * @return \Spatie\OpeningHours\OpeningHoursForDay
          */
         public function getCurrentDayOpeningHours()
         {
             // Content, see src/Cmixin/BusinessTime.php:21
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRanges
+         *
+         * Get open time ranges as array of TimeRange instances that matches the current date and time.
+         *
+         * @return \Spatie\OpeningHours\TimeRange[]
+         */
+        public function getCurrentOpenTimeRanges()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:40
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRange
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @return \Spatie\OpeningHours\TimeRange|bool
+         */
+        public function getCurrentOpenTimeRange()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:59
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed or holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -25,7 +101,7 @@ namespace Carbon
          */
         public function isOpenOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -37,7 +113,7 @@ namespace Carbon
          */
         public function isClosedOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -51,7 +127,7 @@ namespace Carbon
          */
         public function isOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -65,7 +141,7 @@ namespace Carbon
          */
         public function isClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -78,7 +154,7 @@ namespace Carbon
          */
         public function isBusinessOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -93,7 +169,7 @@ namespace Carbon
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -106,7 +182,7 @@ namespace Carbon
          */
         public function isBusinessClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -121,7 +197,7 @@ namespace Carbon
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -135,7 +211,7 @@ namespace Carbon
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -149,7 +225,7 @@ namespace Carbon
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -161,7 +237,7 @@ namespace Carbon
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -173,7 +249,7 @@ namespace Carbon
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -185,7 +261,7 @@ namespace Carbon
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -197,7 +273,7 @@ namespace Carbon
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -212,7 +288,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:59
+            // Content, see src/BusinessTime/MixinBase.php:61
         }
 
         /**
@@ -230,7 +306,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:92
+            // Content, see src/BusinessTime/MixinBase.php:94
         }
 
         /**
@@ -248,7 +324,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:116
+            // Content, see src/BusinessTime/MixinBase.php:118
         }
 
         /**
@@ -262,7 +338,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:177
+            // Content, see src/BusinessTime/MixinBase.php:179
         }
 
         /**
@@ -274,7 +350,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:220
+            // Content, see src/BusinessTime/MixinBase.php:222
         }
 
         /**
@@ -288,7 +364,7 @@ namespace Carbon
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:258
+            // Content, see src/BusinessTime/MixinBase.php:260
         }
 
         /**
@@ -300,7 +376,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:286
+            // Content, see src/BusinessTime/MixinBase.php:288
         }
 
         /**
@@ -315,7 +391,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -330,7 +406,7 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
     }
 }
@@ -342,13 +418,89 @@ namespace Carbon
         /**
          * @see \Cmixin\BusinessTime::getCurrentDayOpeningHours
          *
-         * Get OpeningHours instance of the current instance or class.
+         * Get OpeningHoursForDay instance of the current instance or class.
          *
-         * @return \Spatie\OpeningHours\OpeningHours
+         * @return \Spatie\OpeningHours\OpeningHoursForDay
          */
         public function getCurrentDayOpeningHours()
         {
             // Content, see src/Cmixin/BusinessTime.php:21
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRanges
+         *
+         * Get open time ranges as array of TimeRange instances that matches the current date and time.
+         *
+         * @return \Spatie\OpeningHours\TimeRange[]
+         */
+        public function getCurrentOpenTimeRanges()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:40
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRange
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @return \Spatie\OpeningHours\TimeRange|bool
+         */
+        public function getCurrentOpenTimeRange()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:59
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed or holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -360,7 +512,7 @@ namespace Carbon
          */
         public function isOpenOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -372,7 +524,7 @@ namespace Carbon
          */
         public function isClosedOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -386,7 +538,7 @@ namespace Carbon
          */
         public function isOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -400,7 +552,7 @@ namespace Carbon
          */
         public function isClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -413,7 +565,7 @@ namespace Carbon
          */
         public function isBusinessOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -428,7 +580,7 @@ namespace Carbon
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -441,7 +593,7 @@ namespace Carbon
          */
         public function isBusinessClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -456,7 +608,7 @@ namespace Carbon
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -470,7 +622,7 @@ namespace Carbon
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -484,7 +636,7 @@ namespace Carbon
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -496,7 +648,7 @@ namespace Carbon
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -508,7 +660,7 @@ namespace Carbon
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -520,7 +672,7 @@ namespace Carbon
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -532,7 +684,7 @@ namespace Carbon
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -547,7 +699,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:59
+            // Content, see src/BusinessTime/MixinBase.php:61
         }
 
         /**
@@ -565,7 +717,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:92
+            // Content, see src/BusinessTime/MixinBase.php:94
         }
 
         /**
@@ -583,7 +735,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:116
+            // Content, see src/BusinessTime/MixinBase.php:118
         }
 
         /**
@@ -597,7 +749,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:177
+            // Content, see src/BusinessTime/MixinBase.php:179
         }
 
         /**
@@ -609,7 +761,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:220
+            // Content, see src/BusinessTime/MixinBase.php:222
         }
 
         /**
@@ -623,7 +775,7 @@ namespace Carbon
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:258
+            // Content, see src/BusinessTime/MixinBase.php:260
         }
 
         /**
@@ -635,7 +787,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:286
+            // Content, see src/BusinessTime/MixinBase.php:288
         }
 
         /**
@@ -650,7 +802,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -665,7 +817,7 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
     }
 }
@@ -677,13 +829,89 @@ namespace Illuminate\Support
         /**
          * @see \Cmixin\BusinessTime::getCurrentDayOpeningHours
          *
-         * Get OpeningHours instance of the current instance or class.
+         * Get OpeningHoursForDay instance of the current instance or class.
          *
-         * @return \Spatie\OpeningHours\OpeningHours
+         * @return \Spatie\OpeningHours\OpeningHoursForDay
          */
         public function getCurrentDayOpeningHours()
         {
             // Content, see src/Cmixin/BusinessTime.php:21
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRanges
+         *
+         * Get open time ranges as array of TimeRange instances that matches the current date and time.
+         *
+         * @return \Spatie\OpeningHours\TimeRange[]
+         */
+        public function getCurrentOpenTimeRanges()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:40
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRange
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @return \Spatie\OpeningHours\TimeRange|bool
+         */
+        public function getCurrentOpenTimeRange()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:59
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed or holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -695,7 +923,7 @@ namespace Illuminate\Support
          */
         public function isOpenOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -707,7 +935,7 @@ namespace Illuminate\Support
          */
         public function isClosedOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -721,7 +949,7 @@ namespace Illuminate\Support
          */
         public function isOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -735,7 +963,7 @@ namespace Illuminate\Support
          */
         public function isClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -748,7 +976,7 @@ namespace Illuminate\Support
          */
         public function isBusinessOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -763,7 +991,7 @@ namespace Illuminate\Support
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -776,7 +1004,7 @@ namespace Illuminate\Support
          */
         public function isBusinessClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -791,7 +1019,7 @@ namespace Illuminate\Support
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -805,7 +1033,7 @@ namespace Illuminate\Support
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -819,7 +1047,7 @@ namespace Illuminate\Support
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -831,7 +1059,7 @@ namespace Illuminate\Support
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -843,7 +1071,7 @@ namespace Illuminate\Support
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -855,7 +1083,7 @@ namespace Illuminate\Support
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -867,7 +1095,7 @@ namespace Illuminate\Support
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -882,7 +1110,7 @@ namespace Illuminate\Support
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:59
+            // Content, see src/BusinessTime/MixinBase.php:61
         }
 
         /**
@@ -900,7 +1128,7 @@ namespace Illuminate\Support
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:92
+            // Content, see src/BusinessTime/MixinBase.php:94
         }
 
         /**
@@ -918,7 +1146,7 @@ namespace Illuminate\Support
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:116
+            // Content, see src/BusinessTime/MixinBase.php:118
         }
 
         /**
@@ -932,7 +1160,7 @@ namespace Illuminate\Support
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:177
+            // Content, see src/BusinessTime/MixinBase.php:179
         }
 
         /**
@@ -944,7 +1172,7 @@ namespace Illuminate\Support
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:220
+            // Content, see src/BusinessTime/MixinBase.php:222
         }
 
         /**
@@ -958,7 +1186,7 @@ namespace Illuminate\Support
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:258
+            // Content, see src/BusinessTime/MixinBase.php:260
         }
 
         /**
@@ -970,7 +1198,7 @@ namespace Illuminate\Support
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:286
+            // Content, see src/BusinessTime/MixinBase.php:288
         }
 
         /**
@@ -985,7 +1213,7 @@ namespace Illuminate\Support
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -1000,7 +1228,7 @@ namespace Illuminate\Support
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
     }
 }
@@ -1012,13 +1240,89 @@ namespace Illuminate\Support\Facades
         /**
          * @see \Cmixin\BusinessTime::getCurrentDayOpeningHours
          *
-         * Get OpeningHours instance of the current instance or class.
+         * Get OpeningHoursForDay instance of the current instance or class.
          *
-         * @return \Spatie\OpeningHours\OpeningHours
+         * @return \Spatie\OpeningHours\OpeningHoursForDay
          */
         public function getCurrentDayOpeningHours()
         {
             // Content, see src/Cmixin/BusinessTime.php:21
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRanges
+         *
+         * Get open time ranges as array of TimeRange instances that matches the current date and time.
+         *
+         * @return \Spatie\OpeningHours\TimeRange[]
+         */
+        public function getCurrentOpenTimeRanges()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:40
+        }
+
+        /**
+         * @see \Cmixin\BusinessTime::getCurrentOpenTimeRange
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @return \Spatie\OpeningHours\TimeRange|bool
+         */
+        public function getCurrentOpenTimeRange()
+        {
+            // Content, see src/Cmixin/BusinessTime.php:59
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
+         *
+         * Get current open time range start as Carbon instance or false if closed or holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessTimeRangeStart($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
+         *
+         * Get current open time range end as Carbon instance or false if closed.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
+         */
+        public function getCurrentBusinessOpenTimeRangeEnd($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -1030,7 +1334,7 @@ namespace Illuminate\Support\Facades
          */
         public function isOpenOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -1042,7 +1346,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosedOn($day)
         {
-            // Content, see src/Cmixin/BusinessTime.php:44
+            // Content, see src/Cmixin/BusinessTime.php:150
         }
 
         /**
@@ -1056,7 +1360,7 @@ namespace Illuminate\Support\Facades
          */
         public function isOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -1070,7 +1374,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:87
+            // Content, see src/Cmixin/BusinessTime.php:193
         }
 
         /**
@@ -1083,7 +1387,7 @@ namespace Illuminate\Support\Facades
          */
         public function isBusinessOpen()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -1098,7 +1402,7 @@ namespace Illuminate\Support\Facades
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:128
+            // Content, see src/Cmixin/BusinessTime.php:234
         }
 
         /**
@@ -1111,7 +1415,7 @@ namespace Illuminate\Support\Facades
          */
         public function isBusinessClosed()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -1126,7 +1430,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/Cmixin/BusinessTime.php:171
+            // Content, see src/Cmixin/BusinessTime.php:277
         }
 
         /**
@@ -1140,7 +1444,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -1154,7 +1458,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -1166,7 +1470,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -1178,7 +1482,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -1190,7 +1494,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -1202,7 +1506,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
 
         /**
@@ -1217,7 +1521,7 @@ namespace Illuminate\Support\Facades
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:59
+            // Content, see src/BusinessTime/MixinBase.php:61
         }
 
         /**
@@ -1235,7 +1539,7 @@ namespace Illuminate\Support\Facades
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:92
+            // Content, see src/BusinessTime/MixinBase.php:94
         }
 
         /**
@@ -1253,7 +1557,7 @@ namespace Illuminate\Support\Facades
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:116
+            // Content, see src/BusinessTime/MixinBase.php:118
         }
 
         /**
@@ -1267,7 +1571,7 @@ namespace Illuminate\Support\Facades
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:177
+            // Content, see src/BusinessTime/MixinBase.php:179
         }
 
         /**
@@ -1279,7 +1583,7 @@ namespace Illuminate\Support\Facades
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:220
+            // Content, see src/BusinessTime/MixinBase.php:222
         }
 
         /**
@@ -1293,7 +1597,7 @@ namespace Illuminate\Support\Facades
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:258
+            // Content, see src/BusinessTime/MixinBase.php:260
         }
 
         /**
@@ -1305,7 +1609,7 @@ namespace Illuminate\Support\Facades
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:286
+            // Content, see src/BusinessTime/MixinBase.php:288
         }
 
         /**
@@ -1320,7 +1624,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:311
+            // Content, see src/BusinessTime/MixinBase.php:314
         }
 
         /**
@@ -1335,7 +1639,7 @@ namespace Illuminate\Support\Facades
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:341
+            // Content, see src/BusinessTime/MixinBase.php:353
         }
     }
 }
