@@ -13,6 +13,8 @@ class MixinBase extends BusinessDay
     const NEXT_CLOSE_METHOD = 'nextClose';
     const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
     const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
+    const CURRENT_OPEN_RANGE_START_METHOD = 'currentOpenRangeStart';
+    const CURRENT_OPEN_RANGE_END_METHOD = 'currentOpenRangeEnd';
 
     const HOLIDAYS_OPTION_KEY = 'holidays';
     const REGION_OPTION_KEY = 'region';
@@ -294,11 +296,12 @@ class MixinBase extends BusinessDay
      * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
      * return a date, then convert it into a Carbon/sub-class instance.
      *
-     * @param string $callee
+     * @param string     $callee
+     * @param array|null $earlyReturn
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
      */
-    public function getCalleeAsMethod($callee = null)
+    public function getCalleeAsMethod($callee = null, $earlyReturn = null)
     {
         /**
          * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
@@ -308,15 +311,24 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($method = null) use ($callee) {
+        return function ($method = null) use ($callee, $earlyReturn) {
             $method = is_string($method) ? $method : $callee;
+            $date = isset($this) ? $this : static::now();
+
+            if ($earlyReturn) {
+                [$method, $value] = $earlyReturn;
+
+                if ($date->$method()) {
+                    return $value;
+                }
+            }
 
             if (isset($this)) {
                 /* @var \Carbon\Carbon|static $this */
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $this));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $date));
             }
 
-            return static::now()->$method();
+            return $date->$method();
         };
     }
 
