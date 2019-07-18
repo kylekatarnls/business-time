@@ -195,6 +195,24 @@ Carbon::nextClose()       // go to next close time from now
 $carbonDate->nextClose()  // go to next close time from $carbonDate
 ``` 
 
+### previousOpen
+
+Go to previous open-business time.
+
+```php
+Carbon::previousOpen()       // go to previous open time from now
+$carbonDate->previousOpen()  // go to previous open time from $carbonDate
+``` 
+
+### previousClose
+
+Go to previous closed-business time.
+
+```php
+Carbon::previousClose()       // go to previous close time from now
+$carbonDate->previousClose()  // go to previous close time from $carbonDate
+``` 
+
 ### getCurrentDayOpeningHours
 
 Returns the opening hours current day settings (first matching exception or else current weekday settings).
@@ -274,6 +292,28 @@ exception for a finest setting. [See Holidays section](#Holidays)
 Carbon::setHolidaysRegion('us-national');
 echo Carbon::nextBusinessClose();
 echo $carbonDate->nextBusinessClose();
+``` 
+
+### previousBusinessOpen / previousOpenExcludingHolidays
+
+Go to previous open time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
+exception for a finest setting. [See Holidays section](#Holidays)
+
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::previousBusinessOpen();
+echo $carbonDate->previousBusinessOpen();
+``` 
+
+### previousBusinessClose / previousCloseIncludingHolidays
+
+Go to previous closed time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
+exception for a finest setting. [See Holidays section](#Holidays)
+
+```php
+Carbon::setHolidaysRegion('us-national');
+echo Carbon::previousBusinessClose();
+echo $carbonDate->previousBusinessClose();
 ``` 
 
 ### Laravel
