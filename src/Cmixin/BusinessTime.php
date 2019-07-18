@@ -3,9 +3,9 @@
 namespace Cmixin;
 
 use BusinessTime\MixinBase;
-use BusinessTime\Traits\Range;
 use BusinessTime\Traits\IsMethods;
 use BusinessTime\Traits\OpenClose;
+use BusinessTime\Traits\Range;
 
 class BusinessTime extends MixinBase
 {
