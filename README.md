@@ -316,6 +316,125 @@ echo Carbon::previousBusinessClose();
 echo $carbonDate->previousBusinessClose();
 ``` 
 
+### getCurrentOpenTimeRanges
+
+Get list of ranges that contain the current date-time.
+
+```php
+foreach (Carbon::getCurrentOpenTimeRanges() as $timeRange) {
+  echo 'From: '.$timeRange->start().' to '.$timeRange->end()."\n";
+}
+foreach ($carbonDate->getCurrentOpenTimeRanges() as $timeRange) {
+  echo 'From: '.$timeRange->start().' to '.$timeRange->end()."\n";
+}
+``` 
+
+### getCurrentOpenTimeRange
+
+Get the first range that contain the current date-time.
+
+```php
+$timeRange = Carbon::getCurrentOpenTimeRange();
+
+if ($timeRange) {
+  echo 'From: '.$timeRange->start().' to '.$timeRange->end()."\n";
+}
+
+$timeRange = $carbonDate->getCurrentOpenTimeRange();
+
+if ($timeRange) {
+  echo 'From: '.$timeRange->start().' to '.$timeRange->end()."\n";
+}
+``` 
+
+### getCurrentOpenTimeRangeStart
+
+Get the start of the current open time range (if open, holidays ignored).
+
+```php
+$start = Carbon::getCurrentOpenTimeRangeStart();
+
+if ($start) {
+  echo 'Open since '.$start->format('l H:i')."\n";
+} else {
+  echo "Closed\n";
+}
+
+$start = $carbonDate->getCurrentOpenTimeRangeStart();
+
+if ($start) {
+  echo 'Open since '.$start->format('l H:i')."\n";
+} else {
+   echo "Closed\n";
+ }
+``` 
+
+### getCurrentOpenTimeRangeEnd
+
+Get the end of the current open time range (if open, holidays ignored).
+
+```php
+$end = Carbon::getCurrentOpenTimeRangeEnd();
+
+if ($end) {
+  echo 'Will close at '.$start->format('l H:i')."\n";
+} else {
+  echo "Closed\n";
+}
+
+$end = $carbonDate->getCurrentOpenTimeRangeEnd();
+
+if ($end) {
+  echo 'Will close at '.$start->format('l H:i')."\n";
+} else {
+   echo "Closed\n";
+ }
+``` 
+
+### getCurrentBusinessTimeRangeStart
+
+Get the start of the current open time range (if open and not holiday).
+
+```php
+$start = Carbon::getCurrentBusinessTimeRangeStart();
+
+if ($start) {
+  echo 'Open since '.$start->format('l H:i')."\n";
+} else {
+  echo "Closed\n";
+}
+
+$start = $carbonDate->getCurrentBusinessTimeRangeStart();
+
+if ($start) {
+  echo 'Open since '.$start->format('l H:i')."\n";
+} else {
+   echo "Closed\n";
+ }
+``` 
+
+### getCurrentBusinessTimeRangeEnd
+
+Get the end of the current open time range (if open and not holiday).
+
+```php
+$end = Carbon::getCurrentBusinessTimeRangeEnd();
+
+if ($end) {
+  echo 'Will close at '.$start->format('l H:i')."\n";
+} else {
+  echo "Closed\n";
+}
+
+$end = $carbonDate->getCurrentBusinessTimeRangeEnd();
+
+if ($end) {
+  echo 'Will close at '.$start->format('l H:i')."\n";
+} else {
+   echo "Closed\n";
+ }
+``` 
+
 ### Laravel
 
 To enable business-time globally in Laravel, set default openning hours and holidays settings in the config file
