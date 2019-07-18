@@ -40,6 +40,10 @@ class BusinessTimeTest extends TestCase
         $this->assertSame($date, $date->nextClose());
         $this->assertSame($date, $date->nextOpenExcludingHolidays());
         $this->assertSame($date, $date->nextCloseIncludingHolidays());
+        $this->assertSame($date, $date->previousOpen());
+        $this->assertSame($date, $date->previousClose());
+        $this->assertSame($date, $date->previousOpenExcludingHolidays());
+        $this->assertSame($date, $date->previousCloseIncludingHolidays());
     }
 
     public function testIsOpenOn()
@@ -223,6 +227,22 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2018-11-12 09:00', $carbon::now()->nextOpen()->format('Y-m-d H:i'));
     }
 
+    public function testPreviousOpen()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-02 08:00:00');
+        $carbon::setHolidaysRegion('fr');
+        $this->assertSame('2018-11-01 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-03 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-10 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-10 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
+    }
+
     public function testNextClose()
     {
         $carbon = static::CARBON_CLASS;
@@ -235,6 +255,20 @@ class BusinessTimeTest extends TestCase
         $carbon::setTestNow('2018-11-11 08:00:00');
         $this->assertSame('2018-11-12 12:00', $carbon::nextClose()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-12 12:00', $carbon::now()->nextClose()->format('Y-m-d H:i'));
+    }
+
+    public function testPreviousClose()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-05 08:00:00');
+        $this->assertSame('2018-11-03 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-03 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-10 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-10 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
     }
 
     public function testNextOpenExcludingHolidays()
@@ -250,9 +284,33 @@ class BusinessTimeTest extends TestCase
         $carbon::setHolidaysRegion('fr-national');
         $this->assertSame('2018-11-02 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-02 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-10-30 22:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-02 09:00:00');
         $this->assertSame('2018-11-02 13:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-02 13:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
+    }
+
+    public function testPreviousOpenExcludingHolidays()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-02 08:00:00');
+        $carbon::setHolidaysRegion('fr');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-01 09:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        $carbon::setHolidaysRegion('fr-national');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-02 09:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
     }
 
     public function testNextCloseIncludingHolidays()

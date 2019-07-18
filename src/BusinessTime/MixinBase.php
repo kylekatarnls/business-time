@@ -11,8 +11,12 @@ class MixinBase extends BusinessDay
 {
     const NEXT_OPEN_METHOD = 'nextOpen';
     const NEXT_CLOSE_METHOD = 'nextClose';
+    const PREVIOUS_OPEN_METHOD = 'previousOpen';
+    const PREVIOUS_CLOSE_METHOD = 'previousClose';
     const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
     const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
+    const PREVIOUS_OPEN_HOLIDAYS_METHOD = 'previousOpenExcludingHolidays';
+    const PREVIOUS_CLOSE_HOLIDAYS_METHOD = 'previousCloseIncludingHolidays';
     const CURRENT_OPEN_RANGE_START_METHOD = 'currentOpenRangeStart';
     const CURRENT_OPEN_RANGE_END_METHOD = 'currentOpenRangeEnd';
 
