@@ -411,11 +411,27 @@ class BusinessTimeTest extends TestCase
     public function testEnableWithNoOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-04 10:00');
+
+        self::assertFalse($date->isHoliday());
+
         BusinessTime::enable($carbon, 'us-national');
 
-        $date = $carbon::parse('2019-07-04 10:00');
-        self::assertSame('us-national', $date->getHolidaysRegion());
         self::assertTrue($date->isHoliday());
+    }
+
+    public function testEnableWithNoRegion()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'   => ['09:00-12:00', '13:00-18:00'],
+            'holidays' => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        $date = $carbon::parse('2021-04-07 10:00');
+        self::assertTrue($date->isBusinessClosed());
     }
 
     public function testReadmeCode()
