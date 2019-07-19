@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Cmixin\BusinessTime;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
+use Spatie\OpeningHours\TimeRange;
 
 class BusinessTimeTest extends TestCase
 {
@@ -297,9 +298,8 @@ class BusinessTimeTest extends TestCase
     {
         $carbon = static::CARBON_CLASS;
         $carbon::setTestNow('2018-11-02 08:00:00');
-        $carbon::setHolidaysRegion('fr');
-        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
-        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-01 09:00:00');
         $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
@@ -368,6 +368,44 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('', (string) $date->getCurrentDayOpeningHours());
         $date = $carbon::parse('2018-01-02');
         $this->assertSame('09:00-12:00,13:00-18:00', (string) $date->getCurrentDayOpeningHours());
+    }
+
+    public function testGetCurrentOpenTimeRanges()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 11:45');
+        $list = [];
+
+        foreach ($date->getCurrentOpenTimeRanges() as $range) {
+            self::assertInstanceOf(TimeRange::class, $range);
+            $list[] = (string) $range;
+        }
+
+        self::assertSame(['09:00-12:00'], $list);
+
+        $date = $carbon::parse('2019-07-22 12:45');
+        $list = [];
+
+        foreach ($date->getCurrentOpenTimeRanges() as $range) {
+            self::assertInstanceOf(TimeRange::class, $range);
+            $list[] = (string) $range;
+        }
+
+        self::assertSame([], $list);
+    }
+
+    public function testGetCurrentOpenTimeRange()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 11:45');
+        $range = $date->getCurrentOpenTimeRange();
+
+        self::assertInstanceOf(TimeRange::class, $range);
+        self::assertSame('09:00-12:00', (string) $range);
+
+        $date = $carbon::parse('2019-07-22 12:45');
+
+        self::assertFalse($date->getCurrentOpenTimeRange());
     }
 
     public function testReadmeCode()
