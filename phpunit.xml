@@ -12,6 +12,7 @@
     <filter>
         <whitelist>
             <directory>src/Cmixin</directory>
+            <directory>src/BusinessTime</directory>
         </whitelist>
     </filter>
 

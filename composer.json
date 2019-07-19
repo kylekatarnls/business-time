@@ -6,10 +6,10 @@
     "php": ">=7.1",
     "cmixin/business-day": "^1.1",
     "nesbot/carbon": "^2.0",
-    "spatie/opening-hours": "^2.0"
+    "spatie/opening-hours": "^2.6"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.0 || ^7.0"
+    "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0"
   },
   "autoload": {
     "psr-4": {

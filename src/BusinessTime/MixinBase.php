@@ -11,8 +11,14 @@ class MixinBase extends BusinessDay
 {
     const NEXT_OPEN_METHOD = 'nextOpen';
     const NEXT_CLOSE_METHOD = 'nextClose';
+    const PREVIOUS_OPEN_METHOD = 'previousOpen';
+    const PREVIOUS_CLOSE_METHOD = 'previousClose';
     const NEXT_OPEN_HOLIDAYS_METHOD = 'nextOpenExcludingHolidays';
     const NEXT_CLOSE_HOLIDAYS_METHOD = 'nextCloseIncludingHolidays';
+    const PREVIOUS_OPEN_HOLIDAYS_METHOD = 'previousOpenExcludingHolidays';
+    const PREVIOUS_CLOSE_HOLIDAYS_METHOD = 'previousCloseIncludingHolidays';
+    const CURRENT_OPEN_RANGE_START_METHOD = 'currentOpenRangeStart';
+    const CURRENT_OPEN_RANGE_END_METHOD = 'currentOpenRangeEnd';
 
     const HOLIDAYS_OPTION_KEY = 'holidays';
     const REGION_OPTION_KEY = 'region';
@@ -310,13 +316,14 @@ class MixinBase extends BusinessDay
          */
         return function ($method = null) use ($callee) {
             $method = is_string($method) ? $method : $callee;
+            $date = isset($this) ? $this : static::now();
 
             if (isset($this)) {
                 /* @var \Carbon\Carbon|static $this */
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $this));
+                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $date));
             }
 
-            return static::now()->$method();
+            return $date->$method();
         };
     }
 

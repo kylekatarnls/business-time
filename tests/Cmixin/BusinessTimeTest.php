@@ -4,14 +4,16 @@ namespace Tests\Cmixin;
 
 use Carbon\Carbon;
 use Cmixin\BusinessTime;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
+use Spatie\OpeningHours\TimeRange;
 
 class BusinessTimeTest extends TestCase
 {
     const CARBON_CLASS = Carbon::class;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $carbon = static::CARBON_CLASS;
         BusinessTime::enable($carbon, [
@@ -40,6 +42,10 @@ class BusinessTimeTest extends TestCase
         $this->assertSame($date, $date->nextClose());
         $this->assertSame($date, $date->nextOpenExcludingHolidays());
         $this->assertSame($date, $date->nextCloseIncludingHolidays());
+        $this->assertSame($date, $date->previousOpen());
+        $this->assertSame($date, $date->previousClose());
+        $this->assertSame($date, $date->previousOpenExcludingHolidays());
+        $this->assertSame($date, $date->previousCloseIncludingHolidays());
     }
 
     public function testIsOpenOn()
@@ -120,22 +126,21 @@ class BusinessTimeTest extends TestCase
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours(OpeningHours::create([])));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Opening hours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.
-     */
     public function testBadOpeningHoursInput()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Opening hours parameter should be a '.
+            'Spatie\OpeningHours\OpeningHours instance or an array.');
+
         $carbon = static::CARBON_CLASS;
         $carbon::convertOpeningHours($carbon::now());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Opening hours have not be set.
-     */
     public function testUndefinedOpeningHours()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Opening hours have not be set.');
+
         $carbon = static::CARBON_CLASS;
         $carbon::resetOpeningHours();
         BusinessTime::enable($carbon);
@@ -223,6 +228,22 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2018-11-12 09:00', $carbon::now()->nextOpen()->format('Y-m-d H:i'));
     }
 
+    public function testPreviousOpen()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-02 08:00:00');
+        $carbon::setHolidaysRegion('fr');
+        $this->assertSame('2018-11-01 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-03 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-10 13:00', $carbon::previousOpen()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-10 13:00', $carbon::now()->previousOpen()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
+    }
+
     public function testNextClose()
     {
         $carbon = static::CARBON_CLASS;
@@ -235,6 +256,20 @@ class BusinessTimeTest extends TestCase
         $carbon::setTestNow('2018-11-11 08:00:00');
         $this->assertSame('2018-11-12 12:00', $carbon::nextClose()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-12 12:00', $carbon::now()->nextClose()->format('Y-m-d H:i'));
+    }
+
+    public function testPreviousClose()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-05 08:00:00');
+        $this->assertSame('2018-11-03 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-05 09:00:00');
+        $this->assertSame('2018-11-03 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-03 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-11 08:00:00');
+        $this->assertSame('2018-11-10 16:00', $carbon::previousClose()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-10 16:00', $carbon::now()->previousClose()->format('Y-m-d H:i'));
     }
 
     public function testNextOpenExcludingHolidays()
@@ -250,9 +285,32 @@ class BusinessTimeTest extends TestCase
         $carbon::setHolidaysRegion('fr-national');
         $this->assertSame('2018-11-02 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-02 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-10-30 22:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $carbon::setTestNow('2018-11-02 09:00:00');
         $this->assertSame('2018-11-02 13:00', $carbon::nextOpenExcludingHolidays()->format('Y-m-d H:i'));
         $this->assertSame('2018-11-02 13:00', $carbon::now()->nextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
+    }
+
+    public function testPreviousOpenExcludingHolidays()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setTestNow('2018-11-02 08:00:00');
+        $this->assertSame('2018-11-01 13:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-11-01 13:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-01 09:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        $carbon::setHolidaysRegion('fr-national');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::setTestNow('2018-11-02 09:00:00');
+        $this->assertSame('2018-10-31 09:00', $carbon::previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $this->assertSame('2018-10-31 09:00', $carbon::now()->previousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        $carbon::resetHolidays();
     }
 
     public function testNextCloseIncludingHolidays()
@@ -310,6 +368,70 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('', (string) $date->getCurrentDayOpeningHours());
         $date = $carbon::parse('2018-01-02');
         $this->assertSame('09:00-12:00,13:00-18:00', (string) $date->getCurrentDayOpeningHours());
+    }
+
+    public function testGetCurrentOpenTimeRanges()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 11:45');
+        $list = [];
+
+        foreach ($date->getCurrentOpenTimeRanges() as $range) {
+            self::assertInstanceOf(TimeRange::class, $range);
+            $list[] = (string) $range;
+        }
+
+        self::assertSame(['09:00-12:00'], $list);
+
+        $date = $carbon::parse('2019-07-22 12:45');
+        $list = [];
+
+        foreach ($date->getCurrentOpenTimeRanges() as $range) {
+            self::assertInstanceOf(TimeRange::class, $range);
+            $list[] = (string) $range;
+        }
+
+        self::assertSame([], $list);
+    }
+
+    public function testGetCurrentOpenTimeRange()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 11:45');
+        $range = $date->getCurrentOpenTimeRange();
+
+        self::assertInstanceOf(TimeRange::class, $range);
+        self::assertSame('09:00-12:00', (string) $range);
+
+        $date = $carbon::parse('2019-07-22 12:45');
+
+        self::assertFalse($date->getCurrentOpenTimeRange());
+    }
+
+    public function testEnableWithNoOpeningHours()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-04 10:00');
+
+        self::assertFalse($date->isHoliday());
+
+        BusinessTime::enable($carbon, 'us-national');
+
+        self::assertTrue($date->isHoliday());
+    }
+
+    public function testEnableWithNoRegion()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'   => ['09:00-12:00', '13:00-18:00'],
+            'holidays' => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        $date = $carbon::parse('2021-04-07 10:00');
+        self::assertTrue($date->isBusinessClosed());
     }
 
     public function testReadmeCode()
