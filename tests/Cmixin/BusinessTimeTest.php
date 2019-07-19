@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use Carbon\Carbon;
 use Cmixin\BusinessTime;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
@@ -12,7 +13,7 @@ class BusinessTimeTest extends TestCase
 {
     const CARBON_CLASS = Carbon::class;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $carbon = static::CARBON_CLASS;
         BusinessTime::enable($carbon, [
@@ -125,22 +126,21 @@ class BusinessTimeTest extends TestCase
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours(OpeningHours::create([])));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Opening hours parameter should be a Spatie\OpeningHours\OpeningHours instance or an array.
-     */
     public function testBadOpeningHoursInput()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Opening hours parameter should be a '.
+            'Spatie\OpeningHours\OpeningHours instance or an array.');
+
         $carbon = static::CARBON_CLASS;
         $carbon::convertOpeningHours($carbon::now());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Opening hours have not be set.
-     */
     public function testUndefinedOpeningHours()
     {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Opening hours have not be set.');
+
         $carbon = static::CARBON_CLASS;
         $carbon::resetOpeningHours();
         BusinessTime::enable($carbon);
@@ -406,6 +406,16 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2019-07-22 12:45');
 
         self::assertFalse($date->getCurrentOpenTimeRange());
+    }
+
+    public function testEnableWithNoOpeningHours()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, 'us-national');
+
+        $date = $carbon::parse('2019-07-04 10:00');
+        self::assertSame('us-national', $date->getHolidaysRegion());
+        self::assertTrue($date->isHoliday());
     }
 
     public function testReadmeCode()
