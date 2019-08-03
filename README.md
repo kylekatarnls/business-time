@@ -1,6 +1,6 @@
 # business-time
 
-Carbon mixin to handle business days and opening hours
+[Carbon](https://carbon.nesbot.com/) mixin to handle business days and opening hours
 
 [![Latest Stable Version](https://poser.pugx.org/cmixin/business-time/v/stable.png)](https://packagist.org/packages/cmixin/business-time)
 [![Build Status](https://travis-ci.org/kylekatarnls/business-time.svg?branch=master)](https://travis-ci.org/kylekatarnls/business-time)
