@@ -12,6 +12,7 @@ class BusinessTime extends MixinBase
     use Range;
     use IsMethods;
     use OpenClose;
+
     /**
      * Go to the next open date and time that is also not an holiday.
      *
