@@ -9,6 +9,10 @@ use SplObjectStorage;
 
 class MixinBase extends BusinessDay
 {
+    const IS_OPEN_METHOD = 'isOpen';
+    const IS_CLOSED_METHOD = 'isClosed';
+    const IS_OPEN_HOLIDAYS_METHOD = 'isOpenExcludingHolidays';
+    const IS_CLOSED_HOLIDAYS_METHOD = 'isClosedIncludingHolidays';
     const NEXT_OPEN_METHOD = 'nextOpen';
     const NEXT_CLOSE_METHOD = 'nextClose';
     const PREVIOUS_OPEN_METHOD = 'previousOpen';
@@ -357,6 +361,34 @@ class MixinBase extends BusinessDay
             }
 
             return static::now()->$fallbackMethod();
+        };
+    }
+
+    /**
+     * Get a method that return current date-time if $testMethod applied on it return true,
+     * else return the result of $method called on it.
+     *
+     * @param string $testMethod method for the condition.
+     * @param string $method     method to apply if condition is false.
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
+    public function getTernaryMethod($testMethod = null, $method = null)
+    {
+        /**
+         * Get a method that return current date-time if $testMethod applied on it return true,
+         * else return the result of $method called on it.
+         *
+         * @param string $testMethod method for the condition.
+         * @param string $method     method to apply if condition is false.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+
+        return function () use ($testMethod, $method) {
+            $date = isset($this) ? $this : static::now();
+
+            return $date->$testMethod() ? $date : $date->$method();
         };
     }
 

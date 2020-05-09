@@ -316,6 +316,47 @@ echo Carbon::previousBusinessClose();
 echo $carbonDate->previousBusinessClose();
 ``` 
 
+### currentOr*
+
+Methods starting with `currentOr` are followed by:
+- a **time-direction**: `Next` / `Previous`
+- optionally `Business` (meaning holidays are automatically considered as closed)
+- a **state** `Open` / `Close`
+
+All `currentOr*` methods return the current date-time if it's in the **state**
+(see above), else they return the first date-time (next or previous according
+to the given **time-direction**) where a state change to be the chosen **state**
+(open / close).
+
+Note: `BusinessOpen` can also be written explicitly as `OpenExcludingHolidays`
+and `BusinessClose` as `CloseIncludingHolidays`.
+
+### openOr*
+
+Methods starting with `openOr` are followed by:
+- a **time-direction**: `Next` / `Previous`
+- optionally `Business` (meaning holidays are automatically considered as closed)
+- `Close` (for open-or-next/previous-open, [see currentOr*](#currentOr*))
+
+All `openOr*` methods return the current date-time if it's open, else
+they return the first date-time (next or previous according
+to the given **time-direction**) the business close.
+
+Note: `BusinessClose` can also be written explicitly as `CloseIncludingHolidays`.
+ 
+### closedOr*
+
+Methods starting with `closedOr` are followed by:
+- a **time-direction**: `Next` / `Previous`
+- optionally `Business` (meaning holidays are automatically considered as closed)
+- `Open` (for closed-or-next/previous-closed, [see currentOr*](#currentOr*))
+
+All `closedOr*` methods return the current date-time if it's closed, else
+they return the first date-time (next or previous according
+to the given **time-direction**) the business open.
+
+Note: `BusinessOpen` can also be written explicitly as `OpenExcludingHolidays`.
+
 ### getCurrentOpenTimeRanges
 
 Get list of ranges that contain the current date-time.

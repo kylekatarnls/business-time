@@ -5,102 +5,6 @@ namespace Carbon
     class Carbon
     {
         /**
-         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
          * @see \BusinessTime\MixinBase::normalizeDay
          *
          * Returns day English name in lower case.
@@ -112,7 +16,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:65
+            // Content, see src/BusinessTime/MixinBase.php:69
         }
 
         /**
@@ -130,7 +34,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:98
+            // Content, see src/BusinessTime/MixinBase.php:102
         }
 
         /**
@@ -148,7 +52,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:122
+            // Content, see src/BusinessTime/MixinBase.php:126
         }
 
         /**
@@ -162,7 +66,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:183
+            // Content, see src/BusinessTime/MixinBase.php:187
         }
 
         /**
@@ -174,7 +78,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:226
+            // Content, see src/BusinessTime/MixinBase.php:230
         }
 
         /**
@@ -188,7 +92,7 @@ namespace Carbon
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:264
+            // Content, see src/BusinessTime/MixinBase.php:268
         }
 
         /**
@@ -200,7 +104,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:292
+            // Content, see src/BusinessTime/MixinBase.php:296
         }
 
         /**
@@ -215,7 +119,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
@@ -230,7 +134,571 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:348
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getTernaryMethod
+         *
+         * Get a method that return current date-time if $testMethod applied on it return true,
+         * else return the result of $method called on it.
+         *
+         * @param string $testMethod method for the condition.
+         * @param string $method     method to apply if condition is false.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function getTernaryMethod()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessOpen
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessOpen
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessClose
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessClose
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenOn
+         *
+         * Returns true if the business is open on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedOn
+         *
+         * Returns true if the business is closed on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpen
+         *
+         * Returns true if the business is open now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosed
+         *
+         * Returns true if the business is closed now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
+         *
+         * @alias isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
+         *
+         * @alias isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpen
+         *
+         * Go to the next open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextClose
+         *
+         * Go to the next close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpen
+         *
+         * Go to the previous open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousClose
+         *
+         * Go to the previous close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextBusinessClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
         }
 
         /**
@@ -272,225 +740,53 @@ namespace Carbon
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed or holiday.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpen
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosed
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
     }
 }
@@ -500,102 +796,6 @@ namespace Carbon
     class CarbonImmutable
     {
         /**
-         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
          * @see \BusinessTime\MixinBase::normalizeDay
          *
          * Returns day English name in lower case.
@@ -607,7 +807,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:65
+            // Content, see src/BusinessTime/MixinBase.php:69
         }
 
         /**
@@ -625,7 +825,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:98
+            // Content, see src/BusinessTime/MixinBase.php:102
         }
 
         /**
@@ -643,7 +843,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:122
+            // Content, see src/BusinessTime/MixinBase.php:126
         }
 
         /**
@@ -657,7 +857,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:183
+            // Content, see src/BusinessTime/MixinBase.php:187
         }
 
         /**
@@ -669,7 +869,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:226
+            // Content, see src/BusinessTime/MixinBase.php:230
         }
 
         /**
@@ -683,7 +883,7 @@ namespace Carbon
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:264
+            // Content, see src/BusinessTime/MixinBase.php:268
         }
 
         /**
@@ -695,7 +895,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:292
+            // Content, see src/BusinessTime/MixinBase.php:296
         }
 
         /**
@@ -710,7 +910,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
@@ -725,7 +925,571 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:348
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getTernaryMethod
+         *
+         * Get a method that return current date-time if $testMethod applied on it return true,
+         * else return the result of $method called on it.
+         *
+         * @param string $testMethod method for the condition.
+         * @param string $method     method to apply if condition is false.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function getTernaryMethod()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessOpen
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessOpen
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessClose
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessClose
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenOn
+         *
+         * Returns true if the business is open on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedOn
+         *
+         * Returns true if the business is closed on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpen
+         *
+         * Returns true if the business is open now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosed
+         *
+         * Returns true if the business is closed now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
+         *
+         * @alias isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
+         *
+         * @alias isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpen
+         *
+         * Go to the next open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextClose
+         *
+         * Go to the next close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpen
+         *
+         * Go to the previous open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousClose
+         *
+         * Go to the previous close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextBusinessClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
         }
 
         /**
@@ -767,225 +1531,53 @@ namespace Carbon
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed or holiday.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpen
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosed
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
     }
 }
@@ -995,102 +1587,6 @@ namespace Illuminate\Support
     class Carbon
     {
         /**
-         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
          * @see \BusinessTime\MixinBase::normalizeDay
          *
          * Returns day English name in lower case.
@@ -1102,7 +1598,7 @@ namespace Illuminate\Support
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:65
+            // Content, see src/BusinessTime/MixinBase.php:69
         }
 
         /**
@@ -1120,7 +1616,7 @@ namespace Illuminate\Support
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:98
+            // Content, see src/BusinessTime/MixinBase.php:102
         }
 
         /**
@@ -1138,7 +1634,7 @@ namespace Illuminate\Support
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:122
+            // Content, see src/BusinessTime/MixinBase.php:126
         }
 
         /**
@@ -1152,7 +1648,7 @@ namespace Illuminate\Support
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:183
+            // Content, see src/BusinessTime/MixinBase.php:187
         }
 
         /**
@@ -1164,7 +1660,7 @@ namespace Illuminate\Support
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:226
+            // Content, see src/BusinessTime/MixinBase.php:230
         }
 
         /**
@@ -1178,7 +1674,7 @@ namespace Illuminate\Support
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:264
+            // Content, see src/BusinessTime/MixinBase.php:268
         }
 
         /**
@@ -1190,7 +1686,7 @@ namespace Illuminate\Support
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:292
+            // Content, see src/BusinessTime/MixinBase.php:296
         }
 
         /**
@@ -1205,7 +1701,7 @@ namespace Illuminate\Support
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
@@ -1220,7 +1716,571 @@ namespace Illuminate\Support
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:348
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getTernaryMethod
+         *
+         * Get a method that return current date-time if $testMethod applied on it return true,
+         * else return the result of $method called on it.
+         *
+         * @param string $testMethod method for the condition.
+         * @param string $method     method to apply if condition is false.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function getTernaryMethod()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessOpen
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessOpen
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessClose
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessClose
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenOn
+         *
+         * Returns true if the business is open on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedOn
+         *
+         * Returns true if the business is closed on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpen
+         *
+         * Returns true if the business is open now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosed
+         *
+         * Returns true if the business is closed now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
+         *
+         * @alias isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
+         *
+         * @alias isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpen
+         *
+         * Go to the next open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextClose
+         *
+         * Go to the next close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpen
+         *
+         * Go to the previous open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousClose
+         *
+         * Go to the previous close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextBusinessClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
         }
 
         /**
@@ -1262,225 +2322,53 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed or holiday.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpen
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosed
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
     }
 }
@@ -1490,102 +2378,6 @@ namespace Illuminate\Support\Facades
     class Date
     {
         /**
-         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessOpen
-         *
-         * Go to the next open date and time that is also not an holiday.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessOpen()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousCloseIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousBusinessClose
-         *
-         * Go to the next close date and time or next holiday if sooner.
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousBusinessClose()
-        {
-            // Content, see src/BusinessTime/MixinBase.php:348
-        }
-
-        /**
          * @see \BusinessTime\MixinBase::normalizeDay
          *
          * Returns day English name in lower case.
@@ -1597,7 +2389,7 @@ namespace Illuminate\Support\Facades
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:65
+            // Content, see src/BusinessTime/MixinBase.php:69
         }
 
         /**
@@ -1615,7 +2407,7 @@ namespace Illuminate\Support\Facades
          */
         public function convertOpeningHours($defaultOpeningHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:98
+            // Content, see src/BusinessTime/MixinBase.php:102
         }
 
         /**
@@ -1633,7 +2425,7 @@ namespace Illuminate\Support\Facades
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:122
+            // Content, see src/BusinessTime/MixinBase.php:126
         }
 
         /**
@@ -1647,7 +2439,7 @@ namespace Illuminate\Support\Facades
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:183
+            // Content, see src/BusinessTime/MixinBase.php:187
         }
 
         /**
@@ -1659,7 +2451,7 @@ namespace Illuminate\Support\Facades
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:226
+            // Content, see src/BusinessTime/MixinBase.php:230
         }
 
         /**
@@ -1673,7 +2465,7 @@ namespace Illuminate\Support\Facades
          */
         public function getOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:264
+            // Content, see src/BusinessTime/MixinBase.php:268
         }
 
         /**
@@ -1685,7 +2477,7 @@ namespace Illuminate\Support\Facades
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:292
+            // Content, see src/BusinessTime/MixinBase.php:296
         }
 
         /**
@@ -1700,7 +2492,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
@@ -1715,7 +2507,571 @@ namespace Illuminate\Support\Facades
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:348
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::getTernaryMethod
+         *
+         * Get a method that return current date-time if $testMethod applied on it return true,
+         * else return the result of $method called on it.
+         *
+         * @param string $testMethod method for the condition.
+         * @param string $method     method to apply if condition is false.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function getTernaryMethod()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrNextOpen
+         *
+         * Return current date-time if it's closed, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::closedOrPreviousOpen
+         *
+         * Return current date-time if it's closed, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function closedOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextOpen
+         *
+         * Return current date-time if it's open, else go to the next open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousOpen
+         *
+         * Return current date-time if it's open, else go to the previous open date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrNextClose
+         *
+         * Return current date-time if it's closed, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::currentOrPreviousClose
+         *
+         * Return current date-time if it's closed, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function currentOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpenExcludingHolidays
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessOpen
+         *
+         * Go to the next open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpenExcludingHolidays
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessOpen
+         *
+         * Go to the previous open date and time that is also not an holiday.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessOpen()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextCloseIncludingHolidays
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextBusinessClose
+         *
+         * Go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousCloseIncludingHolidays
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousBusinessClose
+         *
+         * Go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:352
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenOn
+         *
+         * Returns true if the business is open on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedOn
+         *
+         * Returns true if the business is closed on a given day according to current opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedOn($day)
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpen
+         *
+         * Returns true if the business is open now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosed
+         *
+         * Returns true if the business is closed now (or current date and time) according to current opening hours.
+         * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
+         *
+         * @return bool
+         */
+        public function isClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessOpen()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
+         *
+         * @alias isBusinessOpen
+         *
+         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isOpenExcludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isBusinessClosed()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
+         *
+         * @alias isBusinessClosed
+         *
+         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * opening hours.
+         *
+         * @return bool
+         */
+        public function isClosedIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextOpen
+         *
+         * Go to the next open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::nextClose
+         *
+         * Go to the next close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function nextClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousOpen
+         *
+         * Go to the previous open date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousOpen($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::previousClose
+         *
+         * Go to the previous close date and time.
+         * /!\ Important: holidays are assumed open unless you set a closure handler for it in the
+         * exceptions setting.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function previousClose($method = null)
+        {
+            // Content, see src/BusinessTime/MixinBase.php:321
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextBusinessClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousCloseIncludingHolidays()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousBusinessClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrNextClose
+         *
+         * Return current date-time if it's open, else go to the next close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrNextClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
+        }
+
+        /**
+         * @see \BusinessTime\MixinBase::openOrPreviousClose
+         *
+         * Return current date-time if it's open, else go to the previous close date and time (holidays ignored if not set as exception).
+         *
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         */
+        public function openOrPreviousClose()
+        {
+            // Content, see src/BusinessTime/MixinBase.php:388
         }
 
         /**
@@ -1757,225 +3113,53 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
+         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * the exceptions setting.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessTimeRangeStart
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range start as Carbon instance or false if closed or holiday.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
 
         /**
          * @see \BusinessTime\MixinBase::getCurrentBusinessOpenTimeRangeEnd
          *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
+         * Get current open time range end as Carbon instance or false if closed.
          *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedOn
-         *
-         * Returns true if the business is open on a given day according to current opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedOn($day)
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpen
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosed
-         *
-         * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
-         * the exceptions setting.
-         *
-         * @return bool
-         */
-        public function isClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessOpen
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessOpen()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isOpenExcludingHolidays
-         *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isOpenExcludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isBusinessClosed
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isBusinessClosed()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\Traits\IsMethods::isClosedIncludingHolidays
-         *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
-         * opening hours.
-         *
-         * @return bool
-         */
-        public function isClosedIncludingHolidays()
-        {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::nextClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function nextClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousOpen
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousOpen($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
-        }
-
-        /**
-         * @see \BusinessTime\MixinBase::previousClose
-         *
-         * Get a closure to be executed on OpeningHours on the current instance (or now if called globally) that should
-         * return a date, then convert it into a Carbon/sub-class instance.
-         *
-         * @param string $method
-         *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
-         */
-        public function previousClose($method = null)
-        {
-            // Content, see src/BusinessTime/MixinBase.php:317
+            // Content, see src/BusinessTime/MixinBase.php:321
         }
     }
 }
