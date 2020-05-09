@@ -408,6 +408,203 @@ class BusinessTimeTest extends TestCase
         self::assertFalse($date->getCurrentOpenTimeRange());
     }
 
+    public function testCurrentOrMethods()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::setHolidaysRegion('fr-national');
+        BusinessTime::enable($carbon, [
+            'monday'     => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'    => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'  => ['09:00-12:00', '13:00-18:00'],
+            'thursday'   => ['09:00-12:00', '13:00-18:00'],
+            'friday'     => ['09:00-12:00', '13:00-18:00'],
+            'exceptions' => [
+                '05-07' => ['11:00-12:00'],
+            ],
+            'holidays' => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'foo' => '11/05',
+                ],
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function ($string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        // Open (holidays)
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 10:00')->currentOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 09:00', $getDate('2020-05-07 12:00')->currentOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 09:00', $getDate('2020-05-08 10:00')->currentOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 10:00')->currentOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 09:00', $getDate('2020-05-07 12:00')->currentOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 09:00', $getDate('2020-05-08 10:00')->currentOrNextBusinessOpen()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-07 10:00')->currentOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 12:00')->currentOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-08 10:00')->currentOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-07 10:00')->currentOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 12:00')->currentOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-08 10:00')->currentOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+
+        // Close (holidays)
+
+        self::assertSame('2020-05-06 12:00', $getDate('2020-05-06 10:00')->currentOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 12:00', $getDate('2020-05-06 10:00')->currentOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrNextBusinessClose()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-05 18:00', $getDate('2020-05-06 10:00')->currentOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-05 18:00', $getDate('2020-05-06 10:00')->currentOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrPreviousBusinessClose()->format('Y-m-d H:i'));
+
+        // Open (no holidays)
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 10:00')->currentOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 09:00', $getDate('2020-05-07 12:00')->currentOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrNextOpen()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->currentOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-07 10:00')->currentOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 11:00', $getDate('2020-05-07 12:00')->currentOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->currentOrPreviousOpen()->format('Y-m-d H:i'));
+
+        // Close (no holidays)
+
+        self::assertSame('2020-05-06 07:00', $getDate('2020-05-06 07:00')->currentOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 12:00', $getDate('2020-05-06 10:00')->currentOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 12:00', $getDate('2020-05-08 10:00')->currentOrNextClose()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 07:00', $getDate('2020-05-06 07:00')->currentOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-05 18:00', $getDate('2020-05-06 10:00')->currentOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->currentOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->currentOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-08 10:00')->currentOrPreviousClose()->format('Y-m-d H:i'));
+    }
+
+    public function testClosedOrAndOpenOrMethods()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'     => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'    => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'  => ['09:00-12:00', '13:00-18:00'],
+            'thursday'   => ['09:00-12:00', '13:00-18:00'],
+            'friday'     => ['09:00-12:00', '13:00-18:00'],
+            'exceptions' => [
+                '05-07' => ['11:00-12:00'],
+            ],
+            'holidays' => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'foo' => '11/05',
+                ],
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function ($string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        // Open (holidays)
+
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-06 10:00')->closedOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->closedOrNextOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-06 10:00')->closedOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrNextBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->closedOrNextBusinessOpen()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 09:00', $getDate('2020-05-06 10:00')->closedOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->closedOrPreviousOpenExcludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 09:00', $getDate('2020-05-06 10:00')->closedOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->closedOrPreviousBusinessOpen()->format('Y-m-d H:i'));
+
+        // Close (holidays)
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 10:00')->openOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 12:00', $getDate('2020-05-07 12:00')->openOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 12:00', $getDate('2020-05-08 10:00')->openOrNextCloseIncludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 10:00')->openOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 12:00', $getDate('2020-05-07 12:00')->openOrNextBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-12 12:00', $getDate('2020-05-08 10:00')->openOrNextBusinessClose()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 10:00')->openOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 12:00')->openOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-08 10:00')->openOrPreviousCloseIncludingHolidays()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 10:00')->openOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 12:00')->openOrPreviousBusinessClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-08 10:00')->openOrPreviousBusinessClose()->format('Y-m-d H:i'));
+
+        // Open (no holidays)
+
+        self::assertSame('2020-05-06 13:00', $getDate('2020-05-06 10:00')->closedOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrNextOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 13:00', $getDate('2020-05-08 10:00')->closedOrNextOpen()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-06 09:00', $getDate('2020-05-06 10:00')->closedOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 10:00', $getDate('2020-05-07 10:00')->closedOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 12:00')->closedOrPreviousOpen()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 09:00', $getDate('2020-05-08 10:00')->closedOrPreviousOpen()->format('Y-m-d H:i'));
+
+        // Close (no holidays)
+
+        self::assertSame('2020-05-06 12:00', $getDate('2020-05-06 07:00')->openOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-07 12:00', $getDate('2020-05-07 10:00')->openOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 12:00', $getDate('2020-05-07 12:00')->openOrNextClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->openOrNextClose()->format('Y-m-d H:i'));
+
+        self::assertSame('2020-05-05 18:00', $getDate('2020-05-06 07:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 10:00', $getDate('2020-05-06 10:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 10:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 12:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+        self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+    }
+
     public function testEnableWithNoOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
