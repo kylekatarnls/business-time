@@ -319,9 +319,9 @@ echo $carbonDate->previousBusinessClose();
 ### currentOr*
 
 Methods starting with `currentOr` are followed by:
-- a **time-direction**: `Next` / `Previous`
-- optionally `Business` (meaning holidays are automatically considered as closed)
-- a **state** `Open` / `Close`
+  - a **time-direction**: `Next` / `Previous`
+  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - a **state** `Open` / `Close`
 
 All `currentOr*` methods return the current date-time if it's in the **state**
 (see above), else they return the first date-time (next or previous according
@@ -334,9 +334,9 @@ and `BusinessClose` as `CloseIncludingHolidays`.
 ### openOr*
 
 Methods starting with `openOr` are followed by:
-- a **time-direction**: `Next` / `Previous`
-- optionally `Business` (meaning holidays are automatically considered as closed)
-- `Close` (for open-or-next/previous-open, [see currentOr*](#currentOr*))
+  - a **time-direction**: `Next` / `Previous`
+  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - `Close` (for open-or-next/previous-open, [see currentOr*](#currentOr*))
 
 All `openOr*` methods return the current date-time if it's open, else
 they return the first date-time (next or previous according
@@ -347,9 +347,9 @@ Note: `BusinessClose` can also be written explicitly as `CloseIncludingHolidays`
 ### closedOr*
 
 Methods starting with `closedOr` are followed by:
-- a **time-direction**: `Next` / `Previous`
-- optionally `Business` (meaning holidays are automatically considered as closed)
-- `Open` (for closed-or-next/previous-closed, [see currentOr*](#currentOr*))
+  - a **time-direction**: `Next` / `Previous`
+  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - `Open` (for closed-or-next/previous-closed, [see currentOr*](#currentOr*))
 
 All `closedOr*` methods return the current date-time if it's closed, else
 they return the first date-time (next or previous according
