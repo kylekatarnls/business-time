@@ -52,6 +52,11 @@ BusinessTime::enable(Carbon::class, [
     '01-01' => [], // Recurring on each 1st of january
     '12-25' => ['09:00-12:00'], // Recurring on each 25th of december
   ],
+  // You can use the holidays provided by BusinessDay
+  // and mark them as fully closed days using 'holidaysAreClosed'
+  'holidaysAreClosed' => true, 
+  // Note that exceptions will still have the precedence over
+  // the holidaysAreClosed option.
   'holidays' => [
     'region' => 'us-ny', // Load the official list of holidays from USA - New York
     'with' => [
@@ -83,7 +88,9 @@ Then with opening hours, you'll get the following methods directly available on 
 ### Holidays
 
 By default, holidays has no particular opening hours, it will use the opening hours of the current day of week, but
-you can use a custom exception to link automatically holidays to custom opening hours:
+you can use the `'holidaysAreClosed' => true` option to close the business on every holiday that is not specified
+otherwise in the `'exceptions'` option. Else you can use a custom exception handler to link holidays or any dynamic
+calculation as below:
 
 ```php
 BusinessTime::enable(Carbon::class, [
@@ -253,6 +260,8 @@ echo '<p>' . $todayRanges . '</p>';
 
 ### isBusinessOpen / isOpenExcludingHolidays
 
+Equivalent to `isOpen` when `'holidaysAreClosed'` is set to `true`.
+
 Allows to know if the business is usually on open at a given moment and not an holidays. But you also can handle holidays
 with a dedicated exception for a finest setting. [See Holidays section](#Holidays)
 
@@ -264,6 +273,8 @@ $carbonDate->isBusinessOpen()  // returns true if the business is open and not a
 
 ### isBusinessClosed / isClosedIncludingHolidays
 
+Equivalent to `isClosed` when `'holidaysAreClosed'` is set to `true`.
+
 Opposite of [isOpenExcludingHolidays](#isOpenExcludingHolidays)
 
 ```php
@@ -273,6 +284,8 @@ $carbonDate->isBusinessClosed()  // returns true if the business is closed or an
 ``` 
 
 ### nextBusinessOpen / nextOpenExcludingHolidays
+
+Equivalent to `nextOpen` when `'holidaysAreClosed'` is set to `true`.
 
 Go to next open time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
 exception for a finest setting. [See Holidays section](#Holidays)
@@ -285,6 +298,8 @@ echo $carbonDate->nextBusinessOpen();
 
 ### nextBusinessClose / nextCloseIncludingHolidays
 
+Equivalent to `nextClose` when `'holidaysAreClosed'` is set to `true`.
+
 Go to next closed time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
 exception for a finest setting. [See Holidays section](#Holidays)
 
@@ -296,6 +311,8 @@ echo $carbonDate->nextBusinessClose();
 
 ### previousBusinessOpen / previousOpenExcludingHolidays
 
+Equivalent to `previousOpen` when `'holidaysAreClosed'` is set to `true`.
+
 Go to previous open time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
 exception for a finest setting. [See Holidays section](#Holidays)
 
@@ -306,6 +323,8 @@ echo $carbonDate->previousBusinessOpen();
 ``` 
 
 ### previousBusinessClose / previousCloseIncludingHolidays
+
+Equivalent to `previousClose` when `'holidaysAreClosed'` is set to `true`.
 
 Go to previous closed time (considering all holidays as closed time). But prefer to handle holidays with a dedicated
 exception for a finest setting. [See Holidays section](#Holidays)
@@ -320,7 +339,7 @@ echo $carbonDate->previousBusinessClose();
 
 Methods starting with `currentOr` are followed by:
   - a **time-direction**: `Next` / `Previous`
-  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - optionally `Business` (meaning holidays are automatically considered as closed no matter the `'holidaysAreClosed'` is true or false)
   - a **state** `Open` / `Close`
 
 All `currentOr*` methods return the current date-time if it's in the **state**
@@ -335,7 +354,7 @@ and `BusinessClose` as `CloseIncludingHolidays`.
 
 Methods starting with `openOr` are followed by:
   - a **time-direction**: `Next` / `Previous`
-  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - optionally `Business` (meaning holidays are automatically considered as closed no matter the `'holidaysAreClosed'` is true or false)
   - `Close` (for open-or-next/previous-open, [see currentOr*](#currentOr*))
 
 All `openOr*` methods return the current date-time if it's open, else
@@ -348,7 +367,7 @@ Note: `BusinessClose` can also be written explicitly as `CloseIncludingHolidays`
 
 Methods starting with `closedOr` are followed by:
   - a **time-direction**: `Next` / `Previous`
-  - optionally `Business` (meaning holidays are automatically considered as closed)
+  - optionally `Business` (meaning holidays are automatically considered as closed no matter the `'holidaysAreClosed'` is true or false)
   - `Open` (for closed-or-next/previous-closed, [see currentOr*](#currentOr*))
 
 All `closedOr*` methods return the current date-time if it's closed, else
@@ -487,6 +506,7 @@ To enable business-time globally in Laravel, set default openning hours and holi
     'monday' => ['08:00-12:00', '14:00-19:00'],
     'wednesday' => ['09:00-19:00'],
   ],
+  'holidaysAreClosed' => true,
   'holidays' => [
     'region' => 'us',
     'with' => [
