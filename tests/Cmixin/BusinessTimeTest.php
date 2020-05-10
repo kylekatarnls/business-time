@@ -2,6 +2,7 @@
 
 namespace Tests\Cmixin;
 
+use BusinessTime\DefinitionParser;
 use Carbon\Carbon;
 use Cmixin\BusinessTime;
 use InvalidArgumentException;
@@ -530,7 +531,7 @@ class BusinessTimeTest extends TestCase
         /**
          * @return Carbon $date
          */
-        $getDate = function ($string) use ($carbon) {
+        $getDate = function (string $string) use ($carbon) {
             return $carbon::parse($string);
         };
 
@@ -603,6 +604,110 @@ class BusinessTimeTest extends TestCase
         self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 10:00')->openOrPreviousClose()->format('Y-m-d H:i'));
         self::assertSame('2020-05-06 18:00', $getDate('2020-05-07 12:00')->openOrPreviousClose()->format('Y-m-d H:i'));
         self::assertSame('2020-05-08 10:00', $getDate('2020-05-08 10:00')->openOrPreviousClose()->format('Y-m-d H:i'));
+    }
+
+    public function testHolidaysAreClosedOption()
+    {
+        $carbon = static::CARBON_CLASS;
+
+        $setOption = function (bool $option) use ($carbon) {
+            BusinessTime::enable($carbon, [
+                'monday'            => ['09:00-12:00', '13:00-18:00'],
+                'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+                'wednesday'         => ['09:00-12:00', '13:00-18:00'],
+                'thursday'          => ['09:00-12:00', '13:00-18:00'],
+                'friday'            => ['09:00-12:00', '13:00-18:00'],
+                'exceptions'        => [
+                    '05-07' => ['11:00-12:00'],
+                ],
+                'holidaysAreClosed' => $option,
+                'holidays'          => [
+                    'region' => 'fr-national',
+                    'with'   => [
+                        'foo' => '11/05',
+                    ],
+                ],
+            ]);
+        };
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $setOption(false);
+
+        $this->assertTrue($getDate('2020-05-08 11:15')->isOpen());
+        $this->assertTrue($getDate('2020-05-11 11:15')->isOpen());
+
+        $setOption(true);
+
+        $this->assertFalse($getDate('2020-05-08 11:15')->isOpen());
+        $this->assertFalse($getDate('2020-05-11 11:15')->isOpen());
+    }
+
+    public function testDeprecatedGetSetterParameters()
+    {
+        $deprecation = 'The DefinitionParser::getSetterParameters method is deprecated,'.
+            ' use DefinitionParser::getDefinition() instead which also support split argument list.';
+
+        $this->assertSame([null, null, []], (new DefinitionParser(new BusinessTime(), []))->getSetterParameters());
+
+        $lastError = error_get_last();
+
+        $this->assertSame(E_USER_DEPRECATED, $lastError['type']);
+        $this->assertSame($deprecation, $lastError['message']);
+    }
+
+    public function testHolidaysAreClosedOptionOnTheFly()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'            => ['13:00-18:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'fr-national',
+            ],
+        ]);
+
+        $setOption = function (bool $option) use ($carbon) {
+            $carbon::setOpeningHours([
+                'monday'            => ['09:00-12:00', '13:00-18:00'],
+                'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+                'wednesday'         => ['09:00-12:00', '13:00-18:00'],
+                'thursday'          => ['09:00-12:00', '13:00-18:00'],
+                'friday'            => ['09:00-12:00', '13:00-18:00'],
+                'exceptions'        => [
+                    '05-07' => ['11:00-12:00'],
+                ],
+                'holidaysAreClosed' => $option,
+                'holidays'          => [
+                    'region' => 'fr-national',
+                    'with'   => [
+                        'foo' => '11/05',
+                    ],
+                ],
+            ]);
+        };
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $setOption(false);
+
+        $this->assertTrue($getDate('2020-05-08 11:15')->isOpen());
+        $this->assertTrue($getDate('2020-05-11 11:15')->isOpen());
+
+        $setOption(true);
+
+        $this->assertFalse($getDate('2020-05-08 11:15')->isOpen());
+        $this->assertFalse($getDate('2020-05-11 11:15')->isOpen());
     }
 
     public function testEnableWithNoOpeningHours()

@@ -25,6 +25,7 @@ class MixinBase extends BusinessDay
     const CURRENT_OPEN_RANGE_END_METHOD = 'currentOpenRangeEnd';
 
     const HOLIDAYS_OPTION_KEY = 'holidays';
+    const HOLIDAYS_ARE_CLOSED_OPTION_KEY = 'holidaysAreClosed';
     const REGION_OPTION_KEY = 'region';
     const ADDITIONAL_HOLIDAYS_OPTION_KEY = 'with';
 
@@ -394,19 +395,7 @@ class MixinBase extends BusinessDay
 
     private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
     {
-        $region = null;
-        $holidays = null;
-        $parser = new DefinitionParser(static::class, $defaultOpeningHours);
-
-        if (is_string($defaultOpeningHours)) {
-            [$region, $holidays, $defaultOpeningHours] = array_pad($arguments, 3, null);
-        } elseif (is_array($defaultOpeningHours) && isset($defaultOpeningHours[static::HOLIDAYS_OPTION_KEY])) {
-            [$region, $holidays, $defaultOpeningHours] = $parser->extractHolidaysFromOptions($defaultOpeningHours);
-        }
-
-        $region = $parser->getRegionOrFallback($region, $holidays);
-
-        return [$region, $holidays, $defaultOpeningHours];
+        return (new DefinitionParser(static::class, $defaultOpeningHours))->getDefinition($arguments);
     }
 
     private static function setRegionAndHolidays($carbonClass, $region, $holidays)
