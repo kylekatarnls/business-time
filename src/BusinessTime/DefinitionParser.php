@@ -135,12 +135,20 @@ class DefinitionParser
      */
     public function getDefinition(array $arguments = [])
     {
+        return is_string($this->openingHours)
+            ? array_pad($arguments, 3, null)
+            : $this->getDefinitionFromArray();
+    }
+
+    /**
+     * Convert $this->openingHours (assuming it's an options array) into usable definition to be
+     * distributed to BusinessTime and BusinessDay.
+     *
+     * @return array
+     */
+    private function getDefinitionFromArray()
+    {
         $hours = $this->openingHours;
-
-        if (is_string($hours)) {
-            return array_pad($arguments, 3, null);
-        }
-
         $region = null;
         $holidays = null;
 
