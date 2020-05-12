@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use BusinessTime\DefinitionParser;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Cmixin\BusinessTime;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -740,8 +741,12 @@ class BusinessTimeTest extends TestCase
     {
         $carbon = static::CARBON_CLASS;
         BusinessTime::enable($carbon, [
-            'monday'   => ['09:00-12:00', '13:00-18:00'],
-            'holidays' => [
+            'monday'    => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'   => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00', '13:00-18:00'],
+            'thursday'  => ['09:00-12:00', '13:00-18:00'],
+            'friday'    => ['09:00-12:00', '13:00-18:00'],
+            'holidays'  => [
                 'company-special-holiday' => '07/04',
             ],
         ]);
@@ -753,23 +758,50 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $date = $getDate('2021-04-05 10:00')->addBusinessInterval(true, 4, 'hours');
-
         $calculate = function (string $string, ...$params) use ($getDate) {
             $date = $getDate($string)->addBusinessInterval(...$params);
 
-            return "$date";
+            return $date->microsecond ? $date->format('Y-m-d H:i:s.u') : "$date";
         };
 
         $this->assertSame('2021-04-05 09:00:00', $calculate('2021-04-05 7:00', true));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 10:00', true));
         $this->assertSame('2021-04-05 15:00:00', $calculate('2021-04-05 10:00', true, 4, 'hours'));
         $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 7:00', true, 4, 'hours'));
+        $this->assertSame('2021-04-05 11:59:59', $calculate('2021-04-05 7:00', true, '2 hours 59 minutes 59 seconds'));
+        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, '180 minutes'));
+        $this->assertSame('2021-04-05 11:59:59.999999', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 - 1)));
+        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000)));
+        $this->assertSame('2021-04-05 13:00:00.000001', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 + 1)));
 
         $this->assertSame('2021-04-05 07:00:00', $calculate('2021-04-05 7:00', false));
         $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 10:00', false));
         $this->assertSame('2021-04-05 21:00:00', $calculate('2021-04-05 10:00', false, 4, 'hours'));
         $this->assertSame('2021-04-05 19:00:00', $calculate('2021-04-05 7:00', false, 4, 'hours'));
+
+        // 1 work week (but with 1 holiday in the middle)
+        $this->assertSame('2021-04-13 14:00:00', $calculate('2021-04-05 14:00', true, 5 * 8, 'hours', BusinessTime::HOLIDAYS_ARE_CLOSED));
+
+        // 1 work week (without the option to ignore holidays)
+        $this->assertSame('2021-04-12 14:00:00', $calculate('2021-04-05 14:00', true, 5 * 8, 'hours'));
+
+        // Ignore holidays via settings
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00', '13:00-18:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-18:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        // Setting make 7/4 closed no matter the option is used or not
+        $this->assertSame('2021-04-13 14:00:00', $calculate('2021-04-05 14:00', true, 5 * 8, 'hours', BusinessTime::HOLIDAYS_ARE_CLOSED));
+        $this->assertSame('2021-04-13 14:00:00', $calculate('2021-04-05 14:00', true, 5 * 8, 'hours'));
     }
 
     public function testReadmeCode()
