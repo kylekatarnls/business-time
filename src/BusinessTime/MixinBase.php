@@ -2,15 +2,15 @@
 
 namespace BusinessTime;
 
+use BusinessTime\Exceptions\InvalidArgumentException;
 use Cmixin\BusinessDay;
-use InvalidArgumentException;
 use Spatie\OpeningHours\OpeningHours;
 use SplObjectStorage;
 
 class MixinBase extends BusinessDay
 {
     const HOLIDAYS_ARE_CLOSED = 0x01;
-    const MAX_ITERATION = 1000;
+    const MAX_ITERATION = 8192;
 
     const IS_OPEN_METHOD = 'isOpen';
     const IS_CLOSED_METHOD = 'isClosed';
@@ -99,7 +99,7 @@ class MixinBase extends BusinessDay
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
          *
-         * @throws \InvalidArgumentException if $defaultOpeningHours has an invalid type
+         * @throws InvalidArgumentException if $defaultOpeningHours has an invalid type
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
@@ -265,7 +265,7 @@ class MixinBase extends BusinessDay
                 /**
                  * Get the opening hours of the class/instance.
                  *
-                 * @throws \InvalidArgumentException if Opening hours have not be set
+                 * @throws InvalidArgumentException if Opening hours have not been set
                  *
                  * @return \Spatie\OpeningHours\OpeningHours
                  */
@@ -278,7 +278,7 @@ class MixinBase extends BusinessDay
                         return $hours;
                     }
 
-                    throw new InvalidArgumentException('Opening hours have not be set.');
+                    throw new InvalidArgumentException('Opening hours have not been set.');
                 };
         }
     }
