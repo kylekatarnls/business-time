@@ -54,7 +54,7 @@ BusinessTime::enable(Carbon::class, [
   ],
   // You can use the holidays provided by BusinessDay
   // and mark them as fully closed days using 'holidaysAreClosed'
-  'holidaysAreClosed' => true, 
+  'holidaysAreClosed' => true,
   // Note that exceptions will still have the precedence over
   // the holidaysAreClosed option.
   'holidays' => [
