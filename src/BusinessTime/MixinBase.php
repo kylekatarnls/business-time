@@ -9,6 +9,9 @@ use SplObjectStorage;
 
 class MixinBase extends BusinessDay
 {
+    const HOLIDAYS_ARE_CLOSED = 0x01;
+    const MAX_ITERATION = 1000;
+
     const IS_OPEN_METHOD = 'isOpen';
     const IS_CLOSED_METHOD = 'isClosed';
     const IS_OPEN_HOLIDAYS_METHOD = 'isOpenExcludingHolidays';
@@ -385,7 +388,6 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-
         return function () use ($testMethod, $method) {
             $date = isset($this) ? $this : static::now();
 

@@ -736,6 +736,42 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($date->isBusinessClosed());
     }
 
+    public function testAddBusinessInterval()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'   => ['09:00-12:00', '13:00-18:00'],
+            'holidays' => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $date = $getDate('2021-04-05 10:00')->addBusinessInterval(true, 4, 'hours');
+
+        $calculate = function (string $string, ...$params) use ($getDate) {
+            $date = $getDate($string)->addBusinessInterval(...$params);
+
+            return "$date";
+        };
+
+        $this->assertSame('2021-04-05 09:00:00', $calculate('2021-04-05 7:00', true));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 10:00', true));
+        $this->assertSame('2021-04-05 15:00:00', $calculate('2021-04-05 10:00', true, 4, 'hours'));
+        $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 7:00', true, 4, 'hours'));
+
+        $this->assertSame('2021-04-05 07:00:00', $calculate('2021-04-05 7:00', false));
+        $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 10:00', false));
+        $this->assertSame('2021-04-05 21:00:00', $calculate('2021-04-05 10:00', false, 4, 'hours'));
+        $this->assertSame('2021-04-05 19:00:00', $calculate('2021-04-05 7:00', false, 4, 'hours'));
+    }
+
     public function testReadmeCode()
     {
         $carbon = static::CARBON_CLASS;
