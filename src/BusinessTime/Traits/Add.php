@@ -45,24 +45,30 @@ trait Add
             $past = $resultCandidate < $date;
 
             $getNext = function (CarbonInterface $date, bool $openState) use ($past, $holidaysAreClosed) {
-                $method = $past ? 'previous' : 'next';
+                $methodPrefix = $past ? 'previous' : 'next';
 
                 if ($holidaysAreClosed) {
-                    $method .= 'Business';
+                    $methodPrefix .= 'Business';
                 }
 
-                return $date->copy()->{$method.($past === $openState ? 'Close' : 'Open')}();
+                return $date->copy()->{$methodPrefix.($past === $openState ? 'Close' : 'Open')}();
             };
 
             $isInLimit = function (CarbonInterface $possibleResult, CarbonInterface $limitDate) use ($past) {
-                return $past ? $possibleResult > $limitDate : $possibleResult < $limitDate;
+                return $past ? $possibleResult >= $limitDate : $possibleResult < $limitDate;
             };
 
-            $isInExpectedState = function (CarbonInterface $date) use ($open) {
-                return $date->{'is'.($open ? 'Open' : 'Closed')}();
+            $isInExpectedState = function (CarbonInterface $date) use ($open, $holidaysAreClosed) {
+                $methodPrefix = 'is';
+
+                if ($holidaysAreClosed) {
+                    $methodPrefix .= 'Business';
+                }
+
+                return $date->{$methodPrefix.($open ? 'Open' : 'Closed')}();
             };
 
-            $base = $isInExpectedState($date) ? $date : $getNext($date, $open);
+            $base = $isInExpectedState($date) || ($past && $isInExpectedState($date->copy()->subMicrosecond())) ? $date : $getNext($date, $open);
 
             for ($i = 0; $i < $maxIteration; $i++) {
                 $next = $getNext($base, !$open);
@@ -76,7 +82,7 @@ trait Add
                     return $date->setDateTimeFrom($resultCandidate);
                 }
 
-                $interval = $resultCandidate->diffAsCarbonInterval($next);
+                $interval = $next->diff($resultCandidate, false);
                 $base = $getNext($next, $open);
             }
 

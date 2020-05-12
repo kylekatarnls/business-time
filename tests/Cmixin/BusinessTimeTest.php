@@ -766,6 +766,18 @@ class BusinessTimeTest extends TestCase
 
         $this->assertSame('2021-04-05 09:00:00', $calculate('2021-04-05 7:00', true));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 10:00', true));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 09:00', true, 1, 'hour'));
+        $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 12:00', true, 1, 'hour'));
+        $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 13:00', true, 1, 'hour'));
+        $this->assertSame('2021-04-06 10:00:00', $calculate('2021-04-05 18:00', true, 1, 'hour'));
+        $this->assertSame('2021-04-05 16:00:00', $calculate('2021-04-05 09:00', true, 6, 'hour'));
+        $this->assertSame('2021-04-06 10:00:00', $calculate('2021-04-05 12:00', true, 6, 'hour'));
+        $this->assertSame('2021-04-06 10:00:00', $calculate('2021-04-05 13:00', true, 6, 'hour'));
+        $this->assertSame('2021-04-06 16:00:00', $calculate('2021-04-05 18:00', true, 6, 'hour'));
+        $this->assertSame('2021-04-06 09:00:00', $calculate('2021-04-05 09:00', true, 8, 'hour'));
+        $this->assertSame('2021-04-06 13:00:00', $calculate('2021-04-05 12:00', true, 8, 'hour'));
+        $this->assertSame('2021-04-06 13:00:00', $calculate('2021-04-05 13:00', true, 8, 'hour'));
+        $this->assertSame('2021-04-07 09:00:00', $calculate('2021-04-05 18:00', true, 8, 'hour'));
         $this->assertSame('2021-04-05 15:00:00', $calculate('2021-04-05 10:00', true, 4, 'hours'));
         $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 7:00', true, 4, 'hours'));
         $this->assertSame('2021-04-05 11:59:59', $calculate('2021-04-05 7:00', true, '2 hours 59 minutes 59 seconds'));
@@ -784,6 +796,29 @@ class BusinessTimeTest extends TestCase
 
         // 1 work week (without the option to ignore holidays)
         $this->assertSame('2021-04-12 14:00:00', $calculate('2021-04-05 14:00', true, 5 * 8, 'hours'));
+
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 15:00', true, -4, 'hours'));
+        $this->assertSame('2021-04-02 17:00:00', $calculate('2021-04-05 14:00', true, -5, 'hours'));
+        $this->assertSame('2021-04-05 09:00:00', $calculate('2021-04-05 14:00', true, -4, 'hours'));
+        $this->assertSame('2021-04-02 17:00:00', $calculate('2021-04-05 10:59:59', true, '-2 hours -59 minutes -59 seconds'));
+        $this->assertSame('2021-04-05 09:00:00', $calculate('2021-04-05 11:59:59', true, '-2 hours -59 minutes -59 seconds'));
+        $this->assertSame('2021-04-02 17:00:01', $calculate('2021-04-05 11:00:00', true, '-2 hours -59 minutes -59 seconds'));
+        $this->assertSame('2021-04-05 09:00:01', $calculate('2021-04-05 12:00:00', true, '-2 hours -59 minutes -59 seconds'));
+        $this->assertSame('2021-04-02 15:00:00', $calculate('2021-04-05 7:00', true, '-180 minutes'));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 13:00:00', true, '-180 minutes'));
+        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(1 - 3 * 60 * 60 * 1000000)));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(-3 * 60 * 60 * 1000000)));
+        $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(-1 - 3 * 60 * 60 * 1000000)));
+
+        $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 21:00', false, -4, 'hours'));
+        $this->assertSame('2021-04-05 06:00:00', $calculate('2021-04-05 15:00', false, -4, 'hours'));
+        $this->assertSame('2021-04-05 07:00:00', $calculate('2021-04-05 19:00', false, -4, 'hours'));
+
+        // 1 work week (but with 1 holiday in the middle)
+        $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-13 14:00', true, -5 * 8, 'hours', BusinessTime::HOLIDAYS_ARE_CLOSED));
+
+        // 1 work week (without the option to ignore holidays)
+        $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-12 14:00', true, -5 * 8, 'hours'));
 
         // Ignore holidays via settings
         $carbon = static::CARBON_CLASS;
