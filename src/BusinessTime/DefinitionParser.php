@@ -110,12 +110,12 @@ class DefinitionParser
      */
     public function getEmbeddedOpeningHours($carbonClass, array $arguments = [])
     {
-        [$region, $holidays, $openingHours] = $this->getDefinition($arguments);
+        [$region, $holidays, $openHours] = $this->getDefinition($arguments);
         /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
-        $openingHours = $carbonClass::convertOpeningHours($openingHours);
+        $openHours = $carbonClass::convertOpeningHours($openHours);
 
         if ($region) {
-            $openingHours->setData([
+            $openHours->setData([
                 $this->mixin::HOLIDAYS_OPTION_KEY => [
                     $this->mixin::REGION_OPTION_KEY              => $region,
                     $this->mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
@@ -123,7 +123,7 @@ class DefinitionParser
             ]);
         }
 
-        return $openingHours;
+        return $openHours;
     }
 
     /**
