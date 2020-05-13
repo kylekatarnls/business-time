@@ -87,10 +87,11 @@ trait AddAndSubtract
             $date = isset($this) ? $this : static::now();
             $maxIteration = $date->getMaxIteration();
 
-            $interval = CarbonInterval::make($unit
-                ? "$interval ".static::pluralUnit($unit)
-                : $interval
-            ) ?: CarbonInterval::create(0);
+            if ($unit) {
+                $interval = "$interval ".static::pluralUnit($unit);
+            }
+
+            $interval = CarbonInterval::make($interval) ?: CarbonInterval::create(0);
 
             if ($inverted) {
                 $interval->invert();
