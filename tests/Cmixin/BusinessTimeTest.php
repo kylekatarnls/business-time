@@ -1023,12 +1023,26 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime()));
         $this->assertSame('2021-04-05 21:00:00', $format($getDate('2021-04-05 10:00')->addClosedTime(4, 'hours')));
         $this->assertSame('2021-04-05 19:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime('4 hours')));
+        $this->assertSame('2021-04-05 21:00:00', $format($getDate('2021-04-05 12:00')->addClosedHours(4)));
+        $this->assertSame('2021-04-05 18:30:00', $format($getDate('2021-04-05 06:00')->addClosedMinutes(4 * 60 + 30)));
 
         // 1 work week (but with 1 holiday in the middle)
         $this->assertSame('2021-04-13 14:00:00', $format($getDate('2021-04-05 14:00')->addOpenHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
 
         // 1 work week (without the option to ignore holidays)
         $this->assertSame('2021-04-12 14:00:00', $format($getDate('2021-04-05 14:00')->addOpenHours(5 * 8)));
+
+        $this->assertSame('2021-04-05 10:00:00', $format($getDate('2021-04-05 15:00')->subOpenTime(4, 'hours')));
+        $this->assertSame('2021-04-02 17:00:00', $format($getDate('2021-04-05 14:00')->subOpenHours(5)));
+        $this->assertSame('2021-04-05 09:00:00', $format($getDate('2021-04-05 14:00')->subOpenMinutes(4 * 60)));
+        $this->assertSame('2021-04-02 17:00:00', $format($getDate('2021-04-05 10:59:59')->subOpenTime('2 hours 59 minutes 59 seconds')));
+        $this->assertSame('2021-04-05 14:59:58', $format($getDate('2021-04-05 10:59:59')->subOpenTime('-2 hours -59 minutes -59 seconds')));
+        $this->assertSame('2021-04-05 10:00:00.000001', $format($getDate('2021-04-05 14:00:00')->subOpenTime(CarbonInterval::microseconds(3 * 60 * 60 * 1000000 - 1))));
+        $this->assertSame('2021-04-05 12:00:00', $format($getDate('2021-04-05 21:00')->subClosedTime(4, 'hours')));
+        $this->assertSame('2021-04-05 06:00:00', $format($getDate('2021-04-05 15:00')->subClosedHours(4)));
+        $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 19:00')->subClosedMinutes(4 * 60)));
+        $this->assertSame('2021-04-05 14:00:00', $format($getDate('2021-04-13 14:00')->subOpenHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
+        $this->assertSame('2021-04-11 10:00:00', $format($getDate('2021-04-13 14:00')->subClosedHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
     }
 
     public function testReadmeCode()
