@@ -209,7 +209,7 @@ namespace Carbon
          */
         public function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:167
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
         }
 
         /**
@@ -227,7 +227,7 @@ namespace Carbon
          */
         public function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:194
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
         }
 
         /**
@@ -243,7 +243,7 @@ namespace Carbon
          */
         public function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:218
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
         }
 
         /**
@@ -259,7 +259,7 @@ namespace Carbon
          */
         public function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:242
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
         }
 
         /**
@@ -275,7 +275,7 @@ namespace Carbon
          */
         public function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:266
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -291,7 +291,7 @@ namespace Carbon
          */
         public function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
         }
 
         /**
@@ -306,7 +306,7 @@ namespace Carbon
          */
         public function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
         }
 
         /**
@@ -321,7 +321,7 @@ namespace Carbon
          */
         public function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
         }
 
         /**
@@ -336,7 +336,7 @@ namespace Carbon
          */
         public function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
         }
 
         /**
@@ -351,7 +351,7 @@ namespace Carbon
          */
         public function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
         }
 
         /**
@@ -366,7 +366,7 @@ namespace Carbon
          */
         public function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
         }
 
         /**
@@ -381,7 +381,7 @@ namespace Carbon
          */
         public function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
         }
 
         /**
@@ -396,7 +396,7 @@ namespace Carbon
          */
         public function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:451
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
         }
 
         /**
@@ -411,7 +411,7 @@ namespace Carbon
          */
         public function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:474
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
         }
 
         /**
@@ -1301,7 +1301,7 @@ namespace Carbon
          */
         public function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:167
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
         }
 
         /**
@@ -1319,7 +1319,7 @@ namespace Carbon
          */
         public function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:194
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
         }
 
         /**
@@ -1335,7 +1335,7 @@ namespace Carbon
          */
         public function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:218
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
         }
 
         /**
@@ -1351,7 +1351,7 @@ namespace Carbon
          */
         public function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:242
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
         }
 
         /**
@@ -1367,7 +1367,7 @@ namespace Carbon
          */
         public function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:266
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -1383,7 +1383,7 @@ namespace Carbon
          */
         public function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
         }
 
         /**
@@ -1398,7 +1398,7 @@ namespace Carbon
          */
         public function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
         }
 
         /**
@@ -1413,7 +1413,7 @@ namespace Carbon
          */
         public function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
         }
 
         /**
@@ -1428,7 +1428,7 @@ namespace Carbon
          */
         public function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
         }
 
         /**
@@ -1443,7 +1443,7 @@ namespace Carbon
          */
         public function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
         }
 
         /**
@@ -1458,7 +1458,7 @@ namespace Carbon
          */
         public function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
         }
 
         /**
@@ -1473,7 +1473,7 @@ namespace Carbon
          */
         public function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
         }
 
         /**
@@ -1488,7 +1488,7 @@ namespace Carbon
          */
         public function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:451
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
         }
 
         /**
@@ -1503,7 +1503,7 @@ namespace Carbon
          */
         public function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:474
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
         }
 
         /**
@@ -2393,7 +2393,7 @@ namespace Illuminate\Support
          */
         public function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:167
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
         }
 
         /**
@@ -2411,7 +2411,7 @@ namespace Illuminate\Support
          */
         public function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:194
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
         }
 
         /**
@@ -2427,7 +2427,7 @@ namespace Illuminate\Support
          */
         public function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:218
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
         }
 
         /**
@@ -2443,7 +2443,7 @@ namespace Illuminate\Support
          */
         public function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:242
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
         }
 
         /**
@@ -2459,7 +2459,7 @@ namespace Illuminate\Support
          */
         public function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:266
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -2475,7 +2475,7 @@ namespace Illuminate\Support
          */
         public function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
         }
 
         /**
@@ -2490,7 +2490,7 @@ namespace Illuminate\Support
          */
         public function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
         }
 
         /**
@@ -2505,7 +2505,7 @@ namespace Illuminate\Support
          */
         public function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
         }
 
         /**
@@ -2520,7 +2520,7 @@ namespace Illuminate\Support
          */
         public function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
         }
 
         /**
@@ -2535,7 +2535,7 @@ namespace Illuminate\Support
          */
         public function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
         }
 
         /**
@@ -2550,7 +2550,7 @@ namespace Illuminate\Support
          */
         public function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
         }
 
         /**
@@ -2565,7 +2565,7 @@ namespace Illuminate\Support
          */
         public function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
         }
 
         /**
@@ -2580,7 +2580,7 @@ namespace Illuminate\Support
          */
         public function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:451
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
         }
 
         /**
@@ -2595,7 +2595,7 @@ namespace Illuminate\Support
          */
         public function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:474
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
         }
 
         /**
@@ -3485,7 +3485,7 @@ namespace Illuminate\Support\Facades
          */
         public function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:167
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
         }
 
         /**
@@ -3503,7 +3503,7 @@ namespace Illuminate\Support\Facades
          */
         public function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:194
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
         }
 
         /**
@@ -3519,7 +3519,7 @@ namespace Illuminate\Support\Facades
          */
         public function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:218
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
         }
 
         /**
@@ -3535,7 +3535,7 @@ namespace Illuminate\Support\Facades
          */
         public function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:242
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
         }
 
         /**
@@ -3551,7 +3551,7 @@ namespace Illuminate\Support\Facades
          */
         public function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:266
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -3567,7 +3567,7 @@ namespace Illuminate\Support\Facades
          */
         public function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
         }
 
         /**
@@ -3582,7 +3582,7 @@ namespace Illuminate\Support\Facades
          */
         public function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
         }
 
         /**
@@ -3597,7 +3597,7 @@ namespace Illuminate\Support\Facades
          */
         public function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
         }
 
         /**
@@ -3612,7 +3612,7 @@ namespace Illuminate\Support\Facades
          */
         public function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
         }
 
         /**
@@ -3627,7 +3627,7 @@ namespace Illuminate\Support\Facades
          */
         public function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
         }
 
         /**
@@ -3642,7 +3642,7 @@ namespace Illuminate\Support\Facades
          */
         public function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
         }
 
         /**
@@ -3657,7 +3657,7 @@ namespace Illuminate\Support\Facades
          */
         public function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
         }
 
         /**
@@ -3672,7 +3672,7 @@ namespace Illuminate\Support\Facades
          */
         public function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:451
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
         }
 
         /**
@@ -3687,7 +3687,7 @@ namespace Illuminate\Support\Facades
          */
         public function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:474
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
         }
 
         /**
