@@ -66,7 +66,7 @@ trait AddAndSubtract
      */
     public function applyBusinessInterval()
     {
-        $holidaysAreClosedOption = static::HOLIDAYS_ARE_CLOSED;
+        $closed = static::HOLIDAYS_ARE_CLOSED;
 
         /**
          * Shift current time with a given interval taking into account only open time
@@ -82,13 +82,12 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
-            use ($holidaysAreClosedOption) {
+        return function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0) use ($closed) {
             $calculator = new Calculator(
                 isset($this) ? $this : static::now(),
                 (new IntervalComposer(static::class, $inverted, $interval, $unit))->getInterval(),
                 $open,
-                $options & $holidaysAreClosedOption
+                $options & $closed
             );
 
             return $calculator->calculate($this->getMaxIteration());

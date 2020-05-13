@@ -34,14 +34,6 @@ class Calculator
      */
     protected $past;
 
-    /**
-     * Calculator constructor.
-     *
-     * @param CarbonInterface $date
-     * @param CarbonInterval $interval
-     * @param bool $open
-     * @param bool $holidaysAreClosed
-     */
     public function __construct(CarbonInterface $date, CarbonInterval $interval, bool $open, bool $holidaysAreClosed)
     {
         $this->date = $date;
