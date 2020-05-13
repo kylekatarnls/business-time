@@ -5,7 +5,8 @@ namespace BusinessTime\Traits;
 trait ClosedOr
 {
     /**
-     * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+     * Return current date-time if it's closed, else go to the next open date
+     * and time that is also not an holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
      *
@@ -14,7 +15,8 @@ trait ClosedOr
     public function closedOrNextOpenExcludingHolidays()
     {
         /**
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -24,7 +26,8 @@ trait ClosedOr
     }
 
     /**
-     * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+     * Return current date-time if it's closed, else go to the next open date
+     * and time that is also not an holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
      *
@@ -33,7 +36,8 @@ trait ClosedOr
     public function closedOrNextBusinessOpen()
     {
         /**
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -43,7 +47,8 @@ trait ClosedOr
     }
 
     /**
-     * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+     * Return current date-time if it's closed, else go to the previous open date
+     * and time that is also not an holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
      *
@@ -52,7 +57,8 @@ trait ClosedOr
     public function closedOrPreviousBusinessOpen()
     {
         /**
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -62,7 +68,8 @@ trait ClosedOr
     }
 
     /**
-     * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+     * Return current date-time if it's closed, else go to the previous open date
+     * and time that is also not an holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
      *
@@ -71,7 +78,8 @@ trait ClosedOr
     public function closedOrPreviousOpenExcludingHolidays()
     {
         /**
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *

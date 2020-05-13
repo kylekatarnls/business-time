@@ -3,6 +3,7 @@
 namespace BusinessTime\Traits;
 
 use BusinessTime\Exceptions\InvalidArgumentException;
+use BusinessTime\IntervalComposer;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
 use Cmixin\BusinessTime;
@@ -86,16 +87,7 @@ trait AddAndSubtract
             /** @var CarbonInterface $date */
             $date = isset($this) ? $this : static::now();
             $maxIteration = $date->getMaxIteration();
-
-            if ($unit) {
-                $interval = "$interval ".static::pluralUnit($unit);
-            }
-
-            $interval = CarbonInterval::make($interval) ?: CarbonInterval::create(0);
-
-            if ($inverted) {
-                $interval->invert();
-            }
+            $interval = (new IntervalComposer(static::class, $inverted, $interval, $unit))->getInterval();
 
             $resultCandidate = $date->copy()->add($interval);
             $past = $resultCandidate < $date;

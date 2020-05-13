@@ -737,6 +737,9 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($date->isBusinessClosed());
     }
 
+    /**
+     * @group i
+     */
     public function testAddBusinessInterval()
     {
         $carbon = static::CARBON_CLASS;
@@ -782,9 +785,9 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 7:00', true, 4, 'hours'));
         $this->assertSame('2021-04-05 11:59:59', $calculate('2021-04-05 7:00', true, '2 hours 59 minutes 59 seconds'));
         $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, '180 minutes'));
-        $this->assertSame('2021-04-05 11:59:59.999999', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 - 1)));
-        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000)));
-        $this->assertSame('2021-04-05 13:00:00.000001', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 + 1)));
+        $this->assertSame('2021-04-05 11:59:59.999999', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)));
+        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60)));
+        $this->assertSame('2021-04-05 13:00:00.000001', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)));
 
         $this->assertSame('2021-04-05 07:00:00', $calculate('2021-04-05 7:00', false));
         $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 10:00', false));
@@ -806,9 +809,9 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:01', $calculate('2021-04-05 12:00:00', true, '-2 hours -59 minutes -59 seconds'));
         $this->assertSame('2021-04-02 15:00:00', $calculate('2021-04-05 7:00', true, '-180 minutes'));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 13:00:00', true, '-180 minutes'));
-        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(1 - 3 * 60 * 60 * 1000000)));
-        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(-3 * 60 * 60 * 1000000)));
-        $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(-1 - 3 * 60 * 60 * 1000000)));
+        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)->invert()));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->invert()));
+        $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)->invert()));
 
         $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 21:00', false, -4, 'hours'));
         $this->assertSame('2021-04-05 06:00:00', $calculate('2021-04-05 15:00', false, -4, 'hours'));
@@ -886,9 +889,9 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 14:00:00', $calculate('2021-04-05 7:00', true, -4, 'hours'));
         $this->assertSame('2021-04-05 11:59:59', $calculate('2021-04-05 7:00', true, '-2 hours -59 minutes -59 seconds'));
         $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, '-180 minutes'));
-        $this->assertSame('2021-04-05 11:59:59.999999', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(-3 * 60 * 60 * 1000000 + 1)));
-        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(-3 * 60 * 60 * 1000000)));
-        $this->assertSame('2021-04-05 13:00:00.000001', $calculate('2021-04-05 7:00', true, CarbonInterval::microseconds(-3 * 60 * 60 * 1000000 - 1)));
+        $this->assertSame('2021-04-05 11:59:59.999999', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)->invert()));
+        $this->assertSame('2021-04-05 13:00:00', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60)->invert()));
+        $this->assertSame('2021-04-05 13:00:00.000001', $calculate('2021-04-05 7:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)->invert()));
 
         $this->assertSame('2021-04-05 07:00:00', $calculate('2021-04-05 7:00', false));
         $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 10:00', false));
@@ -910,9 +913,9 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:01', $calculate('2021-04-05 12:00:00', true, '2 hours 59 minutes 59 seconds'));
         $this->assertSame('2021-04-02 15:00:00', $calculate('2021-04-05 7:00', true, '180 minutes'));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 13:00:00', true, '180 minutes'));
-        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 - 1)));
-        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000)));
-        $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::microseconds(3 * 60 * 60 * 1000000 + 1)));
+        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)));
+        $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)));
+        $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)));
 
         $this->assertSame('2021-04-05 12:00:00', $calculate('2021-04-05 21:00', false, 4, 'hours'));
         $this->assertSame('2021-04-05 06:00:00', $calculate('2021-04-05 15:00', false, 4, 'hours'));
@@ -1039,7 +1042,7 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:00', $format($getDate('2021-04-05 14:00')->subOpenMinutes(4 * 60)));
         $this->assertSame('2021-04-02 17:00:00', $format($getDate('2021-04-05 10:59:59')->subOpenTime('2 hours 59 minutes 59 seconds')));
         $this->assertSame('2021-04-05 14:59:58', $format($getDate('2021-04-05 10:59:59')->subOpenTime('-2 hours -59 minutes -59 seconds')));
-        $this->assertSame('2021-04-05 10:00:00.000001', $format($getDate('2021-04-05 14:00:00')->subOpenTime(CarbonInterval::microseconds(3 * 60 * 60 * 1000000 - 1))));
+        $this->assertSame('2021-04-05 10:00:00.000001', $format($getDate('2021-04-05 14:00:00')->subOpenTime(CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999))));
         $this->assertSame('2021-04-05 12:00:00', $format($getDate('2021-04-05 21:00')->subClosedTime(4, 'hours')));
         $this->assertSame('2021-04-05 06:00:00', $format($getDate('2021-04-05 15:00')->subClosedHours(4)));
         $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 19:00')->subClosedMinutes(4 * 60)));
