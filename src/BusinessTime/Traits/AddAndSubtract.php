@@ -383,7 +383,7 @@ trait AddAndSubtract
             /** @var CarbonInterface $date */
             $date = isset($this) ? $this : static::now();
 
-            return $date->subClosedTime(false, $numberOfMinutes, 'minutes', $options);
+            return $date->subClosedTime($numberOfMinutes, 'minutes', $options);
         };
     }
 
@@ -475,7 +475,7 @@ trait AddAndSubtract
             /** @var CarbonInterface $date */
             $date = isset($this) ? $this : static::now();
 
-            return $date->subClosedTime(false, $numberOfHours, 'hours', $options);
+            return $date->subClosedTime($numberOfHours, 'hours', $options);
         };
     }
 }
