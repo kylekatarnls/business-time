@@ -2,9 +2,8 @@
 
 namespace BusinessTime\Traits;
 
-use BusinessTime\Exceptions\InvalidArgumentException;
+use BusinessTime\Calculator;
 use BusinessTime\IntervalComposer;
-use Carbon\CarbonInterface;
 use Cmixin\BusinessTime;
 
 trait AddAndSubtract
@@ -31,8 +30,8 @@ trait AddAndSubtract
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        return function (int $maxIteration) use ($mixin) {
-            $mixin->setMaxIteration($maxIteration);
+        return function (int $maximum) use ($mixin) {
+            $mixin->setMaxIteration($maximum);
         };
     }
 
@@ -74,66 +73,25 @@ trait AddAndSubtract
          * (if $open is true) or only closed time (if $open is false).
          *
          * @param bool                          $inverted subtract the interval if set to true.
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0) use ($holidaysAreClosedOption) {
-            $holidaysAreClosed = $options & $holidaysAreClosedOption;
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-            $maxIteration = $date->getMaxIteration();
-            $interval = (new IntervalComposer(static::class, $inverted, $interval, $unit))->getInterval();
+        return function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
+            use ($holidaysAreClosedOption) {
+            $calculator = new Calculator(
+                isset($this) ? $this : static::now(),
+                (new IntervalComposer(static::class, $inverted, $interval, $unit))->getInterval(),
+                $open,
+                $options & $holidaysAreClosedOption
+            );
 
-            $resultCandidate = $date->copy()->add($interval);
-            $past = $resultCandidate < $date;
-
-            $getNext = function (CarbonInterface $date, bool $openState) use ($past, $holidaysAreClosed) {
-                $methodPrefix = $past ? 'previous' : 'next';
-
-                if ($holidaysAreClosed) {
-                    $methodPrefix .= 'Business';
-                }
-
-                return $date->copy()->{$methodPrefix.($past === $openState ? 'Close' : 'Open')}();
-            };
-
-            $isInLimit = function (CarbonInterface $possibleResult, CarbonInterface $limitDate) use ($past) {
-                return $past ? $possibleResult >= $limitDate : $possibleResult < $limitDate;
-            };
-
-            $isInExpectedState = function (CarbonInterface $date) use ($open, $holidaysAreClosed) {
-                $methodPrefix = 'is';
-
-                if ($holidaysAreClosed) {
-                    $methodPrefix .= 'Business';
-                }
-
-                return $date->{$methodPrefix.($open ? 'Open' : 'Closed')}();
-            };
-
-            $base = $isInExpectedState($date) || ($past && $isInExpectedState($date->copy()->subMicrosecond())) ? $date : $getNext($date, $open);
-
-            for ($i = 0; $i < $maxIteration; $i++) {
-                $next = $getNext($base, !$open);
-                $resultCandidate = $base->copy()->add($interval);
-
-                if (!$isInExpectedState($base)) {
-                    $next = $getNext($base, !$open);
-                }
-
-                if ($isInLimit($resultCandidate, $next)) {
-                    return $date->setDateTimeFrom($resultCandidate);
-                }
-
-                $interval = $next->diff($resultCandidate, false);
-                $base = $getNext($next, $open);
-            }
-
-            throw new InvalidArgumentException('Maximum iteration ('.$maxIteration.') has been reached.');
+            return $calculator->calculate($this->getMaxIteration());
         };
     }
 
@@ -149,18 +107,18 @@ trait AddAndSubtract
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function (bool $open, $interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->applyBusinessInterval(false, $open, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->applyBusinessInterval(false, $open, $interval, $unit, $options);
         };
     }
 
@@ -176,18 +134,18 @@ trait AddAndSubtract
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function (bool $open, $interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->applyBusinessInterval(true, $open, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->applyBusinessInterval(true, $open, $interval, $unit, $options);
         };
     }
 
@@ -203,15 +161,14 @@ trait AddAndSubtract
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function ($interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addBusinessInterval(true, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->addBusinessInterval(true, $interval, $unit, $options);
         };
     }
 
@@ -227,15 +184,14 @@ trait AddAndSubtract
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function ($interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subBusinessInterval(true, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->subBusinessInterval(true, $interval, $unit, $options);
         };
     }
 
@@ -251,15 +207,14 @@ trait AddAndSubtract
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function ($interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addBusinessInterval(false, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->addBusinessInterval(false, $interval, $unit, $options);
         };
     }
 
@@ -275,15 +230,14 @@ trait AddAndSubtract
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         return function ($interval = null, $unit = null, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subBusinessInterval(false, $interval, $unit, $options);
+            return (isset($this) ? $this : static::now())
+                ->subBusinessInterval(false, $interval, $unit, $options);
         };
     }
 
@@ -294,6 +248,8 @@ trait AddAndSubtract
      */
     public function addOpenMinutes()
     {
+        $unit = static::MINUTE_UNIT;
+
         /**
          * Add the given number of minutes taking into account only open time.
          *
@@ -302,11 +258,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addOpenTime($numberOfMinutes, 'minutes', $options);
+        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->addOpenTime($numberOfMinutes, $unit, $options);
         };
     }
 
@@ -317,6 +271,8 @@ trait AddAndSubtract
      */
     public function subOpenMinutes()
     {
+        $unit = static::MINUTE_UNIT;
+
         /**
          * Subtract the given number of minutes taking into account only open time.
          *
@@ -325,11 +281,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subOpenTime($numberOfMinutes, 'minutes', $options);
+        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->subOpenTime($numberOfMinutes, $unit, $options);
         };
     }
 
@@ -340,6 +294,8 @@ trait AddAndSubtract
      */
     public function addClosedMinutes()
     {
+        $unit = static::MINUTE_UNIT;
+
         /**
          * Add the given number of minutes taking into account only closed time.
          *
@@ -348,11 +304,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addClosedTime($numberOfMinutes, 'minutes', $options);
+        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->addClosedTime($numberOfMinutes, $unit, $options);
         };
     }
 
@@ -363,6 +317,8 @@ trait AddAndSubtract
      */
     public function subClosedMinutes()
     {
+        $unit = static::MINUTE_UNIT;
+
         /**
          * Subtract the given number of minutes taking into account only closed time.
          *
@@ -371,11 +327,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subClosedTime($numberOfMinutes, 'minutes', $options);
+        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->subClosedTime($numberOfMinutes, $unit, $options);
         };
     }
 
@@ -386,6 +340,8 @@ trait AddAndSubtract
      */
     public function addOpenHours()
     {
+        $unit = static::HOUR_UNIT;
+
         /**
          * Add the given number of hours taking into account only open time.
          *
@@ -394,11 +350,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addOpenTime($numberOfHours, 'hours', $options);
+        return function (int $numberOfHours, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->addOpenTime($numberOfHours, $unit, $options);
         };
     }
 
@@ -409,6 +363,8 @@ trait AddAndSubtract
      */
     public function subOpenHours()
     {
+        $unit = static::HOUR_UNIT;
+
         /**
          * Subtract the given number of hours taking into account only open time.
          *
@@ -417,11 +373,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subOpenTime($numberOfHours, 'hours', $options);
+        return function (int $numberOfHours, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->subOpenTime($numberOfHours, $unit, $options);
         };
     }
 
@@ -432,6 +386,8 @@ trait AddAndSubtract
      */
     public function addClosedHours()
     {
+        $unit = static::HOUR_UNIT;
+
         /**
          * Add the given number of hours taking into account only closed time.
          *
@@ -440,11 +396,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->addClosedTime($numberOfHours, 'hours', $options);
+        return function (int $numberOfHours, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->addClosedTime($numberOfHours, $unit, $options);
         };
     }
 
@@ -455,6 +409,8 @@ trait AddAndSubtract
      */
     public function subClosedHours()
     {
+        $unit = static::HOUR_UNIT;
+
         /**
          * Subtract the given number of hours taking into account only closed time.
          *
@@ -463,11 +419,9 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) {
-            /** @var CarbonInterface $date */
-            $date = isset($this) ? $this : static::now();
-
-            return $date->subClosedTime($numberOfHours, 'hours', $options);
+        return function (int $numberOfHours, int $options = 0) use ($unit) {
+            return (isset($this) ? $this : static::now())
+                ->subClosedTime($numberOfHours, $unit, $options);
         };
     }
 }

@@ -12,6 +12,9 @@ class MixinBase extends BusinessDay
     const HOLIDAYS_ARE_CLOSED = 0x01;
     const MAX_ITERATION = 8192;
 
+    const HOUR_UNIT = 'hours';
+    const MINUTE_UNIT = 'minutes';
+
     const IS_OPEN_METHOD = 'isOpen';
     const IS_CLOSED_METHOD = 'isClosed';
     const IS_OPEN_HOLIDAYS_METHOD = 'isOpenExcludingHolidays';
