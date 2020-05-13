@@ -1023,6 +1023,8 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime()));
         $this->assertSame('2021-04-05 21:00:00', $format($getDate('2021-04-05 10:00')->addClosedTime(4, 'hours')));
         $this->assertSame('2021-04-05 19:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime('4 hours')));
+        $this->assertSame('2021-04-05 19:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime('4h')));
+        $this->assertSame('2021-04-05 19:00:00', $format($getDate('2021-04-05 7:00')->addClosedTime('PT4H')));
         $this->assertSame('2021-04-05 21:00:00', $format($getDate('2021-04-05 12:00')->addClosedHours(4)));
         $this->assertSame('2021-04-05 18:30:00', $format($getDate('2021-04-05 06:00')->addClosedMinutes(4 * 60 + 30)));
 
