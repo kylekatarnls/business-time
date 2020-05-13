@@ -44,20 +44,19 @@ class Calculator
 
     public function calculate($maximum = INF): CarbonInterface
     {
-        $date = $this->date;
-        $interval = $this->interval;
-        $resultCandidate = $date->copy()->add($interval);
-        $this->past = $resultCandidate < $date;
-        $base = $this->getStartDate($date);
+        $remainingInterval = $this->interval;
+        $resultCandidate = $this->date->copy()->add($remainingInterval);
+        $this->past = $resultCandidate < $this->date;
+        $base = $this->getStartDate($this->date);
 
         for ($i = 0; $i < $maximum; $i++) {
-            [$next, $resultCandidate] = $this->getNextAndCandidate($base, $interval);
+            [$next, $resultCandidate] = $this->getNextAndCandidate($base, $remainingInterval);
 
             if ($this->isInLimit($resultCandidate, $next)) {
-                return $date->setDateTimeFrom($resultCandidate);
+                return $this->date->setDateTimeFrom($resultCandidate);
             }
 
-            $interval = $next->diff($resultCandidate, false);
+            $remainingInterval = $next->diff($resultCandidate, false);
             $base = $this->getNextInTakenState($next);
         }
 

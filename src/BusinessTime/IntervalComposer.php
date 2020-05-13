@@ -19,21 +19,28 @@ class IntervalComposer
         $this->unit = $unit;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     *
+     * @throws \Exception
+     *
+     * @return CarbonInterval
+     */
     public function getInterval(): CarbonInterval
     {
-        $interval = $this->interval;
+        $intervalResult = $this->interval;
 
         if ($this->unit) {
-            $className = $this->className;
-            $interval = "$interval ".$className::pluralUnit($this->unit);
+            $class = $this->className;
+            $intervalResult = "$intervalResult ".$class::pluralUnit($this->unit);
         }
 
-        $interval = CarbonInterval::make($interval) ?: CarbonInterval::create(0);
+        $intervalResult = CarbonInterval::make($intervalResult) ?: CarbonInterval::create(0);
 
         if ($this->inverted) {
-            $interval->invert();
+            $intervalResult->invert();
         }
 
-        return $interval;
+        return $intervalResult;
     }
 }
