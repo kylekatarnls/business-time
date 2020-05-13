@@ -11,7 +11,7 @@ class IntervalComposer
     private $unit;
     private $className;
 
-    public function __construct(string $className, bool $inverted, $interval = null, $unit = null)
+    public function __construct(string $className, bool $inverted, $interval, $unit)
     {
         $this->className = $className;
         $this->inverted = $inverted;

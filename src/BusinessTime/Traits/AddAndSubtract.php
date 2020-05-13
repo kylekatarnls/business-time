@@ -5,7 +5,6 @@ namespace BusinessTime\Traits;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use BusinessTime\IntervalComposer;
 use Carbon\CarbonInterface;
-use Carbon\CarbonInterval;
 use Cmixin\BusinessTime;
 
 trait AddAndSubtract
