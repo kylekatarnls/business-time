@@ -3,6 +3,7 @@
 namespace Cmixin;
 
 use BusinessTime\MixinBase;
+use BusinessTime\Traits\AddAndSubtract;
 use BusinessTime\Traits\ClosedOr;
 use BusinessTime\Traits\CurrentOr;
 use BusinessTime\Traits\Holidays;
@@ -13,6 +14,7 @@ use BusinessTime\Traits\Range;
 
 class BusinessTime extends MixinBase
 {
+    use AddAndSubtract;
     use ClosedOr;
     use CurrentOr;
     use Holidays;

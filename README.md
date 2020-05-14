@@ -54,7 +54,7 @@ BusinessTime::enable(Carbon::class, [
   ],
   // You can use the holidays provided by BusinessDay
   // and mark them as fully closed days using 'holidaysAreClosed'
-  'holidaysAreClosed' => true, 
+  'holidaysAreClosed' => true,
   // Note that exceptions will still have the precedence over
   // the holidaysAreClosed option.
   'holidays' => [
@@ -219,6 +219,183 @@ Go to previous closed-business time.
 Carbon::previousClose()       // go to previous close time from now
 $carbonDate->previousClose()  // go to previous close time from $carbonDate
 ``` 
+
+### addOpenTime
+
+Add the given interval of time taking only into account open ranges of hours.
+
+For instance, if the current day has `["09:00-12:00", "13:30-17:00"]` open range
+of hours, adding 2 open hours when it's 11am will actually add 3 hours and 30
+minutes (step over the midday break: an hour and a half) and so set the time to 
+14:30.
+
+```php
+Carbon::addOpenTime('2 hours and 30 minutes')      // add 2 hours and 30 minutes to now
+$carbonDate->addOpenTime('2 hours and 30 minutes') // add 2 hours and 30 minutes to $carbonDate
+
+// Can be used with the same interval definitions than add/sub methods of Carbon
+$carbonDate->addOpenTime(235, 'seconds')
+$carbonDate->addOpenTime(new DateInterval('PT1H23M45S'))
+$carbonDate->addOpenTime(CarbonInterval::hours(3)->minutes(20))
+
+$carbonDate->addOpenTime('2 hours and 30 minutes', BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 2 hours and 30 minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### addOpenHours
+
+Add the given number of hours taking only into account open ranges of hours.
+
+```php
+Carbon::addOpenHours(3)      // add 3 open hours to now
+$carbonDate->addOpenHours(3) // add 3 open hours to $carbonDate
+
+
+$carbonDate->addOpenHours(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 3 open hours considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### addOpenMinutes
+
+Add the given number of minutes taking only into account open ranges of hours.
+
+```php
+Carbon::addOpenMinutes(3)      // add 3 open minutes to now
+$carbonDate->addOpenMinutes(3) // add 3 open minutes to $carbonDate
+
+
+$carbonDate->addOpenMinutes(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 3 open minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### addClosedTime
+
+Add the given interval of time taking only into account closed ranges of hours.
+
+```php
+Carbon::addClosedTime('2 hours and 30 minutes')      // add 2 hours and 30 minutes to now
+$carbonDate->addClosedTime('2 hours and 30 minutes') // add 2 hours and 30 minutes to $carbonDate
+
+// Can be used with the same interval definitions than add/sub methods of Carbon
+$carbonDate->addClosedTime(235, 'seconds')
+$carbonDate->addClosedTime(new DateInterval('PT1H23M45S'))
+$carbonDate->addClosedTime(CarbonInterval::hours(3)->minutes(20))
+
+$carbonDate->addClosedTime('2 hours and 30 minutes', BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 2 hours and 30 minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### addClosedHours
+
+Add the given number of hours taking only into account closed ranges of hours.
+
+```php
+Carbon::addClosedHours(3)      // add 3 closed hours to now
+$carbonDate->addClosedHours(3) // add 3 closed hours to $carbonDate
+
+
+$carbonDate->addClosedHours(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 3 closed hours considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### addClosedMinutes
+
+Add the given number of minutes taking only into account closed ranges of hours.
+
+```php
+Carbon::addClosedMinutes(3)      // add 3 closed minutes to now
+$carbonDate->addClosedMinutes(3) // add 3 closed minutes to $carbonDate
+
+
+$carbonDate->addClosedMinutes(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// add 3 closed minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subOpenTime
+
+Subtract the given interval of time taking only into account open ranges of hours.
+
+```php
+Carbon::subOpenTime('2 hours and 30 minutes')      // subtract 2 hours and 30 minutes to now
+$carbonDate->subOpenTime('2 hours and 30 minutes') // subtract 2 hours and 30 minutes to $carbonDate
+
+// Can be used with the same interval definitions than add/sub methods of Carbon
+$carbonDate->subOpenTime(235, 'seconds')
+$carbonDate->subOpenTime(new DateInterval('PT1H23M45S'))
+$carbonDate->subOpenTime(CarbonInterval::hours(3)->minutes(20))
+
+$carbonDate->subOpenTime('2 hours and 30 minutes', BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 2 hours and 30 minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subOpenHours
+
+Subtract the given number of hours taking only into account open ranges of hours.
+
+```php
+Carbon::subOpenHours(3)      // subtract 3 open hours to now
+$carbonDate->subOpenHours(3) // subtract 3 open hours to $carbonDate
+
+
+$carbonDate->subOpenHours(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 3 open hours considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subOpenMinutes
+
+Subtract the given number of minutes taking only into account open ranges of hours.
+
+```php
+Carbon::subOpenMinutes(3)      // subtract 3 open minutes to now
+$carbonDate->subOpenMinutes(3) // subtract 3 open minutes to $carbonDate
+
+
+$carbonDate->subOpenMinutes(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 3 open minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subClosedTime
+
+Subtract the given interval of time taking only into account closed ranges of hours.
+
+```php
+Carbon::subClosedTime('2 hours and 30 minutes')      // subtract 2 hours and 30 minutes to now
+$carbonDate->subClosedTime('2 hours and 30 minutes') // subtract 2 hours and 30 minutes to $carbonDate
+
+// Can be used with the same interval definitions than add/sub methods of Carbon
+$carbonDate->subClosedTime(235, 'seconds')
+$carbonDate->subClosedTime(new DateInterval('PT1H23M45S'))
+$carbonDate->subClosedTime(CarbonInterval::hours(3)->minutes(20))
+
+$carbonDate->subClosedTime('2 hours and 30 minutes', BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 2 hours and 30 minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subClosedHours
+
+Subtract the given number of hours taking only into account closed ranges of hours.
+
+```php
+Carbon::subClosedHours(3)      // subtract 3 closed hours to now
+$carbonDate->subClosedHours(3) // subtract 3 closed hours to $carbonDate
+
+
+$carbonDate->subClosedHours(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 3 closed hours considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
+
+### subClosedMinutes
+
+Subtract the given number of minutes taking only into account closed ranges of hours.
+
+```php
+Carbon::subClosedMinutes(3)      // subtract 3 closed minutes to now
+$carbonDate->subClosedMinutes(3) // subtract 3 closed minutes to $carbonDate
+
+
+$carbonDate->subClosedMinutes(3, BusinessTime::HOLIDAYS_ARE_CLOSED)
+// subtract 3 closed minutes considering holidays as closed (equivalent than using 'holidaysAreClosed' => true option)
+```
 
 ### getCurrentDayOpeningHours
 
