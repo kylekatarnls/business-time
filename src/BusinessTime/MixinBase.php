@@ -10,6 +10,7 @@ use SplObjectStorage;
 class MixinBase extends BusinessDay
 {
     const HOLIDAYS_ARE_CLOSED = 0x01;
+    const USE_DAYLIGHT_SAVING_TIME = 0x02;
     const MAX_ITERATION = 8192;
 
     const HOUR_UNIT = 'hours';
