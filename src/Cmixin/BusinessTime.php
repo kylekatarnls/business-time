@@ -6,6 +6,7 @@ use BusinessTime\MixinBase;
 use BusinessTime\Traits\AddAndSubtract;
 use BusinessTime\Traits\ClosedOr;
 use BusinessTime\Traits\CurrentOr;
+use BusinessTime\Traits\Diff;
 use BusinessTime\Traits\Holidays;
 use BusinessTime\Traits\IsMethods;
 use BusinessTime\Traits\OpenClose;
@@ -17,6 +18,7 @@ class BusinessTime extends MixinBase
     use AddAndSubtract;
     use ClosedOr;
     use CurrentOr;
+    use Diff;
     use Holidays;
     use IsMethods;
     use OpenClose;

@@ -1050,6 +1050,30 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-11 10:00:00', $format($getDate('2021-04-13 14:00')->subClosedHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
     }
 
+    public function testDiffAsBusinessSeconds()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'    => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'   => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00', '13:00-18:00'],
+            'thursday'  => ['09:00-12:00', '13:00-18:00'],
+            'friday'    => ['09:00-12:00', '13:00-18:00'],
+            'holidays'  => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $this->assertSame(7200.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds('2021-04-05 21:00:00'));
+    }
+
     public function testReadmeCode()
     {
         $carbon = static::CARBON_CLASS;
