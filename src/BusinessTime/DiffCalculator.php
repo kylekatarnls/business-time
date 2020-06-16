@@ -75,7 +75,7 @@ class DiffCalculator
                 continue;
             }
 
-            $nextDate = $date->$nextWrongState();
+            $nextDate = $date->copy()->$nextWrongState();
             $time += $date->$floatDiff(min($end, $nextDate));
             $date = $nextDate;
         }
