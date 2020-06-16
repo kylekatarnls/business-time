@@ -29,11 +29,11 @@ trait Diff
          *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
          * @param bool                                                   $absolute Get the absolute of the difference
-         * @param int $options                                                     options (as bytes-union) such as:
+         * @param int                                                    $options  options (as bytes-union) such as:
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                            => holidays are automatically considered as closed
+         *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                            => use DST native PHP diff result instead of real time (timestamp)
+         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return \Carbon\CarbonInterval|float
          */
@@ -68,11 +68,11 @@ trait Diff
          *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
          * @param bool                                                   $absolute Get the absolute of the difference
-         * @param int $options                                                     options (as bytes-union) such as:
+         * @param int                                                    $options  options (as bytes-union) such as:
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                            => holidays are automatically considered as closed
+         *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                            => use DST native PHP diff result instead of real time (timestamp)
+         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return \Carbon\CarbonInterval
          */
@@ -100,11 +100,11 @@ trait Diff
          *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
          * @param bool                                                   $absolute Get the absolute of the difference
-         * @param int $options                                                     options (as bytes-union) such as:
+         * @param int                                                    $options  options (as bytes-union) such as:
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                            => holidays are automatically considered as closed
+         *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                            => use DST native PHP diff result instead of real time (timestamp)
+         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return float
          */
