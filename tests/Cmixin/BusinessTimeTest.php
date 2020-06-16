@@ -1071,7 +1071,7 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $this->assertSame(7200.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds('2021-04-05 21:00:00'));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00'));
     }
 
     public function testReadmeCode()
