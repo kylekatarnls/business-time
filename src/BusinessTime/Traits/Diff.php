@@ -115,4 +115,68 @@ trait Diff
             return $start->diffInBusinessUnit('second', $open, $date, $absolute, $options);
         };
     }
+
+    /**
+     * Return a number of minutes with open/closed business time between the current date and an other
+     * given date.
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
+    public function diffInBusinessMinutes()
+    {
+        /**
+         * Return a number of minutes with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param bool                                                   $open     true for open time,
+         *                                                                         false for closed time
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param bool                                                   $absolute Get the absolute of the difference
+         * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                         => holidays are automatically considered as closed
+         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): float {
+            /** @var CarbonInterface $start */
+            $start = isset($this) ? $this : static::now();
+
+            return $start->diffInBusinessUnit('minute', $open, $date, $absolute, $options);
+        };
+    }
+
+    /**
+     * Return a number of hours with open/closed business time between the current date and an other
+     * given date.
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
+    public function diffInBusinessHours()
+    {
+        /**
+         * Return a number of hours with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param bool                                                   $open     true for open time,
+         *                                                                         false for closed time
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param bool                                                   $absolute Get the absolute of the difference
+         * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                         => holidays are automatically considered as closed
+         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): float {
+            /** @var CarbonInterface $start */
+            $start = isset($this) ? $this : static::now();
+
+            return $start->diffInBusinessUnit('hour', $open, $date, $absolute, $options);
+        };
+    }
 }
