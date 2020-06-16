@@ -1072,6 +1072,13 @@ class BusinessTimeTest extends TestCase
         };
 
         $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00'));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00'));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00', true));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', true));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00', false));
+        $this->assertSame((2 + 5) * -3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', false));
+        $this->assertSame(7.0, $getDate('2021-04-05 10:00')->diffInBusinessUnit('hour', true, '2021-04-05 21:00:00', false));
+        $this->assertSame(-7.0, $getDate('2021-04-05 21:00')->diffInBusinessUnit('HOURS', true, '2021-04-05 10:00:00', false));
     }
 
     public function testReadmeCode()
