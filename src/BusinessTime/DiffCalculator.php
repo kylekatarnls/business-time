@@ -2,11 +2,9 @@
 
 namespace BusinessTime;
 
-use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
-use DateInterval;
 
 class DiffCalculator
 {
