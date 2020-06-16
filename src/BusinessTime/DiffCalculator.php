@@ -33,13 +33,19 @@ class DiffCalculator
      */
     protected $useDst;
 
-    public function __construct(string $unit, bool $open, bool $absolute, bool $holidaysAreClosed, bool $useDst)
+    /**
+     * @var string
+     */
+    protected $methodPrefix;
+
+    public function __construct(string $unit, bool $open, bool $absolute, bool $holidaysAreClosed, bool $useDst, string $methodPrefix = 'floatDiffIn')
     {
         $this->unit = ucfirst(Carbon::pluralUnit($unit));
         $this->open = $open;
         $this->absolute = $absolute;
         $this->holidaysAreClosed = $holidaysAreClosed;
         $this->useDst = $useDst;
+        $this->methodPrefix = $methodPrefix;
     }
 
     public function calculateDiff(CarbonInterface $start, CarbonInterface $end)
@@ -47,7 +53,7 @@ class DiffCalculator
         if ($this->unit === 'Intervals') {
             $this->unit = 'Seconds';
 
-            return CarbonInterval::createFromFormat('U.u', $this->calculateFloatDiff($start, $end));
+            return CarbonInterval::createFromFormat('s.u', number_format($this->calculateFloatDiff($start, $end), 6, '.', ''))->cascade();
         }
 
         return $this->calculateFloatDiff($start, $end);
@@ -60,7 +66,7 @@ class DiffCalculator
         }
 
         $time = 0;
-        $floatDiff = 'floatDiffIn'.($this->useDst ? '' : 'Real').$this->unit;
+        $floatDiff = $this->methodPrefix.($this->useDst ? '' : 'Real').$this->unit;
         $isWrongState = 'is'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Closed' : 'Open');
         $nextWrongState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Close' : 'Open');
         $nextCorrectState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Open' : 'Close');
