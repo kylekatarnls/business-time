@@ -1071,13 +1071,11 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00'));
-        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00'));
-        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00', true));
-        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', true));
-        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00', false));
-        $this->assertSame((2 + 5) * -3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', false));
-        $this->assertSame((2 + 5) * -3600.0 + 10.654321, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:10.654321', false));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds('2021-04-05 21:00:00'));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds('2021-04-05 10:00:00'));
+        $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds('2021-04-05 21:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame((2 + 5) * -3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds('2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame((2 + 5) * -3600.0 + 10.654321, $getDate('2021-04-05 21:00')->diffInBusinessSeconds('2021-04-05 10:00:10.654321', BusinessTime::RELATIVE_DIFF));
     }
 
     public function testDiffAsBusinessMinutes()
@@ -1101,8 +1099,8 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $this->assertSame((2 + 5) * -60.0, $getDate('2021-04-05 21:00')->diffInBusinessMinutes(true, '2021-04-05 10:00:00', false));
-        $this->assertSame((2 + 5) * -60.0 + 10.654321 / 60, $getDate('2021-04-05 21:00')->diffInBusinessMinutes(true, '2021-04-05 10:00:10.654321', false));
+        $this->assertSame((2 + 5) * -60.0, $getDate('2021-04-05 21:00')->diffInBusinessMinutes('2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame((2 + 5) * -60.0 + 10.654321 / 60, $getDate('2021-04-05 21:00')->diffInBusinessMinutes('2021-04-05 10:00:10.654321', BusinessTime::RELATIVE_DIFF));
     }
 
     public function testDiffAsBusinessHours()
@@ -1126,8 +1124,8 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $this->assertSame((2 + 5) * -1.0, $getDate('2021-04-05 21:00')->diffInBusinessHours(true, '2021-04-05 10:00:00', false));
-        $this->assertSame((2 + 5) * -1.0 + 10.654321 / 3600, $getDate('2021-04-05 21:00')->diffInBusinessHours(true, '2021-04-05 10:00:10.654321', false));
+        $this->assertSame((2 + 5) * -1.0, $getDate('2021-04-05 21:00')->diffInBusinessHours('2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame((2 + 5) * -1.0 + 10.654321 / 3600, $getDate('2021-04-05 21:00')->diffInBusinessHours('2021-04-05 10:00:10.654321', BusinessTime::RELATIVE_DIFF));
     }
 
     public function testDiffAsBusinessUnit()
@@ -1151,10 +1149,10 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string);
         };
 
-        $this->assertSame(7.0, $getDate('2021-04-05 10:00')->diffInBusinessUnit('hour', true, '2021-04-05 21:00:00', false));
-        $this->assertSame(-7.0, $getDate('2021-04-05 21:00')->diffInBusinessUnit('HOURS', true, '2021-04-05 10:00:00', false));
-        $this->assertSame(4.0, $getDate('2021-04-05 10:00')->diffInBusinessUnit('hour', false, '2021-04-05 21:00:00', false));
-        $this->assertSame(-4.0, $getDate('2021-04-05 21:00')->diffInBusinessUnit('HOURS', false, '2021-04-05 10:00:00', false));
+        $this->assertSame(7.0, $getDate('2021-04-05 10:00')->diffInBusinessUnit('hour', '2021-04-05 21:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame(-7.0, $getDate('2021-04-05 21:00')->diffInBusinessUnit('HOURS', '2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF));
+        $this->assertSame(4.0, $getDate('2021-04-05 10:00')->diffInBusinessUnit('hour', '2021-04-05 21:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+        $this->assertSame(-4.0, $getDate('2021-04-05 21:00')->diffInBusinessUnit('HOURS', '2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
     }
 
     public function testDiffAsBusinessInterval()
@@ -1178,44 +1176,44 @@ class BusinessTimeTest extends TestCase
             return $carbon::parse($string, $timezone);
         };
 
-        $interval = $getDate('2021-04-05 10:00')->diffAsBusinessInterval(true, '2021-04-05 21:00:00', false);
+        $interval = $getDate('2021-04-05 10:00')->diffAsBusinessInterval('2021-04-05 21:00:00', BusinessTime::RELATIVE_DIFF);
         $this->assertInstanceOf(CarbonInterval::class, $interval);
         $this->assertSame(0, $interval->invert);
         $this->assertSame(7, $interval->hours);
         $this->assertSame('7 hours', $interval->forHumans());
-        $interval = $getDate('2021-04-05 21:00')->diffAsBusinessInterval(true, '2021-04-05 10:00:00', false);
+        $interval = $getDate('2021-04-05 21:00')->diffAsBusinessInterval('2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF);
         $this->assertSame(1, $interval->invert);
         $this->assertSame('7 hours', $interval->forHumans());
-        $interval = $getDate('2021-04-05 10:00')->diffAsBusinessInterval(false, '2021-04-05 21:00:00', false);
+        $interval = $getDate('2021-04-05 10:00')->diffAsBusinessInterval('2021-04-05 21:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME);
         $this->assertSame(0, $interval->invert);
         $this->assertSame('4 hours', $interval->forHumans());
-        $interval = $getDate('2021-04-05 21:00')->diffAsBusinessInterval(false, '2021-04-05 10:00:00', false);
+        $interval = $getDate('2021-04-05 21:00')->diffAsBusinessInterval('2021-04-05 10:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME);
         $this->assertSame(1, $interval->invert);
         $this->assertSame('4 hours', $interval->forHumans());
 
-        $interval = $getDate('2021-04-05 12:00')->diffAsBusinessInterval(true, '2021-04-05 13:30:00');
+        $interval = $getDate('2021-04-05 12:00')->diffAsBusinessInterval('2021-04-05 13:30:00');
         $this->assertSame('30 minutes', $interval->forHumans());
 
-        $interval = $getDate('2021-04-05 12:00')->diffAsBusinessInterval(true, '2021-04-05 14:30:00');
+        $interval = $getDate('2021-04-05 12:00')->diffAsBusinessInterval('2021-04-05 14:30:00');
         $this->assertSame('1 hour 30 minutes', $interval->forHumans());
 
-        $interval = $getDate('2021-04-06 17:00')->diffAsBusinessInterval(true, '2021-04-08 10:00:00');
+        $interval = $getDate('2021-04-06 17:00')->diffAsBusinessInterval('2021-04-08 10:00:00');
         $this->assertSame('10 hours', $interval->forHumans());
 
         $interval = $getDate('2021-03-29 01:00', 'Europe/Paris')
-            ->diffAsBusinessInterval(false, '2021-03-29 04:00:00', false);
+            ->diffAsBusinessInterval('2021-03-29 04:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME);
         $this->assertSame('3 hours', $interval->forHumans());
 
         $interval = $getDate('2021-03-29 01:00', 'Europe/Paris')
-            ->diffAsBusinessInterval(false, '2021-03-29 04:00:00', false, BusinessTime::USE_DAYLIGHT_SAVING_TIME);
+            ->diffAsBusinessInterval('2021-03-29 04:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME | BusinessTime::USE_DAYLIGHT_SAVING_TIME);
         $this->assertSame('3 hours', $interval->forHumans());
 
         $interval = $getDate('2021-10-25 01:00', 'Europe/Paris')
-            ->diffAsBusinessInterval(false, '2021-10-25 04:00:00', false);
+            ->diffAsBusinessInterval('2021-10-25 04:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME);
         $this->assertSame('3 hours', $interval->forHumans());
 
         $interval = $getDate('2021-10-25 01:00', 'Europe/Paris')
-            ->diffAsBusinessInterval(false, '2021-10-25 04:00:00', false, BusinessTime::USE_DAYLIGHT_SAVING_TIME);
+            ->diffAsBusinessInterval('2021-10-25 04:00:00', BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME | BusinessTime::USE_DAYLIGHT_SAVING_TIME);
         $this->assertSame('3 hours', $interval->forHumans());
     }
 
