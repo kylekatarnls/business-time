@@ -25,11 +25,13 @@ trait Diff
          *                                                                         for the total to return;
          *                                                                         or 'interval' to return a
          *                                                                         CarbonInterval instance
-         * @param bool                                                   $open     true for open time,
-         *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param bool                                                   $absolute Get the absolute of the difference
          * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::CLOSED_TIME
+         *                                                                         => return the interval of for closed time,
+         *                                                                            return open time else
+         *                                                                         - BusinessTime::RELATIVE_DIFF
+         *                                                                         => return negative value if start is before end
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
          *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
@@ -37,13 +39,13 @@ trait Diff
          *
          * @return \Carbon\CarbonInterval|float
          */
-        return function (string $unit, bool $open, $date = null, bool $absolute = true, int $options = 0) {
+        return function (string $unit, $date = null, int $options = 0) {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
             $calculator = new DiffCalculator(
                 $unit,
-                $open,
-                $absolute,
+                !($options & BusinessTime::CLOSED_TIME),
+                !($options & BusinessTime::RELATIVE_DIFF),
                 $options & BusinessTime::HOLIDAYS_ARE_CLOSED,
                 $options & BusinessTime::USE_DAYLIGHT_SAVING_TIME
             );
@@ -64,11 +66,13 @@ trait Diff
          * Return an interval with open/closed business time between the current date and an other
          * given date.
          *
-         * @param bool                                                   $open     true for open time,
-         *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param bool                                                   $absolute Get the absolute of the difference
          * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::CLOSED_TIME
+         *                                                                         => return the interval of for closed time,
+         *                                                                            return open time else
+         *                                                                         - BusinessTime::RELATIVE_DIFF
+         *                                                                         => return negative value if start is before end
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
          *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
@@ -76,11 +80,11 @@ trait Diff
          *
          * @return \Carbon\CarbonInterval
          */
-        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): CarbonInterval {
+        return function ($date = null, int $options = 0): CarbonInterval {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
 
-            return $start->diffInBusinessUnit('interval', $open, $date, $absolute, $options);
+            return $start->diffInBusinessUnit('interval', $date, $options);
         };
     }
 
@@ -96,11 +100,13 @@ trait Diff
          * Return a number of seconds with open/closed business time between the current date and an other
          * given date.
          *
-         * @param bool                                                   $open     true for open time,
-         *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param bool                                                   $absolute Get the absolute of the difference
          * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::CLOSED_TIME
+         *                                                                         => return the interval of for closed time,
+         *                                                                            return open time else
+         *                                                                         - BusinessTime::RELATIVE_DIFF
+         *                                                                         => return negative value if start is before end
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
          *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
@@ -108,11 +114,11 @@ trait Diff
          *
          * @return float
          */
-        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): float {
+        return function ($date = null, int $options = 0): float {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
 
-            return $start->diffInBusinessUnit('second', $open, $date, $absolute, $options);
+            return $start->diffInBusinessUnit('second', $date, $options);
         };
     }
 
@@ -128,11 +134,13 @@ trait Diff
          * Return a number of minutes with open/closed business time between the current date and an other
          * given date.
          *
-         * @param bool                                                   $open     true for open time,
-         *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param bool                                                   $absolute Get the absolute of the difference
          * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::CLOSED_TIME
+         *                                                                         => return the interval of for closed time,
+         *                                                                            return open time else
+         *                                                                         - BusinessTime::RELATIVE_DIFF
+         *                                                                         => return negative value if start is before end
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
          *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
@@ -140,11 +148,11 @@ trait Diff
          *
          * @return float
          */
-        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): float {
+        return function ($date = null, int $options = 0): float {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
 
-            return $start->diffInBusinessUnit('minute', $open, $date, $absolute, $options);
+            return $start->diffInBusinessUnit('minute', $date, $options);
         };
     }
 
@@ -160,11 +168,13 @@ trait Diff
          * Return a number of hours with open/closed business time between the current date and an other
          * given date.
          *
-         * @param bool                                                   $open     true for open time,
-         *                                                                         false for closed time
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param bool                                                   $absolute Get the absolute of the difference
          * @param int                                                    $options  options (as bytes-union) such as:
+         *                                                                         - BusinessTime::CLOSED_TIME
+         *                                                                         => return the interval of for closed time,
+         *                                                                            return open time else
+         *                                                                         - BusinessTime::RELATIVE_DIFF
+         *                                                                         => return negative value if start is before end
          *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
          *                                                                         => holidays are automatically considered as closed
          *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
@@ -172,11 +182,11 @@ trait Diff
          *
          * @return float
          */
-        return function (bool $open, $date = null, bool $absolute = true, int $options = 0): float {
+        return function ($date = null, int $options = 0): float {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
 
-            return $start->diffInBusinessUnit('hour', $open, $date, $absolute, $options);
+            return $start->diffInBusinessUnit('hour', $date, $options);
         };
     }
 }
