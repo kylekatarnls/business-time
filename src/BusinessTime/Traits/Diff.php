@@ -21,21 +21,21 @@ trait Diff
          * Return an interval/count of given unit with open/closed business time between the current date and an other
          * given date.
          *
-         * @param string                                                 $unit     Unit such as 'hour', 'minute' to use
-         *                                                                         for the total to return;
-         *                                                                         or 'interval' to return a
-         *                                                                         CarbonInterval instance
+         * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
+         *                                                                        for the total to return;
+         *                                                                        or 'interval' to return a
+         *                                                                        CarbonInterval instance
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param int                                                    $options  options (as bytes-union) such as:
-         *                                                                         - BusinessTime::CLOSED_TIME
-         *                                                                         => return the interval of for closed time,
-         *                                                                            return open time else
-         *                                                                         - BusinessTime::RELATIVE_DIFF
-         *                                                                         => return negative value if start is before end
-         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                         => holidays are automatically considered as closed
-         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return \Carbon\CarbonInterval|float
          */
@@ -67,16 +67,16 @@ trait Diff
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param int                                                    $options  options (as bytes-union) such as:
-         *                                                                         - BusinessTime::CLOSED_TIME
-         *                                                                         => return the interval of for closed time,
-         *                                                                            return open time else
-         *                                                                         - BusinessTime::RELATIVE_DIFF
-         *                                                                         => return negative value if start is before end
-         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                         => holidays are automatically considered as closed
-         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return \Carbon\CarbonInterval
          */
@@ -101,16 +101,16 @@ trait Diff
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param int                                                    $options  options (as bytes-union) such as:
-         *                                                                         - BusinessTime::CLOSED_TIME
-         *                                                                         => return the interval of for closed time,
-         *                                                                            return open time else
-         *                                                                         - BusinessTime::RELATIVE_DIFF
-         *                                                                         => return negative value if start is before end
-         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                         => holidays are automatically considered as closed
-         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return float
          */
@@ -135,16 +135,16 @@ trait Diff
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param int                                                    $options  options (as bytes-union) such as:
-         *                                                                         - BusinessTime::CLOSED_TIME
-         *                                                                         => return the interval of for closed time,
-         *                                                                            return open time else
-         *                                                                         - BusinessTime::RELATIVE_DIFF
-         *                                                                         => return negative value if start is before end
-         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                         => holidays are automatically considered as closed
-         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return float
          */
@@ -169,16 +169,16 @@ trait Diff
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
-         * @param int                                                    $options  options (as bytes-union) such as:
-         *                                                                         - BusinessTime::CLOSED_TIME
-         *                                                                         => return the interval of for closed time,
-         *                                                                            return open time else
-         *                                                                         - BusinessTime::RELATIVE_DIFF
-         *                                                                         => return negative value if start is before end
-         *                                                                         - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                         => holidays are automatically considered as closed
-         *                                                                         - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                         => use DST native PHP diff result instead of real time (timestamp)
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
          * @return float
          */
