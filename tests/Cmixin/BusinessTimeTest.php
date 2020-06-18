@@ -1077,6 +1077,57 @@ class BusinessTimeTest extends TestCase
         $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', true));
         $this->assertSame((2 + 5) * 3600.0, $getDate('2021-04-05 10:00')->diffInBusinessSeconds(true, '2021-04-05 21:00:00', false));
         $this->assertSame((2 + 5) * -3600.0, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:00', false));
+        $this->assertSame((2 + 5) * -3600.0 + 10.654321, $getDate('2021-04-05 21:00')->diffInBusinessSeconds(true, '2021-04-05 10:00:10.654321', false));
+    }
+
+    public function testDiffAsBusinessMinutes()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'    => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'   => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00', '13:00-18:00'],
+            'thursday'  => ['09:00-12:00', '13:00-18:00'],
+            'friday'    => ['09:00-12:00', '13:00-18:00'],
+            'holidays'  => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $this->assertSame((2 + 5) * -60.0, $getDate('2021-04-05 21:00')->diffInBusinessMinutes(true, '2021-04-05 10:00:00', false));
+        $this->assertSame((2 + 5) * -60.0 + 10.654321 / 60, $getDate('2021-04-05 21:00')->diffInBusinessMinutes(true, '2021-04-05 10:00:10.654321', false));
+    }
+
+    public function testDiffAsBusinessHours()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'    => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'   => ['09:00-12:00', '13:00-18:00'],
+            'wednesday' => ['09:00-12:00', '13:00-18:00'],
+            'thursday'  => ['09:00-12:00', '13:00-18:00'],
+            'friday'    => ['09:00-12:00', '13:00-18:00'],
+            'holidays'  => [
+                'company-special-holiday' => '07/04',
+            ],
+        ]);
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $this->assertSame((2 + 5) * -1.0, $getDate('2021-04-05 21:00')->diffInBusinessHours(true, '2021-04-05 10:00:00', false));
+        $this->assertSame((2 + 5) * -1.0 + 10.654321 / 3600, $getDate('2021-04-05 21:00')->diffInBusinessHours(true, '2021-04-05 10:00:10.654321', false));
     }
 
     public function testDiffAsBusinessUnit()
