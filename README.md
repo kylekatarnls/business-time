@@ -553,6 +553,85 @@ to the given **time-direction**) the business open.
 
 Note: `BusinessOpen` can also be written explicitly as `OpenExcludingHolidays`.
 
+### diffAsBusinessInterval
+
+Return open/closed interval of time between 2 dates/times.
+
+```php
+$start = '2021-04-05 21:00';
+$end = '2021-04-05 10:00:00'; // can be date instance, a string representation or a timestamp
+$options = 0;
+
+$interval = Carbon::parse($start)->diffAsBusinessInterval($end, $options);
+```
+
+The returned `$interval` is an instance of `CarbonInterval`. See https://carbon.nesbot.com/docs/#api-interval
+
+Options are piped flags among:
+  - `BusinessTime::CLOSED_TIME`:
+      return the interval of for closed time,
+      return open time else
+  - `BusinessTime::RELATIVE_DIFF`:
+      return negative value if start is before end
+  - `BusinessTime::HOLIDAYS_ARE_CLOSED`:
+      automatically consider holidays as closed
+  - `BusinessTime::USE_DAYLIGHT_SAVING_TIME`:
+      use DST native PHP diff result instead of real time (timestamp)
+
+Examples:
+
+```php
+Carbon::parse($start)->diffAsBusinessInterval($end, BusinessTime::CLOSED_TIME | BusinessTime::HOLIDAYS_ARE_CLOSED | BusinessTime::RELATIVE_DIFF);
+// - return relative total closed time between $start and $end
+// - considering holidays as closed
+// - it will be negative if $start < $end
+```
+
+### diffInBusinessUnit
+
+Return open/closed time in the given unit between 2 dates/times.
+
+```php
+Carbon::parse('2021-04-05 10:00')->diffInBusinessUnit('hour', '2021-04-05 21:00:00', $options)
+```
+
+The first parameter is the unit singular or plural, in any case. The 2 other parameters are
+the same as in [`diffAsBusinessInterval`](#diffAsBusinessInterval)
+
+### diffInBusinessHours
+
+Return open/closed number of hours (as a floating number) in the given unit between 2 dates/times.
+
+```php
+Carbon::parse('2021-04-05 07:00')->diffInBusinessHours('2021-04-05 10:30', $options)
+// return 2.5 if business is open between 8:00 and 12:00
+```
+
+The 2 parameters are
+the same as in [`diffAsBusinessInterval`](#diffAsBusinessInterval)
+
+### diffInBusinessMinutes
+
+Return open/closed number of minutes (as a floating number) in the given unit between 2 dates/times.
+
+```php
+Carbon::parse('2021-04-05 07:00')->diffInBusinessMinutes('2021-04-05 10:30', $options)
+```
+
+The 2 parameters are
+the same as in [`diffAsBusinessInterval`](#diffAsBusinessInterval)
+
+### diffInBusinessSeconds
+
+Return open/closed number of seconds (as a floating number) in the given unit between 2 dates/times.
+
+```php
+Carbon::parse('2021-04-05 07:00')->diffInBusinessMinutes('2021-04-05 10:30', $options)
+```
+
+The 2 parameters are
+the same as in [`diffAsBusinessInterval`](#diffAsBusinessInterval)
+
 ### getCurrentOpenTimeRanges
 
 Get list of ranges that contain the current date-time.
