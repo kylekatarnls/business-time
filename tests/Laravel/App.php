@@ -12,4 +12,9 @@ class App
             return $app->hours;
         };
     }
+
+    public function setHours($hours): void
+    {
+        $this->hours = $hours;
+    }
 }
