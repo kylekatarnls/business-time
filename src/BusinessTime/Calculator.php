@@ -5,6 +5,7 @@ namespace BusinessTime;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
+use Cmixin\BusinessTime;
 use DateInterval;
 use Spatie\OpeningHours\OpeningHours;
 
@@ -43,7 +44,13 @@ class Calculator
     public function __construct(CarbonInterface $date, CarbonInterval $interval, bool $open, bool $holidaysAreClosed)
     {
         $this->date = $date;
-        $this->openingHours = $date->getOpeningHours();
+
+        try {
+            $this->openingHours = $date->getOpeningHours(BusinessTime::LOCAL_MODE);
+        } catch (InvalidArgumentException $e) {
+            $this->openingHours = null;
+        }
+
         $this->interval = $interval;
         $this->open = $open;
         $this->holidaysAreClosed = $holidaysAreClosed;

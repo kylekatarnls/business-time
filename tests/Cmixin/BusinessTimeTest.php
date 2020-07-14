@@ -737,9 +737,6 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($date->isBusinessClosed());
     }
 
-    /**
-     * @group i
-     */
     public function testAddBusinessInterval()
     {
         $carbon = static::CARBON_CLASS;
