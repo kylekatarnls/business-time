@@ -5,7 +5,9 @@ namespace BusinessTime;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
+use Cmixin\BusinessTime;
 use DateInterval;
+use Spatie\OpeningHours\OpeningHours;
 
 class Calculator
 {
@@ -34,9 +36,21 @@ class Calculator
      */
     protected $past;
 
+    /**
+     * @var OpeningHours
+     */
+    protected $openingHours;
+
     public function __construct(CarbonInterface $date, CarbonInterval $interval, bool $open, bool $holidaysAreClosed)
     {
         $this->date = $date;
+
+        try {
+            $this->openingHours = $date->getOpeningHours(BusinessTime::LOCAL_MODE);
+        } catch (InvalidArgumentException $e) {
+            $this->openingHours = null;
+        }
+
         $this->interval = $interval;
         $this->open = $open;
         $this->holidaysAreClosed = $holidaysAreClosed;
@@ -45,7 +59,9 @@ class Calculator
     public function calculate($maximum = INF): CarbonInterface
     {
         $remainingInterval = $this->interval;
-        $resultCandidate = $this->date->copy()->add($remainingInterval);
+        $resultCandidate = $this->completeDate(
+            $this->date->copy()->add($remainingInterval)
+        );
         $this->past = $resultCandidate < $this->date;
         $base = $this->getStartDate($this->date);
 
@@ -53,7 +69,9 @@ class Calculator
             [$next, $resultCandidate] = $this->getNextAndCandidate($base, $remainingInterval);
 
             if ($this->isInLimit($resultCandidate, $next)) {
-                return $this->date->setDateTimeFrom($resultCandidate);
+                return $this->completeDate(
+                    $this->date->setDateTimeFrom($resultCandidate)
+                );
             }
 
             $remainingInterval = $next->diff($resultCandidate, false);
@@ -87,7 +105,10 @@ class Calculator
             $methodPrefix .= 'Business';
         }
 
-        return $date->copy()->{$methodPrefix.($this->past === $openState ? 'Close' : 'Open')}();
+        return $this->completeDate(
+            $this->completeDate($date->copy())
+                ->{$methodPrefix.($this->past === $openState ? 'Close' : 'Open')}()
+        );
     }
 
     protected function getNextAndCandidate(CarbonInterface $date, DateInterval $interval): array
@@ -119,5 +140,14 @@ class Calculator
         )
             ? $date
             : $this->getNextInTakenState($date);
+    }
+
+    protected function completeDate(CarbonInterface $date): CarbonInterface
+    {
+        if ($this->openingHours) {
+            return $date->setOpeningHours($this->openingHours);
+        }
+
+        return $date;
     }
 }

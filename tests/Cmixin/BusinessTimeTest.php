@@ -737,9 +737,6 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($date->isBusinessClosed());
     }
 
-    /**
-     * @group i
-     */
     public function testAddBusinessInterval()
     {
         $carbon = static::CARBON_CLASS;
@@ -1048,6 +1045,30 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 19:00')->subClosedMinutes(4 * 60)));
         $this->assertSame('2021-04-05 14:00:00', $format($getDate('2021-04-13 14:00')->subOpenHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
         $this->assertSame('2021-04-11 10:00:00', $format($getDate('2021-04-13 14:00')->subClosedHours(5 * 8, BusinessTime::HOLIDAYS_ARE_CLOSED)));
+    }
+
+    public function testAddBusinessTimeWithLocalMode()
+    {
+        $carbon = static::CARBON_CLASS;
+
+        /**
+         * @return Carbon $date
+         */
+        $getDate = function (string $string) use ($carbon) {
+            return $carbon::parse($string);
+        };
+
+        $date = $getDate('2020-07-14 10:00');
+        $date->setOpeningHours([
+            'monday'    => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'   => ['09:00-12:10', '13:00-17:00'],
+            'wednesday' => ['09:00-12:00'],
+            'thursday'  => ['09:00-12:00', '13:00-18:00'],
+            'friday'    => ['09:00-12:00', '13:00-20:00'],
+            'saturday'  => ['09:00-12:00', '13:00-16:00'],
+        ]);
+
+        $this->assertSame('2020-07-16 13:50', $date->addOpenHours(13)->format('Y-m-d H:i'));
     }
 
     public function testDiffAsBusinessSeconds()
