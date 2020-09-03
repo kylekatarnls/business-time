@@ -140,11 +140,15 @@ Carbon::parse('2019-01-02 11:00')->isOpen(); // true  not an holiday in us-natio
 Allows to know if the business is usually on open on a given day.
 
 ```php
-Carbon::isOpenOn('monday') // Returns true if default opening hours include monday
+Carbon::isOpenOn('monday') // Returns true if there is at least 1 open range of
+                           // hours set for Monday (in the regular schedule)
                            // Carbon::MONDAY would also works
 
-$date->isOpenOn('monday') // Returns true $date opening hours include monday, if $date has no opening hours set,
-                          // if will fallback to default opening hours you set globally
+$date->isOpenOn('monday') // Same as above but using local config of $date
+
+Carbon::isOpenOn('2020-09-03') // Returns true if there is at least 1 open range of
+                               // hours set for the date 2020-09-03 (considering both
+                               // the regular schedule and the exceptions)
 ``` 
 
 ### isClosedOn
@@ -153,6 +157,7 @@ Opposite of isOpenOn
 
 ```php
 Carbon::isClosedOn('monday')
+Carbon::isClosedOn('2020-09-03')
 $date->isClosedOn('monday')
 ``` 
 
