@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use BusinessTime\Exceptions\InvalidArgumentException;
+use Closure;
 use Cmixin\BusinessDay;
 use Spatie\OpeningHours\OpeningHours;
 use SplObjectStorage;
@@ -139,7 +140,13 @@ class MixinBase extends BusinessDay
         }
 
         $arguments = array_slice(func_get_args(), 1);
-        [$region, $holidays, $defaultOpeningHours] = self::getOpeningHoursOptions($defaultOpeningHours, $arguments);
+        [$region, $holidays, $defaultOpeningHours] = self::getOpeningHoursOptions(
+            $defaultOpeningHours,
+            $arguments,
+            function ($date) use ($carbonClass) {
+                return $carbonClass::instance($date)->isHoliday();
+            }
+        );
 
         $isArray = is_array($carbonClass);
         $carbonClasses = (array) $carbonClass;
@@ -195,7 +202,9 @@ class MixinBase extends BusinessDay
                  * @return $this|null
                  */
                 return function ($openingHours) use ($mixin, &$staticStorage) {
-                    $parser = new DefinitionParser($mixin, $openingHours);
+                    $parser = new DefinitionParser($mixin, $openingHours, function ($date) {
+                        return static::instance($date)->isHoliday();
+                    });
                     $openingHours = $parser->getEmbeddedOpeningHours(static::class);
 
                     if (isset($this)) {
@@ -401,9 +410,9 @@ class MixinBase extends BusinessDay
         };
     }
 
-    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [])
+    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [], Closure $isHoliday)
     {
-        return (new DefinitionParser(static::class, $defaultOpeningHours))->getDefinition($arguments);
+        return (new DefinitionParser(static::class, $defaultOpeningHours, $isHoliday))->getDefinition($arguments);
     }
 
     private static function setRegionAndHolidays($carbonClass, $region, $holidays)

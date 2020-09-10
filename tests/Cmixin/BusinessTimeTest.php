@@ -55,6 +55,8 @@ class BusinessTimeTest extends TestCase
         $carbon = static::CARBON_CLASS;
         $this->assertTrue($carbon::isOpenOn('monday'));
         $this->assertFalse($carbon::isOpenOn('sunday'));
+        $this->assertTrue($carbon::isOpenOn('2020-09-07'));
+        $this->assertFalse($carbon::isOpenOn('2020-09-06'));
     }
 
     public function testIsClosedOn()
@@ -62,6 +64,57 @@ class BusinessTimeTest extends TestCase
         $carbon = static::CARBON_CLASS;
         $this->assertTrue($carbon::isClosedOn('sunday'));
         $this->assertFalse($carbon::isClosedOn('monday'));
+        $this->assertTrue($carbon::isClosedOn('2020-09-06'));
+        $this->assertFalse($carbon::isClosedOn('2020-09-07'));
+    }
+
+    public function testIsOpenOnHoliday()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00', '13:00-18:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-18:00'],
+            'holidaysAreClosed' => true,
+            'exceptions'        => [
+                '05-07' => [],
+            ],
+            'holidays'          => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'foo' => '11/05',
+                ],
+            ],
+        ]);
+
+        $this->assertFalse($carbon::isOpenOn('2020-07-14'));
+        $this->assertFalse($carbon::isOpenOn('2020-07-05'));
+        $this->assertFalse($carbon::isOpenOn('2020-05-11'));
+
+        $carbon::setOpeningHours([
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00', '13:00-18:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-18:00'],
+            'holidaysAreClosed' => true,
+            'exceptions'        => [
+                '05-07' => [],
+            ],
+            'holidays'          => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'foo' => '12/05',
+                ],
+            ],
+        ]);
+
+        $this->assertFalse($carbon::isOpenOn('2020-07-14'));
+        $this->assertFalse($carbon::isOpenOn('2020-07-05'));
+        $this->assertTrue($carbon::isOpenOn('2020-05-11'));
+        $this->assertFalse($carbon::isOpenOn('2020-05-12'));
     }
 
     public function testSetOpeningHours()
