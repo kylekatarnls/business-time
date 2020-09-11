@@ -707,12 +707,34 @@ class BusinessTimeTest extends TestCase
         $deprecation = 'The DefinitionParser::getSetterParameters method is deprecated,'.
             ' use DefinitionParser::getDefinition() instead which also support split argument list.';
 
-        $this->assertSame([null, null, []], (new DefinitionParser(new BusinessTime(), []))->getSetterParameters());
+        $carbon = static::CARBON_CLASS;
+        $this->assertSame([null, null, []], (new DefinitionParser(new BusinessTime(), [], function ($date) use ($carbon) {
+            return $carbon::instance($date)->isHoliday();
+        }))->getSetterParameters());
 
         $lastError = error_get_last();
 
         $this->assertSame(E_USER_DEPRECATED, $lastError['type']);
         $this->assertSame($deprecation, $lastError['message']);
+    }
+
+    public function testDefinitionParserDefaultHolidayCallback()
+    {
+        $carbon = static::CARBON_CLASS;
+        $options = [
+            'monday'            => ['13:00-18:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'fr-national',
+            ],
+        ];
+        BusinessTime::enable($carbon, $options);
+        $parser = new DefinitionParser(new BusinessTime(), $options);
+        $definition = $parser->getDefinition();
+        $firstException = $definition[2]['exceptions'][0];
+
+        $this->assertSame([], $firstException($carbon::parse('2020-07-14')));
+        $this->assertNull($firstException($carbon::parse('2020-07-15')));
     }
 
     public function testHolidaysAreClosedOptionOnTheFly()

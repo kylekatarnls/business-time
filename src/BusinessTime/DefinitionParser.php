@@ -23,11 +23,13 @@ class DefinitionParser
      */
     protected $isHoliday;
 
-    public function __construct($mixin, $openingHours, Closure $isHoliday)
+    public function __construct($mixin, $openingHours, Closure $isHoliday = null)
     {
         $this->mixin = $mixin;
         $this->openingHours = $openingHours;
-        $this->isHoliday = $isHoliday;
+        $this->isHoliday = $isHoliday ?: function ($date) {
+            return $date->isHoliday();
+        };
     }
 
     /**
