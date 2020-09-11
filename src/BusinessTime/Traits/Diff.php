@@ -42,8 +42,8 @@ trait Diff
         return function (string $unit, $date = null, int $options = 0) {
             /** @var CarbonInterface $start */
             $start = isset($this) ? $this : static::now();
-            $calculator = new DiffCalculator(
-                $unit,
+            $calculator = new DiffCalculator($unit);
+            $calculator->setFlags(
                 !($options & BusinessTime::CLOSED_TIME),
                 !($options & BusinessTime::RELATIVE_DIFF),
                 $options & BusinessTime::HOLIDAYS_ARE_CLOSED,

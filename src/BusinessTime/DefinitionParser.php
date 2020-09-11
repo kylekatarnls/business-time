@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use ArrayAccess;
+use Closure;
 use Spatie\OpeningHours\OpeningHours;
 
 class DefinitionParser
@@ -17,10 +18,18 @@ class DefinitionParser
      */
     protected $openingHours;
 
-    public function __construct($mixin, $openingHours)
+    /**
+     * @var Closure
+     */
+    protected $isHoliday;
+
+    public function __construct($mixin, $openingHours, Closure $isHoliday = null)
     {
         $this->mixin = $mixin;
         $this->openingHours = $openingHours;
+        $this->isHoliday = $isHoliday ?: function ($date) {
+            return $date->isHoliday();
+        };
     }
 
     /**
@@ -191,7 +200,7 @@ class DefinitionParser
 
         if ($options[$this->mixin::HOLIDAYS_ARE_CLOSED_OPTION_KEY]) {
             $exceptions[] = function ($date) {
-                return $date->isHoliday() ? [] : null;
+                return ($this->isHoliday)($date) ? [] : null;
             };
         }
 
