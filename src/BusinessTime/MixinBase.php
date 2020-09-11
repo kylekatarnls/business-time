@@ -410,9 +410,13 @@ class MixinBase extends BusinessDay
         };
     }
 
-    private static function getOpeningHoursOptions($defaultOpeningHours = null, array $arguments = [], Closure $isHoliday = null)
-    {
-        return (new DefinitionParser(static::class, $defaultOpeningHours, $isHoliday))->getDefinition($arguments);
+    private static function getOpeningHoursOptions(
+        $defaultOpeningHours = null,
+        array $arguments = [],
+        Closure $isHoliday = null
+    ) {
+        return (new DefinitionParser(static::class, $defaultOpeningHours, $isHoliday))
+            ->getDefinition($arguments);
     }
 
     private static function setRegionAndHolidays($carbonClass, $region, $holidays)
