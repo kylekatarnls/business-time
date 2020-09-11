@@ -38,14 +38,18 @@ class DiffCalculator
      */
     protected $methodPrefix;
 
-    public function __construct(string $unit, bool $open, bool $absolute, bool $holidaysAreClosed, bool $useDst, string $methodPrefix = 'floatDiffIn')
+    public function __construct(string $unit, string $methodPrefix = 'floatDiffIn')
     {
         $this->unit = ucfirst(Carbon::pluralUnit($unit));
+        $this->methodPrefix = $methodPrefix;
+    }
+
+    public function setFlags(bool $open, bool $absolute, bool $holidaysAreClosed, bool $useDst)
+    {
         $this->open = $open;
         $this->absolute = $absolute;
         $this->holidaysAreClosed = $holidaysAreClosed;
         $this->useDst = $useDst;
-        $this->methodPrefix = $methodPrefix;
     }
 
     public function calculateDiff(CarbonInterface $start, CarbonInterface $end)
@@ -53,7 +57,10 @@ class DiffCalculator
         if ($this->unit === 'Intervals') {
             $this->unit = 'Seconds';
 
-            return CarbonInterval::createFromFormat('s.u', number_format($this->calculateFloatDiff($start, $end), 6, '.', ''))->cascade();
+            return CarbonInterval::createFromFormat(
+                's.u',
+                number_format($this->calculateFloatDiff($start, $end), 6, '.', '')
+            )->cascade();
         }
 
         return $this->calculateFloatDiff($start, $end);
