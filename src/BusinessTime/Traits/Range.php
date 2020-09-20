@@ -3,6 +3,7 @@
 namespace BusinessTime\Traits;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 trait Range
 {
@@ -62,7 +63,42 @@ trait Range
             /** @var Carbon $date */
             $date = isset($this) ? $this : static::now();
 
-            return $date->getOpeningHours()->currentOpenRange($date);
+            return $date->getOpeningHours()->currentOpenRange($date) ?: false;
+        };
+    }
+
+    /**
+     * Get current open time range as TimeRange instance or false if closed.
+     *
+     * @return \Closure<\Carbon\CarbonPeriod|bool>
+     */
+    public function getCurrentOpenTimePeriod()
+    {
+        /**
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @param string|\DateInterval $interval
+         *
+         * @return \Carbon\CarbonPeriod|bool
+         */
+        return function ($interval = null) {
+            /** @var Carbon $date */
+            $date = isset($this) ? $this : static::now();
+            $range = $date->getOpeningHours()->currentOpenRange($date);
+
+            if (!$range) {
+                return false;
+            }
+
+            $time = $date->format('H:i');
+            $start = $range->start();
+            $end = $range->end();
+
+            return new CarbonPeriod(
+                $date->copy()->modify($start.($start > $time ? ' - 1 day' : '')),
+                $interval ?? 'PT1M',
+                $date->copy()->modify($end.($end < $time ? ' + 1 day' : ''))
+            );
         };
     }
 
