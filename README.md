@@ -668,6 +668,29 @@ if ($timeRange) {
 }
 ``` 
 
+### getCurrentOpenTimePeriod
+
+Get the first range that contain the current date-time as a `CarbonPeriod`.
+
+While [`getCurrentOpenTimeRange()`](#getCurrentOpenTimeRange) return a `TimeRange`
+instance which only handle the time part, `getCurrentOpenTimePeriod()` return
+a `CarbonPeriod` instance so you get whole date and time of the start and end.
+
+This is mostly useful when having ranges overflowing midnight:
+
+```php
+BusinessTime::enable(Carbon::class, [
+  'overflow' => true,
+  'monday'   => ['22:00-03:00'],
+]);
+
+$timeRange = Carbon::getCurrentOpenTimePeriod(); // with current date and time
+$timeRange = Carbon::parse('Monday 23:34')->getCurrentOpenTimePeriod();
+
+echo $timeRange->getStartDate()->format('D G\h'); // Mon 22h
+echo $timeRange->getEndDate()->format('D G\h'); // Tue 3h
+```
+
 ### getCurrentOpenTimeRangeStart
 
 Get the start of the current open time range (if open, holidays ignored).

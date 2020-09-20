@@ -6,6 +6,7 @@ use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
@@ -461,6 +462,33 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2019-07-22 12:45');
 
         self::assertFalse($date->getCurrentOpenTimeRange());
+    }
+
+    public function testGetCurrentOpenTimePeriod()
+    {
+        $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 05:45');
+
+        self::assertFalse($date->getCurrentOpenTimePeriod());
+
+        $date = $carbon::parse('2019-07-22 11:45');
+        $period = $date->getCurrentOpenTimePeriod();
+
+        self::assertInstanceOf(CarbonPeriod::class, $period);
+        self::assertSame('Every 1 minute from 2019-07-22 09:00:00 to 2019-07-22 12:00:00', (string) $period);
+
+        $date = $carbon::parse('2019-07-22 12:45');
+
+        self::assertFalse($date->getCurrentOpenTimeRange());
+
+        BusinessTime::enable($carbon, [
+            'overflow' => true,
+            'monday'   => ['18:00-02:00'],
+        ]);
+
+        $date = $carbon::parse('2020-09-21 22:45');
+        $period = $date->getCurrentOpenTimePeriod('2 hours');
+        self::assertSame('Every 2 hours from 2020-09-21 18:00:00 to 2020-09-22 02:00:00', (string) $period);
     }
 
     public function testCurrentOrMethods()
