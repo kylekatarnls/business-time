@@ -467,6 +467,10 @@ class BusinessTimeTest extends TestCase
     public function testGetCurrentOpenTimePeriod()
     {
         $carbon = static::CARBON_CLASS;
+        $date = $carbon::parse('2019-07-22 05:45');
+
+        self::assertFalse($date->getCurrentOpenTimePeriod());
+
         $date = $carbon::parse('2019-07-22 11:45');
         $period = $date->getCurrentOpenTimePeriod();
 
