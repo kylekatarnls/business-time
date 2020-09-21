@@ -1396,4 +1396,26 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2020-07-15 10:00');
         self::assertTrue($date->isBusinessOpen());
     }
+
+    public function testRangMethods()
+    {
+        $carbon = static::CARBON_CLASS;
+        BusinessTime::enable($carbon, [
+            'overflow' => true,
+            'monday' => ['19:00-02:00'],
+        ]);
+
+        $date = $carbon::parse('2020-09-22 00:50')->getCurrentOpenTimeRangeStart();
+        self::assertInstanceOf($carbon, $date);
+        self::assertSame('2020-09-21 19:00:00', $date->format('Y-m-d H:i:s'));
+        $date = $carbon::parse('2020-09-22 00:50')->getCurrentOpenTimeRangeEnd();
+        self::assertInstanceOf($carbon, $date);
+        self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
+        $date = $carbon::parse('2020-09-21 23:50')->getCurrentOpenTimeRangeStart();
+        self::assertInstanceOf($carbon, $date);
+        self::assertSame('2020-09-21 19:00:00', $date->format('Y-m-d H:i:s'));
+        $date = $carbon::parse('2020-09-21 23:50')->getCurrentOpenTimeRangeEnd();
+        self::assertInstanceOf($carbon, $date);
+        self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
+    }
 }
