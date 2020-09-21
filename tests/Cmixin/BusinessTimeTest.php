@@ -1402,7 +1402,7 @@ class BusinessTimeTest extends TestCase
         $carbon = static::CARBON_CLASS;
         BusinessTime::enable($carbon, [
             'overflow' => true,
-            'monday' => ['19:00-02:00'],
+            'monday'   => ['19:00-02:00'],
         ]);
 
         $date = $carbon::parse('2020-09-22 00:50')->getCurrentOpenTimeRangeStart();
