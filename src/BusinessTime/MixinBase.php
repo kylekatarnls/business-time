@@ -110,19 +110,19 @@ class MixinBase extends BusinessDay
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        return function ($defaultOpeningHours) {
+        return function ($defaultOpeningHours, $data = null) {
             if ($defaultOpeningHours instanceof OpeningHours) {
                 return $defaultOpeningHours;
             }
 
             if (is_array($defaultOpeningHours)) {
-                $hours = [];
+                $hours = ['data' => $data];
 
                 foreach ($defaultOpeningHours as $key => $value) {
                     $hours[static::normalizeDay($key)] = $value;
                 }
 
-                return (new OpeningHours())->fill($hours);
+                return OpeningHours::create($hours);
             }
 
             throw new InvalidArgumentException('Opening hours parameter should be a '.

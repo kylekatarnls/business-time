@@ -121,16 +121,12 @@ class DefinitionParser
     {
         [$region, $holidays, $openHours] = $this->getDefinition($arguments);
         /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
-        $openHours = $carbonClass::convertOpeningHours($openHours);
-
-        if ($region) {
-            $openHours->setData([
-                $this->mixin::HOLIDAYS_OPTION_KEY => [
-                    $this->mixin::REGION_OPTION_KEY              => $region,
-                    $this->mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
-                ],
-            ]);
-        }
+        $openHours = $carbonClass::convertOpeningHours($openHours, $region ? [
+            $this->mixin::HOLIDAYS_OPTION_KEY => [
+                $this->mixin::REGION_OPTION_KEY              => $region,
+                $this->mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,
+            ],
+        ] : null);
 
         return $openHours;
     }
