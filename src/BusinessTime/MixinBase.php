@@ -140,19 +140,19 @@ class MixinBase extends BusinessDay
         }
 
         $arguments = array_slice(func_get_args(), 1);
-        [$region, $holidays, $defaultOpeningHours] = self::getOpeningHoursOptions(
-            $defaultOpeningHours,
-            $arguments,
-            function ($date) use ($carbonClass) {
-                return $carbonClass::instance($date)->isHoliday();
-            }
-        );
-
         $isArray = is_array($carbonClass);
         $carbonClasses = (array) $carbonClass;
         $mixins = [];
 
         foreach ($carbonClasses as $carbonClass) {
+            [$region, $holidays, $defaultOpeningHours] = self::getOpeningHoursOptions(
+                $defaultOpeningHours,
+                $arguments,
+                function ($date) use ($carbonClass) {
+                    return $carbonClass::instance($date)->isHoliday();
+                }
+            );
+
             /* @var static $mixin */
             $mixin = parent::enable($carbonClass);
             $carbonClass::mixin($mixin);
