@@ -284,7 +284,7 @@ class MixinBase extends BusinessDay
                  *
                  * @return \Spatie\OpeningHours\OpeningHours
                  */
-                return function ($mode = null) use ($mixin) {
+                return function ($mode = null) use ($mixin): ?OpeningHours {
                     if ((
                         (!$mode || $mode === $mixin::LOCAL_MODE) && isset($this) && (
                             $hours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this)

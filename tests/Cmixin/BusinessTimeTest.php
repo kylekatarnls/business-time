@@ -157,6 +157,20 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('foo', $carbon::parse('2010-09-07')->getHolidayId());
     }
 
+    public function testSetOpeningHoursDiff()
+    {
+        $carbon = static::CARBON_CLASS;
+        $carbon::resetMacros();
+        BusinessTime::enable($carbon);
+        $hours = [
+            $carbon::TUESDAY => ['08:00-10:45'],
+        ];
+        $openingDate = $carbon::parse('2020-11-23')->setOpeningHours($hours);
+        $endDate = $carbon::parse('2020-11-25')->setOpeningHours($hours);
+
+        $this->assertSame(2.75, $openingDate->diffInBusinessHours($endDate));
+    }
+
     public function testGetOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
