@@ -2,9 +2,11 @@
 
 namespace BusinessTime;
 
+use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
+use Spatie\OpeningHours\OpeningHours;
 
 class DiffCalculator
 {
@@ -77,20 +79,44 @@ class DiffCalculator
         $isWrongState = 'is'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Closed' : 'Open');
         $nextWrongState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Close' : 'Open');
         $nextCorrectState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Open' : 'Close');
-        $date = $start->copy();
+        $hours = $this->getOpeningHours($start);
+        $date = $this->copy($start);
 
         while ($date < $end) {
             if ($date->$isWrongState()) {
-                $date = $date->$nextCorrectState();
+                $date = $this->withOpeningHours($date->$nextCorrectState(), $hours);
 
                 continue;
             }
 
-            $nextDate = $date->copy()->$nextWrongState();
+            $nextDate = $this->withOpeningHours($this->copy($date)->$nextWrongState(), $hours);
             $time += $date->$floatDiff(min($end, $nextDate));
             $date = $nextDate;
         }
 
         return $time;
+    }
+
+    protected function copy(CarbonInterface $date): CarbonInterface
+    {
+        return $this->withOpeningHours($date->copy(), $this->getOpeningHours($date));
+    }
+
+    protected function withOpeningHours(CarbonInterface $date, ?OpeningHours $hours): CarbonInterface
+    {
+        if ($hours) {
+            return $date->setOpeningHours($hours);
+        }
+
+        return $date;
+    }
+
+    protected function getOpeningHours(CarbonInterface $date): ?OpeningHours
+    {
+        try {
+            return $date->getOpeningHours(MixinBase::LOCAL_MODE);
+        } catch (InvalidArgumentException $exception) {
+            return null;
+        }
     }
 }
