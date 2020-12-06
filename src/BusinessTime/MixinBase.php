@@ -77,7 +77,7 @@ class MixinBase extends BusinessDay
          *
          * @return string
          */
-        return function ($day) {
+        return static function ($day) {
             if (is_int($day)) {
                 $day %= 7;
                 if ($day < 0) {
@@ -110,7 +110,7 @@ class MixinBase extends BusinessDay
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        return function ($defaultOpeningHours, $data = null) {
+        return static function ($defaultOpeningHours, $data = null) {
             if ($defaultOpeningHours instanceof OpeningHours) {
                 return $defaultOpeningHours;
             }
@@ -134,7 +134,7 @@ class MixinBase extends BusinessDay
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
         if ($carbonClass === null) {
-            return function () {
+            return static function () {
                 return true;
             };
         }
@@ -373,7 +373,7 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return static function () use ($method, $fallbackMethod) {
+        return function () use ($method, $fallbackMethod) {
             $date = static::this();
 
             if (isset($this) && $this === $date) {

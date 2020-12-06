@@ -19,7 +19,7 @@ trait Range
          *
          * @return \Spatie\OpeningHours\OpeningHoursForDay
          */
-        return function () {
+        return static function () {
             /** @var Carbon $date */
             $date = static::this();
 
@@ -39,7 +39,7 @@ trait Range
          *
          * @return \Spatie\OpeningHours\TimeRange[]
          */
-        return function () {
+        return static function () {
             /** @var Carbon $date */
             $date = static::this();
 
@@ -59,7 +59,7 @@ trait Range
          *
          * @return \Spatie\OpeningHours\TimeRange|bool
          */
-        return function () {
+        return static function () {
             /** @var Carbon $date */
             $date = static::this();
 
