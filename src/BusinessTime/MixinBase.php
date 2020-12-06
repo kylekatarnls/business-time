@@ -202,12 +202,13 @@ class MixinBase extends BusinessDay
                  * @return $this|null
                  */
                 return function ($openingHours) use ($mixin, &$staticStorage) {
+                    $self = static::this();
                     $parser = new DefinitionParser($mixin, $openingHours, function ($date) {
                         return static::instance($date)->isHoliday();
                     });
                     $openingHours = $parser->getEmbeddedOpeningHours(static::class);
 
-                    if (isset($this)) {
+                    if (isset($this) && $this === $self) {
                         $mixin->setOpeningHours($mixin::LOCAL_MODE, static::class, $openingHours, $this);
 
                         return $this;
@@ -247,7 +248,7 @@ class MixinBase extends BusinessDay
                  * @return $this|null
                  */
                 return function () use ($mixin) {
-                    if (isset($this)) {
+                    if (isset($this) && $this === static::this()) {
                         $mixin->resetOpeningHours($mixin::LOCAL_MODE, $this);
 
                         return $this;
@@ -286,7 +287,7 @@ class MixinBase extends BusinessDay
                  */
                 return function ($mode = null) use ($mixin): ?OpeningHours {
                     if ((
-                        (!$mode || $mode === $mixin::LOCAL_MODE) && isset($this) && (
+                        (!$mode || $mode === $mixin::LOCAL_MODE) && isset($this) && $this === static::this() && (
                             $hours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this)
                         )
                     ) ||
@@ -343,9 +344,9 @@ class MixinBase extends BusinessDay
          */
         return function ($method = null) use ($callee) {
             $method = is_string($method) ? $method : $callee;
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
 
-            if (isset($this)) {
+            if (isset($this) && $this === $date) {
                 /* @var \Carbon\Carbon|static $this */
                 return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $date));
             }
@@ -372,10 +373,10 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function () use ($method, $fallbackMethod) {
-            if (isset($this)) {
-                $date = $this;
+        return static function () use ($method, $fallbackMethod) {
+            $date = static::this();
 
+            if (isset($this) && $this === $date) {
                 do {
                     $date = $date->$method();
                 } while ($date->isHoliday());
@@ -383,7 +384,7 @@ class MixinBase extends BusinessDay
                 return $date;
             }
 
-            return static::now()->$fallbackMethod();
+            return $date->$fallbackMethod();
         };
     }
 
@@ -407,8 +408,8 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function () use ($testMethod, $method) {
-            $date = isset($this) ? $this : static::now();
+        return static function () use ($testMethod, $method) {
+            $date = static::this();
 
             return $date->$testMethod() ? $date : $date->$method();
         };

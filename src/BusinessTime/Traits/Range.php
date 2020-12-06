@@ -21,7 +21,7 @@ trait Range
          */
         return function () {
             /** @var Carbon $date */
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
 
             return $date->getOpeningHours()->forDate($date);
         };
@@ -41,7 +41,7 @@ trait Range
          */
         return function () {
             /** @var Carbon $date */
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
 
             return $date->getOpeningHours()->forDateTime($date);
         };
@@ -61,7 +61,7 @@ trait Range
          */
         return function () {
             /** @var Carbon $date */
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
 
             return $date->getOpeningHours()->currentOpenRange($date) ?: false;
         };
@@ -81,9 +81,9 @@ trait Range
          *
          * @return \Carbon\CarbonPeriod|bool
          */
-        return function ($interval = null) {
+        return static function ($interval = null) {
             /** @var Carbon $date */
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
             $range = $date->getOpeningHours()->currentOpenRange($date);
 
             if (!$range) {

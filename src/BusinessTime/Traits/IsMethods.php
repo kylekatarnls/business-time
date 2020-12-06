@@ -22,7 +22,9 @@ trait IsMethods
          */
         return function ($day) use ($method) {
             $day = static::normalizeDay($day);
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
+            $openingHours = isset($this) && $this === static::this()
+                ? $this->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->$method($day);
         };
@@ -64,8 +66,10 @@ trait IsMethods
          * @return bool
          */
         return function () use ($method) {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
+            $openingHours = isset($this) && $this === $date
+                ? $this->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->$method($date);
         };
@@ -105,8 +109,10 @@ trait IsMethods
          * @return bool
          */
         return function () {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
+            $openingHours = isset($this) && $this === $date
+                ? $this->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->isOpenAt($date) && !$date->isHoliday();
         };
@@ -148,8 +154,10 @@ trait IsMethods
          * @return bool
          */
         return function () {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+            $date = static::this();
+            $openingHours = isset($this) && $this === $date
+                ? $this->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->isClosedAt($date) || $date->isHoliday();
         };
