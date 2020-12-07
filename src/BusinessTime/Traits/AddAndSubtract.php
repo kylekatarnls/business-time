@@ -30,7 +30,7 @@ trait AddAndSubtract
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        return function (int $maximum) use ($mixin) {
+        return static function (int $maximum) use ($mixin) {
             $mixin->setMaxIteration($maximum);
         };
     }
@@ -53,7 +53,7 @@ trait AddAndSubtract
          * Get the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        return function () use ($mixin): int {
+        return static function () use ($mixin): int {
             return $mixin->getMaxIteration(true);
         };
     }
@@ -82,15 +82,22 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0) use ($closed) {
+        return static function (
+            bool $inverted,
+            bool $open,
+            $interval = null,
+            $unit = null,
+            int $options = 0
+        ) use ($closed) {
+            $date = static::this();
             $calculator = new Calculator(
-                isset($this) ? $this : static::now(),
+                $date,
                 (new IntervalComposer(static::class, $inverted, $interval, $unit))->getInterval(),
                 $open,
                 $options & $closed
             );
 
-            return $calculator->calculate($this->getMaxIteration());
+            return $calculator->calculate($date->getMaxIteration());
         };
     }
 
@@ -115,8 +122,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (bool $open, $interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function (bool $open, $interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->applyBusinessInterval(false, $open, $interval, $unit, $options);
         };
     }
@@ -142,8 +149,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (bool $open, $interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function (bool $open, $interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->applyBusinessInterval(true, $open, $interval, $unit, $options);
         };
     }
@@ -165,8 +172,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function ($interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->addBusinessInterval(true, $interval, $unit, $options);
         };
     }
@@ -188,8 +195,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function ($interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->subBusinessInterval(true, $interval, $unit, $options);
         };
     }
@@ -211,8 +218,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function ($interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->addBusinessInterval(false, $interval, $unit, $options);
         };
     }
@@ -234,8 +241,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($interval = null, $unit = null, int $options = 0) {
-            return (isset($this) ? $this : static::now())
+        return static function ($interval = null, $unit = null, int $options = 0) {
+            return static::this()
                 ->subBusinessInterval(false, $interval, $unit, $options);
         };
     }
@@ -257,8 +264,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return static::this()
                 ->addOpenTime($numberOfMinutes, $unit, $options);
         };
     }
@@ -280,8 +287,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return static::this()
                 ->subOpenTime($numberOfMinutes, $unit, $options);
         };
     }
@@ -303,8 +310,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return static::this()
                 ->addClosedTime($numberOfMinutes, $unit, $options);
         };
     }
@@ -326,8 +333,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfMinutes, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfMinutes, int $options = 0) use ($unit) {
+            return static::this()
                 ->subClosedTime($numberOfMinutes, $unit, $options);
         };
     }
@@ -349,8 +356,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfHours, int $options = 0) use ($unit) {
+            return static::this()
                 ->addOpenTime($numberOfHours, $unit, $options);
         };
     }
@@ -372,8 +379,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfHours, int $options = 0) use ($unit) {
+            return static::this()
                 ->subOpenTime($numberOfHours, $unit, $options);
         };
     }
@@ -395,8 +402,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfHours, int $options = 0) use ($unit) {
+            return static::this()
                 ->addClosedTime($numberOfHours, $unit, $options);
         };
     }
@@ -418,8 +425,8 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function (int $numberOfHours, int $options = 0) use ($unit) {
-            return (isset($this) ? $this : static::now())
+        return static function (int $numberOfHours, int $options = 0) use ($unit) {
+            return static::this()
                 ->subClosedTime($numberOfHours, $unit, $options);
         };
     }

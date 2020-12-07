@@ -20,9 +20,12 @@ trait IsMethods
          *
          * @return bool
          */
-        return function ($day) use ($method) {
+        return static function ($day) use ($method) {
+            $date = end(static::$macroContextStack);
             $day = static::normalizeDay($day);
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
+            $openingHours = $date
+                ? $date->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->$method($day);
         };
@@ -63,9 +66,11 @@ trait IsMethods
          *
          * @return bool
          */
-        return function () use ($method) {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+        return static function () use ($method) {
+            $date = static::this();
+            $openingHours = end(static::$macroContextStack)
+                ? $date->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->$method($date);
         };
@@ -104,9 +109,11 @@ trait IsMethods
          *
          * @return bool
          */
-        return function () {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+        return static function () {
+            $date = static::this();
+            $openingHours = end(static::$macroContextStack)
+                ? $date->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->isOpenAt($date) && !$date->isHoliday();
         };
@@ -147,9 +154,11 @@ trait IsMethods
          *
          * @return bool
          */
-        return function () {
-            $openingHours = isset($this) ? $this->getOpeningHours() : static::getOpeningHours();
-            $date = isset($this) ? $this : static::now();
+        return static function () {
+            $date = static::this();
+            $openingHours = end(static::$macroContextStack)
+                ? $date->getOpeningHours()
+                : static::getOpeningHours();
 
             return $openingHours->isClosedAt($date) || $date->isHoliday();
         };

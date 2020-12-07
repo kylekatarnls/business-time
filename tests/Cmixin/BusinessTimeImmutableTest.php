@@ -4,6 +4,9 @@ namespace Tests\Cmixin;
 
 use Carbon\CarbonImmutable;
 
+/**
+ * @group immutable
+ */
 class BusinessTimeImmutableTest extends BusinessTimeTest
 {
     const CARBON_CLASS = CarbonImmutable::class;
