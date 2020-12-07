@@ -5,6 +5,7 @@ namespace BusinessTime;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Closure;
 use Cmixin\BusinessDay;
+use Cmixin\BusinessDay\Util\Context;
 use Spatie\OpeningHours\OpeningHours;
 use SplObjectStorage;
 
@@ -51,9 +52,9 @@ class MixinBase extends BusinessDay
 
     /**
      * @var \SplObjectStorage<
-     *                         \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
-     *                         \Spatie\OpeningHours\OpeningHours
-     *                         >
+     *     \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
+     *     \Spatie\OpeningHours\OpeningHours
+     * >
      */
     protected $localOpeningHours;
 
@@ -201,17 +202,17 @@ class MixinBase extends BusinessDay
                  *
                  * @return $this|null
                  */
-                return function ($openingHours) use ($mixin, &$staticStorage) {
-                    $self = static::this();
+                return static function ($openingHours) use ($mixin, &$staticStorage) {
                     $parser = new DefinitionParser($mixin, $openingHours, function ($date) {
                         return static::instance($date)->isHoliday();
                     });
                     $openingHours = $parser->getEmbeddedOpeningHours(static::class);
+                    $date = end(static::$macroContextStack);
 
-                    if (isset($this) && $this === $self) {
-                        $mixin->setOpeningHours($mixin::LOCAL_MODE, static::class, $openingHours, $this);
+                    if ($date) {
+                        $mixin->setOpeningHours($mixin::LOCAL_MODE, static::class, $openingHours, $date);
 
-                        return $this;
+                        return $date;
                     }
 
                     $mixin->setOpeningHours($mixin::GLOBAL_MODE, static::class, $openingHours);
@@ -247,11 +248,13 @@ class MixinBase extends BusinessDay
                  *
                  * @return $this|null
                  */
-                return function () use ($mixin) {
-                    if (isset($this) && $this === static::this()) {
-                        $mixin->resetOpeningHours($mixin::LOCAL_MODE, $this);
+                return static function () use ($mixin) {
+                    $date = end(static::$macroContextStack);
 
-                        return $this;
+                    if ($date) {
+                        $mixin->resetOpeningHours($mixin::LOCAL_MODE, $date);
+
+                        return $date;
                     }
 
                     $mixin->resetOpeningHours($mixin::GLOBAL_MODE);
@@ -285,11 +288,11 @@ class MixinBase extends BusinessDay
                  *
                  * @return \Spatie\OpeningHours\OpeningHours
                  */
-                return function ($mode = null) use ($mixin): ?OpeningHours {
+                return static function ($mode = null) use ($mixin): ?OpeningHours {
                     if ((
-                        (!$mode || $mode === $mixin::LOCAL_MODE) && isset($this) && $this === static::this() && (
-                            $hours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $this)
-                        )
+                        (!$mode || $mode === $mixin::LOCAL_MODE) &&
+                        ($date = end(static::$macroContextStack)) &&
+                        ($hours = $mixin->getOpeningHours($mixin::LOCAL_MODE, $date))
                     ) ||
                         ((!$mode || $mode === $mixin::GLOBAL_MODE) && (
                             $hours = $mixin->getOpeningHours($mixin::GLOBAL_MODE)
@@ -317,8 +320,8 @@ class MixinBase extends BusinessDay
          *
          * @return mixed
          */
-        return function ($method, ...$arguments) {
-            return $this->getOpeningHours()->$method(...$arguments);
+        return static function ($method, ...$arguments) {
+            return static::this()->getOpeningHours()->$method(...$arguments);
         };
     }
 
@@ -342,16 +345,16 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function ($method = null) use ($callee) {
+        return static function ($method = null) use ($callee) {
             $method = is_string($method) ? $method : $callee;
-            $date = static::this();
+            $date = end(static::$macroContextStack);
 
-            if (isset($this) && $this === $date) {
-                /* @var \Carbon\Carbon|static $this */
-                return $this->setDateTimeFrom($this->safeCallOnOpeningHours($method, clone $date));
+            if ($date) {
+                /* @var \Carbon\Carbon|static $date */
+                return $date->setDateTimeFrom($date->safeCallOnOpeningHours($method, clone $date));
             }
 
-            return $date->$method();
+            return static::this()->$method();
         };
     }
 
@@ -373,10 +376,10 @@ class MixinBase extends BusinessDay
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return function () use ($method, $fallbackMethod) {
-            $date = static::this();
+        return static function () use ($method, $fallbackMethod) {
+            $date = end(static::$macroContextStack);
 
-            if (isset($this) && $this === $date) {
+            if ($date) {
                 do {
                     $date = $date->$method();
                 } while ($date->isHoliday());
@@ -384,7 +387,7 @@ class MixinBase extends BusinessDay
                 return $date;
             }
 
-            return $date->$fallbackMethod();
+            return static::this()->$fallbackMethod();
         };
     }
 

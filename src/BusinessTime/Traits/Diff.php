@@ -39,9 +39,9 @@ trait Diff
          *
          * @return \Carbon\CarbonInterval|float
          */
-        return function (string $unit, $date = null, int $options = 0) {
+        return static function (string $unit, $date = null, int $options = 0) {
             /** @var CarbonInterface $start */
-            $start = isset($this) ? $this : static::now();
+            $start = static::this();
             $calculator = new DiffCalculator($unit);
             $calculator->setFlags(
                 !($options & BusinessTime::CLOSED_TIME),
@@ -80,11 +80,8 @@ trait Diff
          *
          * @return \Carbon\CarbonInterval
          */
-        return function ($date = null, int $options = 0): CarbonInterval {
-            /** @var CarbonInterface $start */
-            $start = isset($this) ? $this : static::now();
-
-            return $start->diffInBusinessUnit('interval', $date, $options);
+        return static function ($date = null, int $options = 0): CarbonInterval {
+            return static::this()->diffInBusinessUnit('interval', $date, $options);
         };
     }
 
@@ -114,11 +111,8 @@ trait Diff
          *
          * @return float
          */
-        return function ($date = null, int $options = 0): float {
-            /** @var CarbonInterface $start */
-            $start = isset($this) ? $this : static::now();
-
-            return $start->diffInBusinessUnit('second', $date, $options);
+        return static function ($date = null, int $options = 0): float {
+            return static::this()->diffInBusinessUnit('second', $date, $options);
         };
     }
 
@@ -148,11 +142,8 @@ trait Diff
          *
          * @return float
          */
-        return function ($date = null, int $options = 0): float {
-            /** @var CarbonInterface $start */
-            $start = isset($this) ? $this : static::now();
-
-            return $start->diffInBusinessUnit('minute', $date, $options);
+        return static function ($date = null, int $options = 0): float {
+            return static::this()->diffInBusinessUnit('minute', $date, $options);
         };
     }
 
@@ -182,11 +173,8 @@ trait Diff
          *
          * @return float
          */
-        return function ($date = null, int $options = 0): float {
-            /** @var CarbonInterface $start */
-            $start = isset($this) ? $this : static::now();
-
-            return $start->diffInBusinessUnit('hour', $date, $options);
+        return static function ($date = null, int $options = 0): float {
+            return static::this()->diffInBusinessUnit('hour', $date, $options);
         };
     }
 }

@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
 
+/**
+ * @group mutable
+ */
 class BusinessTimeTest extends TestCase
 {
     const CARBON_CLASS = Carbon::class;

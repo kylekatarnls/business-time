@@ -9,6 +9,9 @@ class MyCarbon extends Carbon
 {
 }
 
+/**
+ * @group custom
+ */
 class BusinessTimeCustomTest extends BusinessTimeTest
 {
     const CARBON_CLASS = MyCarbon::class;
