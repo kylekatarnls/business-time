@@ -82,7 +82,13 @@ trait AddAndSubtract
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
-        return static function (bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0) use ($closed) {
+        return static function (
+            bool $inverted,
+            bool $open,
+            $interval = null,
+            $unit = null,
+            int $options = 0
+        ) use ($closed) {
             $date = static::this();
             $calculator = new Calculator(
                 $date,
