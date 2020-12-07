@@ -2,8 +2,6 @@
 
 namespace BusinessTime\Traits;
 
-use Cmixin\BusinessDay\Util\Context;
-
 trait IsMethods
 {
     /**

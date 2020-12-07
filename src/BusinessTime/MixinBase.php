@@ -5,7 +5,6 @@ namespace BusinessTime;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Closure;
 use Cmixin\BusinessDay;
-use Cmixin\BusinessDay\Util\Context;
 use Spatie\OpeningHours\OpeningHours;
 use SplObjectStorage;
 
@@ -46,15 +45,12 @@ class MixinBase extends BusinessDay
     protected static $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
     /**
-     * @var \Spatie\OpeningHours\OpeningHours|null
+     * @var OpeningHours|null
      */
     protected $openingHours;
 
     /**
-     * @var \SplObjectStorage<
-     *     \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface,
-     *     \Spatie\OpeningHours\OpeningHours
-     * >
+     * @var SplObjectStorage<object, OpeningHours>
      */
     protected $localOpeningHours;
 
