@@ -15,15 +15,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
-        $config = $this->app->get('config');
-        $config = $this->proceedConfig($config->get('carbon') ?: $config->get('carbon'));
+        $config = $this->proceedConfig($this->app->get('config'));
 
         if (!is_array($config)) {
             return;
         }
 
-        $openingHours = $this->proceedConfig($config['opening-hours'] ?? $config['opening_hours'] ?? []);
-        unset($config['opening-hours'], $config['opening_hours']);
+        $openingHours = $this->proceedConfig($config['opening-hours'] ?? $config['opening_hours'] ?? $config['openingHours'] ?? []);
+        unset($config['opening-hours'], $config['opening_hours'], $config['openingHours']);
 
         BusinessTime::enable(
             $this->getCarbonClasses(),
