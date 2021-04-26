@@ -15,7 +15,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
-        $config = $this->proceedConfig($this->app->get('config'));
+        $config = $this->proceedConfig($this->app->get('config')->get('carbon'));
 
         if (!is_array($config)) {
             return;
