@@ -5,9 +5,11 @@ namespace Tests\Cmixin;
 use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
@@ -926,7 +928,7 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:01', $calculate('2021-04-05 12:00:00', true, '-2 hours -59 minutes -59 seconds'));
         $this->assertSame('2021-04-02 15:00:00', $calculate('2021-04-05 7:00', true, '-180 minutes'));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 13:00:00', true, '-180 minutes'));
-        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)->invert()));
+        $this->assertDateMatch('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)->invert()));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->invert()));
         $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)->invert()));
 
@@ -1030,7 +1032,7 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:01', $calculate('2021-04-05 12:00:00', true, '2 hours 59 minutes 59 seconds'));
         $this->assertSame('2021-04-02 15:00:00', $calculate('2021-04-05 7:00', true, '180 minutes'));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 13:00:00', true, '180 minutes'));
-        $this->assertSame('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)));
+        $this->assertDateMatch('2021-04-05 10:00:00.000001', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999)));
         $this->assertSame('2021-04-05 10:00:00', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)));
         $this->assertSame('2021-04-05 09:59:59.999999', $calculate('2021-04-05 14:00:00', true, CarbonInterval::seconds(3 * 60 * 60)->microseconds(1)));
 
@@ -1159,7 +1161,7 @@ class BusinessTimeTest extends TestCase
         $this->assertSame('2021-04-05 09:00:00', $format($getDate('2021-04-05 14:00')->subOpenMinutes(4 * 60)));
         $this->assertSame('2021-04-02 17:00:00', $format($getDate('2021-04-05 10:59:59')->subOpenTime('2 hours 59 minutes 59 seconds')));
         $this->assertSame('2021-04-05 14:59:58', $format($getDate('2021-04-05 10:59:59')->subOpenTime('-2 hours -59 minutes -59 seconds')));
-        $this->assertSame('2021-04-05 10:00:00.000001', $format($getDate('2021-04-05 14:00:00')->subOpenTime(CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999))));
+        $this->assertDateMatch('2021-04-05 10:00:00.000001', $format($getDate('2021-04-05 14:00:00')->subOpenTime(CarbonInterval::seconds(3 * 60 * 60 - 1)->microseconds(999999))));
         $this->assertSame('2021-04-05 12:00:00', $format($getDate('2021-04-05 21:00')->subClosedTime(4, 'hours')));
         $this->assertSame('2021-04-05 06:00:00', $format($getDate('2021-04-05 15:00')->subClosedHours(4)));
         $this->assertSame('2021-04-05 07:00:00', $format($getDate('2021-04-05 19:00')->subClosedMinutes(4 * 60)));
@@ -1434,5 +1436,23 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2020-09-21 23:50')->getCurrentOpenTimeRangeEnd();
         self::assertInstanceOf($carbon, $date);
         self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
+    }
+
+    private function assertDateMatch($expected, $actual, string $message = ''): void
+    {
+        try {
+            self::assertSame($expected, $actual, $message);
+        } catch (ExpectationFailedException $exception) {
+            if (version_compare(PHP_VERSION, '8.1.0-dev', '<')) {
+                throw $exception;
+            }
+
+            // Handle https://bugs.php.net/bug.php?id=80998
+
+            self::assertTrue(in_array(
+                CarbonImmutable::parse($expected)->diffInMicroseconds($actual, true),
+                [1000000, 2000000]
+            ), $message);
+        }
     }
 }
