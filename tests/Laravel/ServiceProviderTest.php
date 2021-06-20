@@ -13,8 +13,8 @@ class ServiceProviderTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $composerConfig = require(__DIR__ . '/../../vendor/composer/installed.php');
-        self::$businessDayVersion = $composerConfig['versions']['cmixin/business-day'] ?? 'dev-master';
+        $composerConfig = require __DIR__.'/../../vendor/composer/installed.php';
+        self::$businessDayVersion = $composerConfig['versions']['cmixin/business-day']['version'] ?? 'dev-master';
 
         if (!preg_match('/^\d+\./', self::$businessDayVersion)) {
             self::$businessDayVersion = '1.999';
