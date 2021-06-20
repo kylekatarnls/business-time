@@ -9,6 +9,18 @@ use PHPUnit\Framework\TestCase;
 
 class ServiceProviderTest extends TestCase
 {
+    private static $businessDayVersion;
+
+    public static function setUpBeforeClass(): void
+    {
+        $composerConfig = require(__DIR__ . '/../../vendor/composer/installed.php');
+        self::$businessDayVersion = $composerConfig['versions']['cmixin/business-day'] ?? 'dev-master';
+
+        if (!preg_match('/^\d+\./', self::$businessDayVersion)) {
+            self::$businessDayVersion = '1.999';
+        }
+    }
+
     public function testBoot()
     {
         include_once __DIR__.'/ServiceProvider.php';
@@ -35,11 +47,18 @@ class ServiceProviderTest extends TestCase
         $service->app->setHours(null);
 
         $this->assertNull($service->boot());
-        $this->assertNull(Carbon::getHolidaysRegion());
+
+        if (version_compare(self::$businessDayVersion, '1.3.0', '>=')) {
+            $this->assertNull(Carbon::getHolidaysRegion());
+        }
     }
 
     public function testConfig()
     {
+        if (version_compare(self::$businessDayVersion, '1.3.0', '<')) {
+            $this->markTestSkipped('This test requires cmixin/business-day >= 1.3.0');
+        }
+
         include_once __DIR__.'/ServiceProvider.php';
         $service = new ServiceProvider();
         $classes = [
