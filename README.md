@@ -631,7 +631,7 @@ the same as in [`diffAsBusinessInterval`](#diffAsBusinessInterval)
 Return open/closed number of seconds (as a floating number) in the given unit between 2 dates/times.
 
 ```php
-Carbon::parse('2021-04-05 07:00')->diffInBusinessMinutes('2021-04-05 10:30', $options)
+Carbon::parse('2021-04-05 07:00')->diffInBusinessSeconds('2021-04-05 10:30', $options)
 ```
 
 The 2 parameters are
