@@ -114,7 +114,7 @@ class Calculator
     protected function getNextAndCandidate(CarbonInterface $date, DateInterval $interval): array
     {
         $next = $this->getNextInSkippedState($date);
-        $resultCandidate = $date->copy()->add($interval);
+        $resultCandidate = $this->completeDate($date->copy()->add($interval));
 
         if (!$this->isInExpectedState($date)) {
             $next = $this->getNextInSkippedState($date);
@@ -136,7 +136,7 @@ class Calculator
     protected function getStartDate(CarbonInterface $date)
     {
         return $this->isInExpectedState($date) || (
-            $this->past && $this->isInExpectedState($date->copy()->subMicrosecond())
+            $this->past && $this->isInExpectedState($this->completeDate($date->copy()->subMicrosecond()))
         )
             ? $date
             : $this->getNextInTakenState($date);
