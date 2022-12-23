@@ -112,16 +112,22 @@ class DefinitionParser
     /**
      * Create and return an OpeningHours instance with holidays options put in embedded metadata.
      *
-     * @param string $carbonClass class enabled by the mixin.
-     * @param string $arguments   extra paremeters to provide options as a list (empty array by default).
+     * @param string|Schedule $carbonClass class enabled by the mixin.
+     * @param string          $arguments   extra paremeters to provide options as a list (empty array by default).
      *
      * @return \Spatie\OpeningHours\OpeningHours
      */
     public function getEmbeddedOpeningHours($carbonClass, array $arguments = [])
     {
         [$region, $holidays, $openHours] = $this->getDefinition($arguments);
+        $convertOpeningHours = [$carbonClass, 'convertOpeningHours'];
+
+        if (is_object($carbonClass)) {
+            $convertOpeningHours = $convertOpeningHours();
+        }
+
         /* @var \Spatie\OpeningHours\OpeningHours $openingHours */
-        $openHours = $carbonClass::convertOpeningHours($openHours, $region ? [
+        $openHours = $convertOpeningHours($openHours, $region ? [
             $this->mixin::HOLIDAYS_OPTION_KEY => [
                 $this->mixin::REGION_OPTION_KEY              => $region,
                 $this->mixin::ADDITIONAL_HOLIDAYS_OPTION_KEY => $holidays,

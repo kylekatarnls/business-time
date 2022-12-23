@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use BusinessTime\Exceptions\InvalidArgumentException;
+use Carbon\CarbonInterface;
 use Closure;
 use Cmixin\BusinessDay;
 use Spatie\OpeningHours\OpeningHours;
@@ -47,7 +48,7 @@ class MixinBase extends BusinessDay
     /**
      * @var OpeningHours|null
      */
-    protected $openingHours;
+    public $openingHours;
 
     /**
      * @var SplObjectStorage<object, OpeningHours>
@@ -75,16 +76,7 @@ class MixinBase extends BusinessDay
          * @return string
          */
         return static function ($day) {
-            if (is_int($day)) {
-                $day %= 7;
-                if ($day < 0) {
-                    $day += 7;
-                }
-
-                return static::$days[$day];
-            }
-
-            return strtolower($day);
+            return Normalizer::normalizeDay($day, static::$days);
         };
     }
 
@@ -116,7 +108,10 @@ class MixinBase extends BusinessDay
                 $hours = ['data' => $data];
 
                 foreach ($defaultOpeningHours as $key => $value) {
-                    $hours[static::normalizeDay($key)] = $value;
+                    $day = is_a(static::class, CarbonInterface::class)
+                        ? static::normalizeDay($key)
+                        : Normalizer::normalizeDay($key);
+                    $hours[$day] = $value;
                 }
 
                 return OpeningHours::create($hours);

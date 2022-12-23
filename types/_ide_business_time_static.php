@@ -16,7 +16,7 @@ namespace Carbon
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:73
+            // Content, see src/BusinessTime/MixinBase.php:77
         }
 
         /**
@@ -32,9 +32,9 @@ namespace Carbon
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function convertOpeningHours($defaultOpeningHours)
+        public static function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:106
+            // Content, see src/BusinessTime/MixinBase.php:110
         }
 
         /**
@@ -52,7 +52,7 @@ namespace Carbon
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:130
+            // Content, see src/BusinessTime/MixinBase.php:134
         }
 
         /**
@@ -66,7 +66,7 @@ namespace Carbon
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:191
+            // Content, see src/BusinessTime/MixinBase.php:206
         }
 
         /**
@@ -78,7 +78,7 @@ namespace Carbon
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:234
+            // Content, see src/BusinessTime/MixinBase.php:252
         }
 
         /**
@@ -90,9 +90,9 @@ namespace Carbon
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function getOpeningHours()
+        public static function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:272
+            // Content, see src/BusinessTime/MixinBase.php:292
         }
 
         /**
@@ -104,7 +104,7 @@ namespace Carbon
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:300
+            // Content, see src/BusinessTime/MixinBase.php:324
         }
 
         /**
@@ -119,7 +119,7 @@ namespace Carbon
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -134,7 +134,7 @@ namespace Carbon
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -150,7 +150,7 @@ namespace Carbon
          */
         public static function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -159,9 +159,9 @@ namespace Carbon
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        public static function setMaxIteration(int $maxIteration)
+        public static function setMaxIteration(int $maximum)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:34
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:33
         }
 
         /**
@@ -172,7 +172,7 @@ namespace Carbon
          */
         public static function getMaxIteration()
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:57
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:56
         }
 
         /**
@@ -182,16 +182,18 @@ namespace Carbon
          * (if $open is true) or only closed time (if $open is false).
          *
          * @param bool                          $inverted subtract the interval if set to true.
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function applyBusinessInterval(bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:84
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:85
         }
 
         /**
@@ -200,16 +202,18 @@ namespace Carbon
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:125
         }
 
         /**
@@ -218,16 +222,18 @@ namespace Carbon
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:152
         }
 
         /**
@@ -237,13 +243,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:175
         }
 
         /**
@@ -253,13 +260,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:198
         }
 
         /**
@@ -269,13 +277,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:221
         }
 
         /**
@@ -285,13 +294,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:244
         }
 
         /**
@@ -306,7 +316,7 @@ namespace Carbon
          */
         public static function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -321,7 +331,7 @@ namespace Carbon
          */
         public static function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
         }
 
         /**
@@ -336,7 +346,7 @@ namespace Carbon
          */
         public static function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
         }
 
         /**
@@ -351,7 +361,7 @@ namespace Carbon
          */
         public static function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
         }
 
         /**
@@ -366,7 +376,7 @@ namespace Carbon
          */
         public static function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
         }
 
         /**
@@ -381,7 +391,7 @@ namespace Carbon
          */
         public static function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
         }
 
         /**
@@ -396,7 +406,7 @@ namespace Carbon
          */
         public static function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
         }
 
         /**
@@ -411,13 +421,14 @@ namespace Carbon
          */
         public static function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -425,13 +436,14 @@ namespace Carbon
          */
         public static function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -439,13 +451,14 @@ namespace Carbon
          */
         public static function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -453,13 +466,14 @@ namespace Carbon
          */
         public static function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -467,7 +481,7 @@ namespace Carbon
          */
         public static function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -480,7 +494,7 @@ namespace Carbon
          */
         public static function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -493,13 +507,14 @@ namespace Carbon
          */
         public static function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -507,13 +522,14 @@ namespace Carbon
          */
         public static function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -521,13 +537,14 @@ namespace Carbon
          */
         public static function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -535,13 +552,14 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open
+         * date and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -549,13 +567,14 @@ namespace Carbon
          */
         public static function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -563,13 +582,14 @@ namespace Carbon
          */
         public static function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -577,13 +597,14 @@ namespace Carbon
          */
         public static function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -591,13 +612,14 @@ namespace Carbon
          */
         public static function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -605,7 +627,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -618,7 +640,7 @@ namespace Carbon
          */
         public static function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -631,7 +653,7 @@ namespace Carbon
          */
         public static function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -644,7 +666,7 @@ namespace Carbon
          */
         public static function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -657,7 +679,136 @@ namespace Carbon
          */
         public static function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
+         *
+         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
+         *                                                                        for the total to return;
+         *                                                                        or 'interval' to return a
+         *                                                                        CarbonInterval instance
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval|float
+         */
+        public static function diffInBusinessUnit(string $unit, $date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:42
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
+         *
+         * Return an interval with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval
+         */
+        public static function diffAsBusinessInterval($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:83
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
+         *
+         * Return a number of seconds with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessSeconds($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:114
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
+         *
+         * Return a number of minutes with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessMinutes($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:145
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessHours
+         *
+         * Return a number of hours with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessHours($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:176
         }
 
         /**
@@ -669,7 +820,7 @@ namespace Carbon
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -681,7 +832,7 @@ namespace Carbon
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -693,7 +844,7 @@ namespace Carbon
          */
         public static function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -705,7 +856,7 @@ namespace Carbon
          */
         public static function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -717,7 +868,7 @@ namespace Carbon
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -729,7 +880,7 @@ namespace Carbon
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -741,7 +892,7 @@ namespace Carbon
          */
         public static function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -753,7 +904,7 @@ namespace Carbon
          */
         public static function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -791,7 +942,7 @@ namespace Carbon
          */
         public static function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -805,7 +956,7 @@ namespace Carbon
          */
         public static function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -818,7 +969,7 @@ namespace Carbon
          */
         public static function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -833,7 +984,7 @@ namespace Carbon
          */
         public static function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -846,7 +997,7 @@ namespace Carbon
          */
         public static function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -861,7 +1012,7 @@ namespace Carbon
          */
         public static function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -875,7 +1026,7 @@ namespace Carbon
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -889,7 +1040,7 @@ namespace Carbon
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -903,7 +1054,7 @@ namespace Carbon
          */
         public static function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -917,13 +1068,14 @@ namespace Carbon
          */
         public static function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -931,13 +1083,14 @@ namespace Carbon
          */
         public static function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextBusinessClose
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -945,13 +1098,14 @@ namespace Carbon
          */
         public static function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -959,13 +1113,14 @@ namespace Carbon
          */
         public static function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -973,7 +1128,7 @@ namespace Carbon
          */
         public static function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -986,7 +1141,7 @@ namespace Carbon
          */
         public static function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -999,7 +1154,7 @@ namespace Carbon
          */
         public static function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1011,7 +1166,7 @@ namespace Carbon
          */
         public static function getCurrentDayOpeningHours()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:21
+            // Content, see src/BusinessTime/Traits/Range.php:22
         }
 
         /**
@@ -1023,7 +1178,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRanges()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:41
+            // Content, see src/BusinessTime/Traits/Range.php:42
         }
 
         /**
@@ -1035,7 +1190,21 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRange()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:61
+            // Content, see src/BusinessTime/Traits/Range.php:62
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Range::getCurrentOpenTimePeriod
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @param string|\DateInterval $interval
+         *
+         * @return \Carbon\CarbonPeriod|bool
+         */
+        public static function getCurrentOpenTimePeriod($interval = null)
+        {
+            // Content, see src/BusinessTime/Traits/Range.php:84
         }
 
         /**
@@ -1049,7 +1218,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1063,7 +1232,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1075,7 +1244,7 @@ namespace Carbon
          */
         public static function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1087,7 +1256,7 @@ namespace Carbon
          */
         public static function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
     }
 }
@@ -1108,7 +1277,7 @@ namespace Carbon
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:73
+            // Content, see src/BusinessTime/MixinBase.php:77
         }
 
         /**
@@ -1124,9 +1293,9 @@ namespace Carbon
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function convertOpeningHours($defaultOpeningHours)
+        public static function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:106
+            // Content, see src/BusinessTime/MixinBase.php:110
         }
 
         /**
@@ -1144,7 +1313,7 @@ namespace Carbon
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:130
+            // Content, see src/BusinessTime/MixinBase.php:134
         }
 
         /**
@@ -1158,7 +1327,7 @@ namespace Carbon
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:191
+            // Content, see src/BusinessTime/MixinBase.php:206
         }
 
         /**
@@ -1170,7 +1339,7 @@ namespace Carbon
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:234
+            // Content, see src/BusinessTime/MixinBase.php:252
         }
 
         /**
@@ -1182,9 +1351,9 @@ namespace Carbon
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function getOpeningHours()
+        public static function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:272
+            // Content, see src/BusinessTime/MixinBase.php:292
         }
 
         /**
@@ -1196,7 +1365,7 @@ namespace Carbon
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:300
+            // Content, see src/BusinessTime/MixinBase.php:324
         }
 
         /**
@@ -1211,7 +1380,7 @@ namespace Carbon
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1226,7 +1395,7 @@ namespace Carbon
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1242,7 +1411,7 @@ namespace Carbon
          */
         public static function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1251,9 +1420,9 @@ namespace Carbon
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        public static function setMaxIteration(int $maxIteration)
+        public static function setMaxIteration(int $maximum)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:34
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:33
         }
 
         /**
@@ -1264,7 +1433,7 @@ namespace Carbon
          */
         public static function getMaxIteration()
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:57
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:56
         }
 
         /**
@@ -1274,16 +1443,18 @@ namespace Carbon
          * (if $open is true) or only closed time (if $open is false).
          *
          * @param bool                          $inverted subtract the interval if set to true.
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function applyBusinessInterval(bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:84
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:85
         }
 
         /**
@@ -1292,16 +1463,18 @@ namespace Carbon
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:125
         }
 
         /**
@@ -1310,16 +1483,18 @@ namespace Carbon
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:152
         }
 
         /**
@@ -1329,13 +1504,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:175
         }
 
         /**
@@ -1345,13 +1521,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:198
         }
 
         /**
@@ -1361,13 +1538,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:221
         }
 
         /**
@@ -1377,13 +1555,14 @@ namespace Carbon
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:244
         }
 
         /**
@@ -1398,7 +1577,7 @@ namespace Carbon
          */
         public static function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -1413,7 +1592,7 @@ namespace Carbon
          */
         public static function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
         }
 
         /**
@@ -1428,7 +1607,7 @@ namespace Carbon
          */
         public static function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
         }
 
         /**
@@ -1443,7 +1622,7 @@ namespace Carbon
          */
         public static function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
         }
 
         /**
@@ -1458,7 +1637,7 @@ namespace Carbon
          */
         public static function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
         }
 
         /**
@@ -1473,7 +1652,7 @@ namespace Carbon
          */
         public static function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
         }
 
         /**
@@ -1488,7 +1667,7 @@ namespace Carbon
          */
         public static function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
         }
 
         /**
@@ -1503,13 +1682,14 @@ namespace Carbon
          */
         public static function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -1517,13 +1697,14 @@ namespace Carbon
          */
         public static function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -1531,13 +1712,14 @@ namespace Carbon
          */
         public static function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -1545,13 +1727,14 @@ namespace Carbon
          */
         public static function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -1559,7 +1742,7 @@ namespace Carbon
          */
         public static function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1572,7 +1755,7 @@ namespace Carbon
          */
         public static function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1585,13 +1768,14 @@ namespace Carbon
          */
         public static function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -1599,13 +1783,14 @@ namespace Carbon
          */
         public static function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -1613,13 +1798,14 @@ namespace Carbon
          */
         public static function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -1627,13 +1813,14 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open
+         * date and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -1641,13 +1828,14 @@ namespace Carbon
          */
         public static function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -1655,13 +1843,14 @@ namespace Carbon
          */
         public static function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -1669,13 +1858,14 @@ namespace Carbon
          */
         public static function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -1683,13 +1873,14 @@ namespace Carbon
          */
         public static function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -1697,7 +1888,7 @@ namespace Carbon
          */
         public static function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1710,7 +1901,7 @@ namespace Carbon
          */
         public static function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1723,7 +1914,7 @@ namespace Carbon
          */
         public static function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1736,7 +1927,7 @@ namespace Carbon
          */
         public static function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -1749,7 +1940,136 @@ namespace Carbon
          */
         public static function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
+         *
+         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
+         *                                                                        for the total to return;
+         *                                                                        or 'interval' to return a
+         *                                                                        CarbonInterval instance
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval|float
+         */
+        public static function diffInBusinessUnit(string $unit, $date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:42
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
+         *
+         * Return an interval with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval
+         */
+        public static function diffAsBusinessInterval($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:83
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
+         *
+         * Return a number of seconds with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessSeconds($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:114
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
+         *
+         * Return a number of minutes with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessMinutes($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:145
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessHours
+         *
+         * Return a number of hours with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessHours($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:176
         }
 
         /**
@@ -1761,7 +2081,7 @@ namespace Carbon
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1773,7 +2093,7 @@ namespace Carbon
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1785,7 +2105,7 @@ namespace Carbon
          */
         public static function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1797,7 +2117,7 @@ namespace Carbon
          */
         public static function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1809,7 +2129,7 @@ namespace Carbon
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1821,7 +2141,7 @@ namespace Carbon
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1833,7 +2153,7 @@ namespace Carbon
          */
         public static function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1845,7 +2165,7 @@ namespace Carbon
          */
         public static function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -1883,7 +2203,7 @@ namespace Carbon
          */
         public static function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -1897,7 +2217,7 @@ namespace Carbon
          */
         public static function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -1910,7 +2230,7 @@ namespace Carbon
          */
         public static function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -1925,7 +2245,7 @@ namespace Carbon
          */
         public static function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -1938,7 +2258,7 @@ namespace Carbon
          */
         public static function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -1953,7 +2273,7 @@ namespace Carbon
          */
         public static function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -1967,7 +2287,7 @@ namespace Carbon
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1981,7 +2301,7 @@ namespace Carbon
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -1995,7 +2315,7 @@ namespace Carbon
          */
         public static function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -2009,13 +2329,14 @@ namespace Carbon
          */
         public static function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -2023,13 +2344,14 @@ namespace Carbon
          */
         public static function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextBusinessClose
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -2037,13 +2359,14 @@ namespace Carbon
          */
         public static function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -2051,13 +2374,14 @@ namespace Carbon
          */
         public static function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -2065,7 +2389,7 @@ namespace Carbon
          */
         public static function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2078,7 +2402,7 @@ namespace Carbon
          */
         public static function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2091,7 +2415,7 @@ namespace Carbon
          */
         public static function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2103,7 +2427,7 @@ namespace Carbon
          */
         public static function getCurrentDayOpeningHours()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:21
+            // Content, see src/BusinessTime/Traits/Range.php:22
         }
 
         /**
@@ -2115,7 +2439,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRanges()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:41
+            // Content, see src/BusinessTime/Traits/Range.php:42
         }
 
         /**
@@ -2127,7 +2451,21 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRange()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:61
+            // Content, see src/BusinessTime/Traits/Range.php:62
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Range::getCurrentOpenTimePeriod
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @param string|\DateInterval $interval
+         *
+         * @return \Carbon\CarbonPeriod|bool
+         */
+        public static function getCurrentOpenTimePeriod($interval = null)
+        {
+            // Content, see src/BusinessTime/Traits/Range.php:84
         }
 
         /**
@@ -2141,7 +2479,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -2155,7 +2493,7 @@ namespace Carbon
          */
         public static function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -2167,7 +2505,7 @@ namespace Carbon
          */
         public static function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -2179,7 +2517,7 @@ namespace Carbon
          */
         public static function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
     }
 }
@@ -2200,7 +2538,7 @@ namespace Illuminate\Support
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:73
+            // Content, see src/BusinessTime/MixinBase.php:77
         }
 
         /**
@@ -2216,9 +2554,9 @@ namespace Illuminate\Support
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function convertOpeningHours($defaultOpeningHours)
+        public static function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:106
+            // Content, see src/BusinessTime/MixinBase.php:110
         }
 
         /**
@@ -2236,7 +2574,7 @@ namespace Illuminate\Support
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:130
+            // Content, see src/BusinessTime/MixinBase.php:134
         }
 
         /**
@@ -2250,7 +2588,7 @@ namespace Illuminate\Support
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:191
+            // Content, see src/BusinessTime/MixinBase.php:206
         }
 
         /**
@@ -2262,7 +2600,7 @@ namespace Illuminate\Support
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:234
+            // Content, see src/BusinessTime/MixinBase.php:252
         }
 
         /**
@@ -2274,9 +2612,9 @@ namespace Illuminate\Support
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function getOpeningHours()
+        public static function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:272
+            // Content, see src/BusinessTime/MixinBase.php:292
         }
 
         /**
@@ -2288,7 +2626,7 @@ namespace Illuminate\Support
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:300
+            // Content, see src/BusinessTime/MixinBase.php:324
         }
 
         /**
@@ -2303,7 +2641,7 @@ namespace Illuminate\Support
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -2318,7 +2656,7 @@ namespace Illuminate\Support
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2334,7 +2672,7 @@ namespace Illuminate\Support
          */
         public static function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2343,9 +2681,9 @@ namespace Illuminate\Support
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        public static function setMaxIteration(int $maxIteration)
+        public static function setMaxIteration(int $maximum)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:34
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:33
         }
 
         /**
@@ -2356,7 +2694,7 @@ namespace Illuminate\Support
          */
         public static function getMaxIteration()
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:57
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:56
         }
 
         /**
@@ -2366,16 +2704,18 @@ namespace Illuminate\Support
          * (if $open is true) or only closed time (if $open is false).
          *
          * @param bool                          $inverted subtract the interval if set to true.
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function applyBusinessInterval(bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:84
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:85
         }
 
         /**
@@ -2384,16 +2724,18 @@ namespace Illuminate\Support
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:125
         }
 
         /**
@@ -2402,16 +2744,18 @@ namespace Illuminate\Support
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:152
         }
 
         /**
@@ -2421,13 +2765,14 @@ namespace Illuminate\Support
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:175
         }
 
         /**
@@ -2437,13 +2782,14 @@ namespace Illuminate\Support
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:198
         }
 
         /**
@@ -2453,13 +2799,14 @@ namespace Illuminate\Support
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:221
         }
 
         /**
@@ -2469,13 +2816,14 @@ namespace Illuminate\Support
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:244
         }
 
         /**
@@ -2490,7 +2838,7 @@ namespace Illuminate\Support
          */
         public static function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -2505,7 +2853,7 @@ namespace Illuminate\Support
          */
         public static function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
         }
 
         /**
@@ -2520,7 +2868,7 @@ namespace Illuminate\Support
          */
         public static function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
         }
 
         /**
@@ -2535,7 +2883,7 @@ namespace Illuminate\Support
          */
         public static function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
         }
 
         /**
@@ -2550,7 +2898,7 @@ namespace Illuminate\Support
          */
         public static function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
         }
 
         /**
@@ -2565,7 +2913,7 @@ namespace Illuminate\Support
          */
         public static function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
         }
 
         /**
@@ -2580,7 +2928,7 @@ namespace Illuminate\Support
          */
         public static function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
         }
 
         /**
@@ -2595,13 +2943,14 @@ namespace Illuminate\Support
          */
         public static function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -2609,13 +2958,14 @@ namespace Illuminate\Support
          */
         public static function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -2623,13 +2973,14 @@ namespace Illuminate\Support
          */
         public static function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -2637,13 +2988,14 @@ namespace Illuminate\Support
          */
         public static function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -2651,7 +3003,7 @@ namespace Illuminate\Support
          */
         public static function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2664,7 +3016,7 @@ namespace Illuminate\Support
          */
         public static function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2677,13 +3029,14 @@ namespace Illuminate\Support
          */
         public static function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -2691,13 +3044,14 @@ namespace Illuminate\Support
          */
         public static function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -2705,13 +3059,14 @@ namespace Illuminate\Support
          */
         public static function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -2719,13 +3074,14 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open
+         * date and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -2733,13 +3089,14 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -2747,13 +3104,14 @@ namespace Illuminate\Support
          */
         public static function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -2761,13 +3119,14 @@ namespace Illuminate\Support
          */
         public static function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -2775,13 +3134,14 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -2789,7 +3149,7 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2802,7 +3162,7 @@ namespace Illuminate\Support
          */
         public static function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2815,7 +3175,7 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2828,7 +3188,7 @@ namespace Illuminate\Support
          */
         public static function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -2841,7 +3201,136 @@ namespace Illuminate\Support
          */
         public static function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
+         *
+         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
+         *                                                                        for the total to return;
+         *                                                                        or 'interval' to return a
+         *                                                                        CarbonInterval instance
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval|float
+         */
+        public static function diffInBusinessUnit(string $unit, $date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:42
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
+         *
+         * Return an interval with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval
+         */
+        public static function diffAsBusinessInterval($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:83
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
+         *
+         * Return a number of seconds with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessSeconds($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:114
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
+         *
+         * Return a number of minutes with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessMinutes($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:145
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessHours
+         *
+         * Return a number of hours with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessHours($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:176
         }
 
         /**
@@ -2853,7 +3342,7 @@ namespace Illuminate\Support
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2865,7 +3354,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2877,7 +3366,7 @@ namespace Illuminate\Support
          */
         public static function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2889,7 +3378,7 @@ namespace Illuminate\Support
          */
         public static function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2901,7 +3390,7 @@ namespace Illuminate\Support
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2913,7 +3402,7 @@ namespace Illuminate\Support
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2925,7 +3414,7 @@ namespace Illuminate\Support
          */
         public static function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2937,7 +3426,7 @@ namespace Illuminate\Support
          */
         public static function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -2975,7 +3464,7 @@ namespace Illuminate\Support
          */
         public static function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -2989,7 +3478,7 @@ namespace Illuminate\Support
          */
         public static function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -3002,7 +3491,7 @@ namespace Illuminate\Support
          */
         public static function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -3017,7 +3506,7 @@ namespace Illuminate\Support
          */
         public static function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -3030,7 +3519,7 @@ namespace Illuminate\Support
          */
         public static function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -3045,7 +3534,7 @@ namespace Illuminate\Support
          */
         public static function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -3059,7 +3548,7 @@ namespace Illuminate\Support
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3073,7 +3562,7 @@ namespace Illuminate\Support
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3087,7 +3576,7 @@ namespace Illuminate\Support
          */
         public static function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3101,13 +3590,14 @@ namespace Illuminate\Support
          */
         public static function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -3115,13 +3605,14 @@ namespace Illuminate\Support
          */
         public static function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextBusinessClose
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -3129,13 +3620,14 @@ namespace Illuminate\Support
          */
         public static function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -3143,13 +3635,14 @@ namespace Illuminate\Support
          */
         public static function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -3157,7 +3650,7 @@ namespace Illuminate\Support
          */
         public static function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3170,7 +3663,7 @@ namespace Illuminate\Support
          */
         public static function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3183,7 +3676,7 @@ namespace Illuminate\Support
          */
         public static function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3195,7 +3688,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentDayOpeningHours()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:21
+            // Content, see src/BusinessTime/Traits/Range.php:22
         }
 
         /**
@@ -3207,7 +3700,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentOpenTimeRanges()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:41
+            // Content, see src/BusinessTime/Traits/Range.php:42
         }
 
         /**
@@ -3219,7 +3712,21 @@ namespace Illuminate\Support
          */
         public static function getCurrentOpenTimeRange()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:61
+            // Content, see src/BusinessTime/Traits/Range.php:62
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Range::getCurrentOpenTimePeriod
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @param string|\DateInterval $interval
+         *
+         * @return \Carbon\CarbonPeriod|bool
+         */
+        public static function getCurrentOpenTimePeriod($interval = null)
+        {
+            // Content, see src/BusinessTime/Traits/Range.php:84
         }
 
         /**
@@ -3233,7 +3740,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3247,7 +3754,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3259,7 +3766,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3271,7 +3778,7 @@ namespace Illuminate\Support
          */
         public static function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
     }
 }
@@ -3292,7 +3799,7 @@ namespace Illuminate\Support\Facades
          */
         public static function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:73
+            // Content, see src/BusinessTime/MixinBase.php:77
         }
 
         /**
@@ -3308,9 +3815,9 @@ namespace Illuminate\Support\Facades
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function convertOpeningHours($defaultOpeningHours)
+        public static function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:106
+            // Content, see src/BusinessTime/MixinBase.php:110
         }
 
         /**
@@ -3328,7 +3835,7 @@ namespace Illuminate\Support\Facades
          */
         public static function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:130
+            // Content, see src/BusinessTime/MixinBase.php:134
         }
 
         /**
@@ -3342,7 +3849,7 @@ namespace Illuminate\Support\Facades
          */
         public static function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:191
+            // Content, see src/BusinessTime/MixinBase.php:206
         }
 
         /**
@@ -3354,7 +3861,7 @@ namespace Illuminate\Support\Facades
          */
         public static function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:234
+            // Content, see src/BusinessTime/MixinBase.php:252
         }
 
         /**
@@ -3366,9 +3873,9 @@ namespace Illuminate\Support\Facades
          *
          * @return \Spatie\OpeningHours\OpeningHours
          */
-        public static function getOpeningHours()
+        public static function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:272
+            // Content, see src/BusinessTime/MixinBase.php:292
         }
 
         /**
@@ -3380,7 +3887,7 @@ namespace Illuminate\Support\Facades
          */
         public static function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:300
+            // Content, see src/BusinessTime/MixinBase.php:324
         }
 
         /**
@@ -3395,7 +3902,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -3410,7 +3917,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -3426,7 +3933,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3435,9 +3942,9 @@ namespace Illuminate\Support\Facades
          * Set the maximum of loop turns to run before throwing an exception where trying to add
          * or subtract open/closed time.
          */
-        public static function setMaxIteration(int $maxIteration)
+        public static function setMaxIteration(int $maximum)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:34
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:33
         }
 
         /**
@@ -3448,7 +3955,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getMaxIteration()
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:57
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:56
         }
 
         /**
@@ -3458,16 +3965,18 @@ namespace Illuminate\Support\Facades
          * (if $open is true) or only closed time (if $open is false).
          *
          * @param bool                          $inverted subtract the interval if set to true.
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function applyBusinessInterval(bool $inverted, bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:84
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:85
         }
 
         /**
@@ -3476,16 +3985,18 @@ namespace Illuminate\Support\Facades
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:168
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:125
         }
 
         /**
@@ -3494,16 +4005,18 @@ namespace Illuminate\Support\Facades
          * Add the given interval taking into account only open time
          * (if $open is true) or only closed time (if $open is false).
          *
-         * @param bool                          $open     take only open time into account if true, only closed time else.
+         * @param bool                          $open     take only open time into account if true,
+         *                                                only closed time else.
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subBusinessInterval(bool $open, $interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:195
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:152
         }
 
         /**
@@ -3513,13 +4026,14 @@ namespace Illuminate\Support\Facades
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:219
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:175
         }
 
         /**
@@ -3529,13 +4043,14 @@ namespace Illuminate\Support\Facades
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subOpenTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:243
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:198
         }
 
         /**
@@ -3545,13 +4060,14 @@ namespace Illuminate\Support\Facades
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function addClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:221
         }
 
         /**
@@ -3561,13 +4077,14 @@ namespace Illuminate\Support\Facades
          *
          * @param int|\DateInterval|string|null $interval period default interval or number of the given $unit.
          * @param string|null                   $unit     if specified, $interval must be an integer.
-         * @param int                           $options  options (as bytes-union) such as BusinessTime::HOLIDAYS_ARE_CLOSED
+         * @param int                           $options  options (as bytes-union) such as
+         *                                                BusinessTime::HOLIDAYS_ARE_CLOSED
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
         public static function subClosedTime($interval = null, $unit = null, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:291
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:244
         }
 
         /**
@@ -3582,7 +4099,7 @@ namespace Illuminate\Support\Facades
          */
         public static function addOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:314
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:267
         }
 
         /**
@@ -3597,7 +4114,7 @@ namespace Illuminate\Support\Facades
          */
         public static function subOpenMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:337
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:290
         }
 
         /**
@@ -3612,7 +4129,7 @@ namespace Illuminate\Support\Facades
          */
         public static function addClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:360
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:313
         }
 
         /**
@@ -3627,7 +4144,7 @@ namespace Illuminate\Support\Facades
          */
         public static function subClosedMinutes(int $numberOfMinutes, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:383
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:336
         }
 
         /**
@@ -3642,7 +4159,7 @@ namespace Illuminate\Support\Facades
          */
         public static function addOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:406
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:359
         }
 
         /**
@@ -3657,7 +4174,7 @@ namespace Illuminate\Support\Facades
          */
         public static function subOpenHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:429
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:382
         }
 
         /**
@@ -3672,7 +4189,7 @@ namespace Illuminate\Support\Facades
          */
         public static function addClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:452
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:405
         }
 
         /**
@@ -3687,13 +4204,14 @@ namespace Illuminate\Support\Facades
          */
         public static function subClosedHours(int $numberOfHours, int $options = 0)
         {
-            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:475
+            // Content, see src/BusinessTime/Traits/AddAndSubtract.php:428
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -3701,13 +4219,14 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrNextBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -3715,13 +4234,14 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousBusinessOpen
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -3729,13 +4249,14 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::closedOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's closed, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -3743,7 +4264,7 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3756,7 +4277,7 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3769,13 +4290,14 @@ namespace Illuminate\Support\Facades
          */
         public static function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -3783,13 +4305,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessOpen
          *
-         * Return current date-time if it's open, else go to the next open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the next open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextOpen().
          *
@@ -3797,13 +4320,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessOpen
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open date
+         * and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -3811,13 +4335,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousOpenExcludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous open date and time that is also not an holiday.
+         * Return current date-time if it's open, else go to the previous open
+         * date and time that is also not an holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousOpen().
          *
@@ -3825,13 +4350,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -3839,13 +4365,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrNextBusinessClose
          *
-         * Return current date-time if it's closed, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's closed, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrNextClose().
          *
@@ -3853,13 +4380,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -3867,13 +4395,14 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::currentOrPreviousBusinessClose
          *
-         * Return current date-time if it's closed, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's closed, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and currentOrPreviousClose().
          *
@@ -3881,7 +4410,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3894,7 +4423,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3907,7 +4436,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3920,7 +4449,7 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -3933,7 +4462,136 @@ namespace Illuminate\Support\Facades
          */
         public static function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
+         *
+         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
+         *                                                                        for the total to return;
+         *                                                                        or 'interval' to return a
+         *                                                                        CarbonInterval instance
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval|float
+         */
+        public static function diffInBusinessUnit(string $unit, $date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:42
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
+         *
+         * Return an interval with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return \Carbon\CarbonInterval
+         */
+        public static function diffAsBusinessInterval($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:83
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
+         *
+         * Return a number of seconds with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessSeconds($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:114
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
+         *
+         * Return a number of minutes with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessMinutes($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:145
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Diff::diffInBusinessHours
+         *
+         * Return a number of hours with open/closed business time between the current date and an other
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
+         *                                                                        => holidays are automatically considered as closed
+         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
+         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
+         *
+         * @return float
+         */
+        public static function diffInBusinessHours($date = null, int $options = 0)
+        {
+            // Content, see src/BusinessTime/Traits/Diff.php:176
         }
 
         /**
@@ -3945,7 +4603,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -3957,7 +4615,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -3969,7 +4627,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -3981,7 +4639,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -3993,7 +4651,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -4005,7 +4663,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -4017,7 +4675,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -4029,7 +4687,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:356
+            // Content, see src/BusinessTime/MixinBase.php:380
         }
 
         /**
@@ -4067,7 +4725,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -4081,7 +4739,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:66
+            // Content, see src/BusinessTime/Traits/IsMethods.php:69
         }
 
         /**
@@ -4094,7 +4752,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -4109,7 +4767,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:107
+            // Content, see src/BusinessTime/Traits/IsMethods.php:112
         }
 
         /**
@@ -4122,7 +4780,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -4137,7 +4795,7 @@ namespace Illuminate\Support\Facades
          */
         public static function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:150
+            // Content, see src/BusinessTime/Traits/IsMethods.php:157
         }
 
         /**
@@ -4151,7 +4809,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4165,7 +4823,7 @@ namespace Illuminate\Support\Facades
          */
         public static function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4179,7 +4837,7 @@ namespace Illuminate\Support\Facades
          */
         public static function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4193,13 +4851,14 @@ namespace Illuminate\Support\Facades
          */
         public static function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -4207,13 +4866,14 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrNextBusinessClose
          *
-         * Return current date-time if it's open, else go to the next close date and time or next holiday if sooner.
+         * Return current date-time if it's open, else go to the next close date
+         * and time or next holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrNextClose().
          *
@@ -4221,13 +4881,14 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousCloseIncludingHolidays
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -4235,13 +4896,14 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
          * @see \BusinessTime\MixinBase::openOrPreviousBusinessClose
          *
-         * Return current date-time if it's open, else go to the previous close date and time or previous holiday if sooner.
+         * Return current date-time if it's open, else go to the previous close date
+         * and time or previous holiday if sooner.
          *
          * Note than you can use the 'holidaysAreClosed' option and openOrPreviousClose().
          *
@@ -4249,7 +4911,7 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -4262,7 +4924,7 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -4275,7 +4937,7 @@ namespace Illuminate\Support\Facades
          */
         public static function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:391
+            // Content, see src/BusinessTime/MixinBase.php:415
         }
 
         /**
@@ -4287,7 +4949,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentDayOpeningHours()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:21
+            // Content, see src/BusinessTime/Traits/Range.php:22
         }
 
         /**
@@ -4299,7 +4961,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentOpenTimeRanges()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:41
+            // Content, see src/BusinessTime/Traits/Range.php:42
         }
 
         /**
@@ -4311,7 +4973,21 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentOpenTimeRange()
         {
-            // Content, see src/BusinessTime/Traits/Range.php:61
+            // Content, see src/BusinessTime/Traits/Range.php:62
+        }
+
+        /**
+         * @see \BusinessTime\Traits\Range::getCurrentOpenTimePeriod
+         *
+         * Get current open time range as TimeRange instance or false if closed.
+         *
+         * @param string|\DateInterval $interval
+         *
+         * @return \Carbon\CarbonPeriod|bool
+         */
+        public static function getCurrentOpenTimePeriod($interval = null)
+        {
+            // Content, see src/BusinessTime/Traits/Range.php:84
         }
 
         /**
@@ -4325,7 +5001,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4339,7 +5015,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4351,7 +5027,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
 
         /**
@@ -4363,7 +5039,7 @@ namespace Illuminate\Support\Facades
          */
         public static function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:325
+            // Content, see src/BusinessTime/MixinBase.php:349
         }
     }
 }
