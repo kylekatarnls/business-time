@@ -8,8 +8,9 @@ use Cmixin\BusinessTime;
 
 final class BusinessTimeWrapper extends BusinessTime
 {
-    /** @var array|null  */
+    /** @var array|null */
     private $methods = null;
+
     public static function create(array $openingHours): self
     {
         $businessTime = new self();

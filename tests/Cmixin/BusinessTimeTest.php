@@ -1442,31 +1442,31 @@ class BusinessTimeTest extends TestCase
     public function testSchedule()
     {
         $us = Schedule::create([
-            'monday' => ['09:00-12:00', '13:00-18:00'],
-            'tuesday' => ['09:00-12:00', '13:00-18:00'],
-            'wednesday' => ['09:00-12:00'],
-            'thursday' => ['09:00-12:00', '13:00-18:00'],
-            'friday' => ['09:00-12:00', '13:00-20:00'],
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-20:00'],
             'holidaysAreClosed' => true,
-            'holidays' => [
+            'holidays'          => [
                 'region' => 'us-ny',
-                'with' => [
-                    'labor-day' => null,
+                'with'   => [
+                    'labor-day'               => null,
                     'company-special-holiday' => '04-07',
                 ],
             ],
         ]);
 
         $fr = Schedule::create([
-            'monday' => ['08:00-12:00', '13:00-17:00'],
-            'tuesday' => ['08:00-12:00', '13:00-17:00'],
-            'wednesday' => ['08:00-12:00'],
-            'thursday' => ['08:00-12:00', '13:00-17:00'],
-            'friday' => ['08:00-12:00', '13:00-17:00'],
+            'monday'            => ['08:00-12:00', '13:00-17:00'],
+            'tuesday'           => ['08:00-12:00', '13:00-17:00'],
+            'wednesday'         => ['08:00-12:00'],
+            'thursday'          => ['08:00-12:00', '13:00-17:00'],
+            'friday'            => ['08:00-12:00', '13:00-17:00'],
             'holidaysAreClosed' => true,
-            'holidays' => [
+            'holidays'          => [
                 'region' => 'fr-national',
-                'with' => [
+                'with'   => [
                     'company-special-holiday' => '24/8',
                 ],
             ],

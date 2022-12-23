@@ -6,19 +6,19 @@ include __DIR__.'/vendor/cmixin/business-day/src/Types/Generator.php';
 final class TypeGenerator extends \Types\Generator
 {
     private $skipped = [
-        'normalizeDay' => true,
+        'normalizeDay'        => true,
         'convertOpeningHours' => true,
-        'enable' => true,
+        'enable'              => true,
     ];
 
     /**
      * @param class-string $defaultClass
-     * @param string $source
-     * @param Closure $boot
-     *
-     * @return string
+     * @param string       $source
+     * @param Closure      $boot
      *
      * @throws ReflectionException
+     *
+     * @return string
      */
     public function getScheduleDoc($defaultClass, $source, $boot)
     {
@@ -121,11 +121,11 @@ final class TypeGenerator extends \Types\Generator
             $methodDocBlock = trim(preg_replace('/^(@|\s{6}).*$/m', '', $methodDocBlock));
 
             if (!empty($parameters)) {
-                $parameters = ', ' . $parameters;
+                $parameters = ', '.$parameters;
             }
 
             $start = " * @method $return $name(CarbonInterface \$date$parameters) ";
-            $methodDocBlock = strtr($methodDocBlock, ["\n" => "\n *" . str_repeat(' ', strlen($start) - 2)]);
+            $methodDocBlock = strtr($methodDocBlock, ["\n" => "\n *".str_repeat(' ', strlen($start) - 2)]);
             $methods .= "$start$methodDocBlock\n";
         }
 
@@ -138,7 +138,7 @@ $boot = static function () {
     \Cmixin\BusinessTime::enable(\Carbon\Carbon::class);
 };
 $generator->writeHelpers(\Cmixin\BusinessTime::class, __DIR__.'/src', __DIR__.'/types', '_ide_business_time', $boot);
-$scheduleFile = __DIR__ . '/src/BusinessTime/Schedule.php';
+$scheduleFile = __DIR__.'/src/BusinessTime/Schedule.php';
 $contents = file_get_contents($scheduleFile);
 $contents = preg_replace('/(<autodoc>)([\s\S]*)(<\/autodoc>)/', "<autodoc>\n{{AUTODOC-CONTENT}}\n *</autodoc>", $contents);
 $contents = strtr($contents, [
