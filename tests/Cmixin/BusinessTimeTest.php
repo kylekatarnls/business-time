@@ -124,7 +124,6 @@ class BusinessTimeTest extends TestCase
         $this->assertFalse($carbon::isOpenOn('2020-05-12'));
     }
 
-    /** @group i */
     public function testSetOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
