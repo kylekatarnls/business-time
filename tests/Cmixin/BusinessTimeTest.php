@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
+use BusinessTime\Normalizer;
 use BusinessTime\Schedule;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -200,6 +201,18 @@ class BusinessTimeTest extends TestCase
         $carbon = static::CARBON_CLASS;
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours([]));
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours(OpeningHours::create([])));
+        $carbon::macro('normalizeDay', static function ($day) {
+            if ($day === 'lundi') {
+                return 'monday';
+            }
+
+            return Normalizer::normalizeDay($day);
+        });
+        $hours = $carbon::convertOpeningHours([
+            'lundi' => ['08:00-12:00'],
+        ]);
+        $this->assertInstanceOf(OpeningHours::class, $hours);
+        $this->assertSame('Monday', $hours->asStructuredData()[0]['dayOfWeek']);
     }
 
     public function testBadOpeningHoursInput()

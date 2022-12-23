@@ -108,7 +108,7 @@ class MixinBase extends BusinessDay
                 $hours = ['data' => $data];
 
                 foreach ($defaultOpeningHours as $key => $value) {
-                    $day = is_a(static::class, CarbonInterface::class)
+                    $day = is_a(static::class, CarbonInterface::class, true) && static::hasMacro('normalizeDay')
                         ? static::normalizeDay($key)
                         : Normalizer::normalizeDay($key);
                     $hours[$day] = $value;
