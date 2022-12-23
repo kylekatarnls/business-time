@@ -4,7 +4,7 @@
   "type": "library",
   "require": {
     "php": ">=7.1",
-    "cmixin/business-day": "^1.1",
+    "cmixin/business-day": "dev-fix/fallback-get-holidays",
     "nesbot/carbon": "^2.28 || ^3@dev",
     "spatie/opening-hours": "^2.9 || ^3@dev"
   },

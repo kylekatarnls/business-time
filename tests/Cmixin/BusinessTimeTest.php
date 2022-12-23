@@ -4,6 +4,7 @@ namespace Tests\Cmixin;
 
 use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
+use BusinessTime\Schedule;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterval;
@@ -123,6 +124,7 @@ class BusinessTimeTest extends TestCase
         $this->assertFalse($carbon::isOpenOn('2020-05-12'));
     }
 
+    /** @group i */
     public function testSetOpeningHours()
     {
         $carbon = static::CARBON_CLASS;
@@ -1436,6 +1438,44 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2020-09-21 23:50')->getCurrentOpenTimeRangeEnd();
         self::assertInstanceOf($carbon, $date);
         self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
+    }
+
+    public function testSchedule()
+    {
+        $us = Schedule::create([
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-20:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'us-ny',
+                'with'   => [
+                    'labor-day'               => null,
+                    'company-special-holiday' => '04-07',
+                ],
+            ],
+        ]);
+
+        $fr = Schedule::create([
+            'monday'            => ['08:00-12:00', '13:00-17:00'],
+            'tuesday'           => ['08:00-12:00', '13:00-17:00'],
+            'wednesday'         => ['08:00-12:00'],
+            'thursday'          => ['08:00-12:00', '13:00-17:00'],
+            'friday'            => ['08:00-12:00', '13:00-17:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'company-special-holiday' => '24/8',
+                ],
+            ],
+        ]);
+
+        $d = CarbonImmutable::parse('2022-10-21 06:40:00');
+        self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
+        self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void
