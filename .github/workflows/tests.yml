@@ -28,6 +28,10 @@ jobs:
         extensions: calendar
         tools: composer:v2
 
+    - name: PHP >= 8.2 compatibility
+      if: matrix.php >= 8.2
+      run: composer require nesbot/carbon:^2.62.1
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
