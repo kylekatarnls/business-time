@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
         setup: ['lowest', 'stable', 'next']
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
@@ -27,6 +27,10 @@ jobs:
         php-version: ${{ matrix.php }}
         extensions: calendar
         tools: composer:v2
+
+    - name: PHP >= 8.2 compatibility
+      if: matrix.php >= 8.2
+      run: composer require nesbot/carbon:^2.62.1
 
     - name: Cache Composer packages
       id: composer-cache
