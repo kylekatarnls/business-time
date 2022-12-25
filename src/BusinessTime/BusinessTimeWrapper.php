@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use BadMethodCallException;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Cmixin\BusinessTime;
 
@@ -27,7 +28,9 @@ final class BusinessTimeWrapper extends BusinessTime
                 }
             }
 
-            return static::instance($date)->isHoliday();
+            $className = method_exists(static::class, 'instance') ? static::class : CarbonImmutable::class;
+
+            return $className::instance($date)->isHoliday();
         });
         $businessTime->openingHours = $parser->getEmbeddedOpeningHours($businessTime);
 

@@ -2,12 +2,14 @@
 
 namespace Tests\Cmixin;
 
+use BadMethodCallException;
 use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
 use BusinessTime\Normalizer;
 use BusinessTime\Schedule;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
@@ -1488,6 +1490,52 @@ class BusinessTimeTest extends TestCase
         $d = CarbonImmutable::parse('2022-10-21 06:40:00');
         self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
+        $d = CarbonImmutable::parse('2022-10-20 17:30:00');
+        self::assertTrue($us->isOpen($d));
+        self::assertFalse($fr->isOpen($d));
+
+        $d = new class () extends CarbonImmutable {
+            public function __construct($time = null, $tz = null)
+            {
+                parent::__construct($time ?? '2022-10-20', $tz);
+            }
+
+            public function hasLocalMacro($name)
+            {
+                if ($name === 'isHoliday') {
+                    throw new BadMethodCallException('Broken/old version');
+                }
+
+                return parent::hasLocalMacro($name);
+            }
+        };
+        self::assertFalse($us->isOpen($d));
+
+        self::assertSame('monday', $us->normalizeDay('Monday'));
+        self::assertSame('tuesday', $us->normalizeDay(CarbonInterface::TUESDAY));
+
+        $hours = $us->convertOpeningHours([CarbonInterface::WEDNESDAY => ['00:30-05:00']]);
+        self::assertInstanceOf(OpeningHours::class, $hours);
+        self::assertSame('00:30-05:00', (string) $hours->forWeek()['wednesday']);
+    }
+
+    public function testNonDateException()
+    {
+        self::expectExceptionObject(new InvalidArgumentException(
+            'First parameter must be a '.CarbonInterface::class.' instance.'
+        ));
+
+        Schedule::create([])->isOpen('2022-10-20');
+    }
+
+    public function testNonMacroException()
+    {
+        self::expectExceptionObject(new InvalidArgumentException(
+            'getMethods cannot be called on a '.Schedule::class.'.'
+        ));
+
+        $carbon = static::CARBON_CLASS;
+        Schedule::create([])->getMethods();
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void

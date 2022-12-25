@@ -2,9 +2,9 @@
 
 namespace BusinessTime;
 
+use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\CarbonInterface;
 use Closure;
-use InvalidArgumentException;
 use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 
@@ -192,7 +192,12 @@ final class Schedule
         return new self(BusinessTimeWrapper::create($openingHours));
     }
 
-    public function normalizeDay(string $day): string
+    /**
+     * @param string|int $day
+     *
+     * @return string
+     */
+    public function normalizeDay($day): string
     {
         return $this->businessTime->normalizeDay()($day);
     }
