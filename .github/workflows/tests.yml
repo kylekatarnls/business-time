@@ -30,7 +30,7 @@ jobs:
 
     - name: PHP >= 8.2 compatibility
       if: matrix.php >= 8.2
-      run: composer require nesbot/carbon:^2.62.1
+      run: composer require nesbot/carbon:^2.62.1 phpunit/phpunit:^9.5.27 --no-update --no-interaction
 
     - name: Cache Composer packages
       id: composer-cache
@@ -44,8 +44,8 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
-        ${{ matrix.php >= 8 && 'composer require --no-update phpunit/phpunit:^8.5.14 --no-interaction;' || '' }}
-        composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest ${{ matrix.php >= 8 && '--ignore-platform-req=php' || '' }}
+        ${{ matrix.php >= 8 && matrix.php < 8.2 && 'composer require phpunit/phpunit:^8.5.14 --no-update --no-interaction;' || '' }}
+        composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest
 
     - name: Code Climate Test Reporter Preparation
       if: matrix.php == '7.4' && matrix.setup == 'stable'
