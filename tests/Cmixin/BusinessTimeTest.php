@@ -13,8 +13,10 @@ use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
 
@@ -1494,7 +1496,7 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($us->isOpen($d));
         self::assertFalse($fr->isOpen($d));
 
-        $d = new class () extends CarbonImmutable {
+        $d = new class() extends CarbonImmutable {
             public function __construct($time = null, $tz = null)
             {
                 parent::__construct($time ?? '2022-10-20', $tz);
@@ -1534,8 +1536,38 @@ class BusinessTimeTest extends TestCase
             'getMethods cannot be called on a '.Schedule::class.'.'
         ));
 
-        $carbon = static::CARBON_CLASS;
         Schedule::create([])->getMethods();
+    }
+
+    public function testOldVersionWithoutBindMacroContext()
+    {
+        $calculateBindMacroContextMethod = new ReflectionMethod(
+            Schedule::class,
+            'calculateBindMacroContext'
+        );
+        $callInContextMethod = new ReflectionMethod(
+            Schedule::class,
+            'callInContext'
+        );
+
+        if (PHP_VERSION < 8.1) {
+            $calculateBindMacroContextMethod->setAccessible(true);
+            $callInContextMethod->setAccessible(true);
+        }
+
+        self::assertNull($calculateBindMacroContextMethod->invoke(Schedule::create([]), \stdClass::class));
+
+        $dateMock = self::getMockBuilder(CarbonImmutable::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethodsExcept(['bindMacroContext'])
+            ->getMock();
+
+        self::assertSame(42, $callInContextMethod->invoke(Schedule::create([]), null, $dateMock, static function () {
+            return 42;
+        }, []));
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void

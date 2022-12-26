@@ -329,7 +329,7 @@ class MixinBase extends BusinessDay
      *
      * @param string $callee
      *
-     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool>
      */
     public function getCalleeAsMethod($callee = null)
     {
@@ -339,7 +339,7 @@ class MixinBase extends BusinessDay
          *
          * @param string $method
          *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         return static function ($method = null) use ($callee) {
             $method = is_string($method) ? $method : $callee;
@@ -355,7 +355,7 @@ class MixinBase extends BusinessDay
     }
 
     /**
-     * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+     * Loop on the current instance (or now if called statically) with a given method until it's not a holiday.
      *
      * @param string $method
      * @param string $fallbackMethod
@@ -365,7 +365,7 @@ class MixinBase extends BusinessDay
     public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
         /**
-         * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+         * Loop on the current instance (or now if called statically) with a given method until it's not a holiday.
          *
          * @param string $method
          * @param string $fallbackMethod

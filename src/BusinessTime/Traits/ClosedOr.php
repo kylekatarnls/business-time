@@ -6,7 +6,7 @@ trait ClosedOr
 {
     /**
      * Return current date-time if it's closed, else go to the next open date
-     * and time that is also not an holiday.
+     * and time that is also not a holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
      *
@@ -16,7 +16,7 @@ trait ClosedOr
     {
         /**
          * Return current date-time if it's closed, else go to the next open date
-         * and time that is also not an holiday.
+         * and time that is also not a holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -27,7 +27,7 @@ trait ClosedOr
 
     /**
      * Return current date-time if it's closed, else go to the next open date
-     * and time that is also not an holiday.
+     * and time that is also not a holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
      *
@@ -37,7 +37,7 @@ trait ClosedOr
     {
         /**
          * Return current date-time if it's closed, else go to the next open date
-         * and time that is also not an holiday.
+         * and time that is also not a holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrNextOpen().
          *
@@ -48,7 +48,7 @@ trait ClosedOr
 
     /**
      * Return current date-time if it's closed, else go to the previous open date
-     * and time that is also not an holiday.
+     * and time that is also not a holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
      *
@@ -58,7 +58,7 @@ trait ClosedOr
     {
         /**
          * Return current date-time if it's closed, else go to the previous open date
-         * and time that is also not an holiday.
+         * and time that is also not a holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
@@ -69,7 +69,7 @@ trait ClosedOr
 
     /**
      * Return current date-time if it's closed, else go to the previous open date
-     * and time that is also not an holiday.
+     * and time that is also not a holiday.
      *
      * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
      *
@@ -79,7 +79,7 @@ trait ClosedOr
     {
         /**
          * Return current date-time if it's closed, else go to the previous open date
-         * and time that is also not an holiday.
+         * and time that is also not a holiday.
          *
          * Note than you can use the 'holidaysAreClosed' option and closedOrPreviousOpen().
          *
