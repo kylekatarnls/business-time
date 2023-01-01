@@ -104,7 +104,7 @@ trait Range
 
     /**
      * Get current open time range start as Carbon instance or false if closed.
-     * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+     * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in the
      * exceptions setting.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool>
@@ -113,7 +113,7 @@ trait Range
     {
         /**
          * Get current open time range start as Carbon instance or false if closed.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in
          * the exceptions setting.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
@@ -123,7 +123,7 @@ trait Range
 
     /**
      * Get current open time range end as Carbon instance or false if closed.
-     * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+     * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in the
      * exceptions setting.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool>
@@ -132,7 +132,7 @@ trait Range
     {
         /**
          * Get current open time range end as Carbon instance or false if closed.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in
          * the exceptions setting.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool

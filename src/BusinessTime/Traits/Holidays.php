@@ -5,14 +5,14 @@ namespace BusinessTime\Traits;
 trait Holidays
 {
     /**
-     * Go to the next open date and time that is also not an holiday.
+     * Go to the next open date and time that is also not a holiday.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
      */
     public function nextOpenExcludingHolidays()
     {
         /**
-         * Go to the next open date and time that is also not an holiday.
+         * Go to the next open date and time that is also not a holiday.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -20,14 +20,14 @@ trait Holidays
     }
 
     /**
-     * Go to the next open date and time that is also not an holiday.
+     * Go to the next open date and time that is also not a holiday.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
      */
     public function nextBusinessOpen()
     {
         /**
-         * Go to the next open date and time that is also not an holiday.
+         * Go to the next open date and time that is also not a holiday.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -35,14 +35,14 @@ trait Holidays
     }
 
     /**
-     * Go to the previous open date and time that is also not an holiday.
+     * Go to the previous open date and time that is also not a holiday.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
      */
     public function previousOpenExcludingHolidays()
     {
         /**
-         * Go to the previous open date and time that is also not an holiday.
+         * Go to the previous open date and time that is also not a holiday.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */
@@ -50,14 +50,14 @@ trait Holidays
     }
 
     /**
-     * Go to the previous open date and time that is also not an holiday.
+     * Go to the previous open date and time that is also not a holiday.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
      */
     public function previousBusinessOpen()
     {
         /**
-         * Go to the previous open date and time that is also not an holiday.
+         * Go to the previous open date and time that is also not a holiday.
          *
          * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
          */

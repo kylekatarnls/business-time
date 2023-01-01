@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use BusinessTime\Exceptions\InvalidArgumentException;
+use Carbon\CarbonInterface;
 use Closure;
 use Cmixin\BusinessDay;
 use Spatie\OpeningHours\OpeningHours;
@@ -47,7 +48,7 @@ class MixinBase extends BusinessDay
     /**
      * @var OpeningHours|null
      */
-    protected $openingHours;
+    public $openingHours;
 
     /**
      * @var SplObjectStorage<object, OpeningHours>
@@ -75,16 +76,7 @@ class MixinBase extends BusinessDay
          * @return string
          */
         return static function ($day) {
-            if (is_int($day)) {
-                $day %= 7;
-                if ($day < 0) {
-                    $day += 7;
-                }
-
-                return static::$days[$day];
-            }
-
-            return strtolower($day);
+            return Normalizer::normalizeDay($day, static::$days);
         };
     }
 
@@ -116,7 +108,10 @@ class MixinBase extends BusinessDay
                 $hours = ['data' => $data];
 
                 foreach ($defaultOpeningHours as $key => $value) {
-                    $hours[static::normalizeDay($key)] = $value;
+                    $day = is_a(static::class, CarbonInterface::class, true) && static::hasMacro('normalizeDay')
+                        ? static::normalizeDay($key)
+                        : Normalizer::normalizeDay($key);
+                    $hours[$day] = $value;
                 }
 
                 return OpeningHours::create($hours);
@@ -128,6 +123,17 @@ class MixinBase extends BusinessDay
         };
     }
 
+    /**
+     * Returns the mixin for the given class or an array where the key is the class and value the mixin
+     * if an array (of classes) was passed in.
+     *
+     * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+     *                                                                     definition
+     *
+     * @throws InvalidArgumentException if $defaultOpeningHours has an invalid type
+     *
+     * @return array|static
+     */
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
         if ($carbonClass === null) {
@@ -162,6 +168,10 @@ class MixinBase extends BusinessDay
 
             if ($defaultOpeningHours) {
                 $mixin->openingHours = $carbonClass::convertOpeningHours($defaultOpeningHours);
+            }
+
+            if ($isArray) {
+                $mixins[$carbonClass] = $mixin;
             }
         }
 
@@ -334,7 +344,7 @@ class MixinBase extends BusinessDay
      *
      * @param string $callee
      *
-     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool>
      */
     public function getCalleeAsMethod($callee = null)
     {
@@ -344,7 +354,7 @@ class MixinBase extends BusinessDay
          *
          * @param string $method
          *
-         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface
+         * @return \Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface|bool
          */
         return static function ($method = null) use ($callee) {
             $method = is_string($method) ? $method : $callee;
@@ -360,7 +370,7 @@ class MixinBase extends BusinessDay
     }
 
     /**
-     * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+     * Loop on the current instance (or now if called statically) with a given method until it's not a holiday.
      *
      * @param string $method
      * @param string $fallbackMethod
@@ -370,7 +380,7 @@ class MixinBase extends BusinessDay
     public function getMethodLoopOnHoliday($method = null, $fallbackMethod = null)
     {
         /**
-         * Loop on the current instance (or now if called statically) with a given method until it's not an holiday.
+         * Loop on the current instance (or now if called statically) with a given method until it's not a holiday.
          *
          * @param string $method
          * @param string $fallbackMethod

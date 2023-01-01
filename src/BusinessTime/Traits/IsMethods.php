@@ -48,7 +48,7 @@ trait IsMethods
 
     /**
      * Returns true if the business is open now (or current date and time) according to current opening hours.
-     * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in the
+     * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in the
      * exceptions setting.
      *
      * @param string $method can be null or 'isClosed' to invert the result
@@ -61,7 +61,7 @@ trait IsMethods
 
         /**
          * Returns true if the business is open now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns true if the current day is an holiday unless you set a closure handler for it in
+         * /!\ Important: it returns true if the current day is a holiday unless you set a closure handler for it in
          * the exceptions setting.
          *
          * @return bool
@@ -78,7 +78,7 @@ trait IsMethods
 
     /**
      * Returns true if the business is closed now (or current date and time) according to current opening hours.
-     * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in the
+     * /!\ Important: it returns false if the current day is a holiday unless you set a closure handler for it in the
      * exceptions setting.
      *
      * @return \Closure<bool>
@@ -87,7 +87,7 @@ trait IsMethods
     {
         /**
          * Returns true if the business is closed now (or current date and time) according to current opening hours.
-         * /!\ Important: it returns false if the current day is an holiday unless you set a closure handler for it in
+         * /!\ Important: it returns false if the current day is a holiday unless you set a closure handler for it in
          * the exceptions setting.
          *
          * @return bool
@@ -96,7 +96,7 @@ trait IsMethods
     }
 
     /**
-     * Returns true if the business is open and not an holiday now (or current date and time) according to current
+     * Returns true if the business is open and not a holiday now (or current date and time) according to current
      * opening hours.
      *
      * @return \Closure<bool>
@@ -104,7 +104,7 @@ trait IsMethods
     public function isBusinessOpen()
     {
         /**
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * Returns true if the business is open and not a holiday now (or current date and time) according to current
          * opening hours.
          *
          * @return bool
@@ -122,7 +122,7 @@ trait IsMethods
     /**
      * @alias isBusinessOpen
      *
-     * Returns true if the business is open and not an holiday now (or current date and time) according to current
+     * Returns true if the business is open and not a holiday now (or current date and time) according to current
      * opening hours.
      *
      * @return \Closure<bool>
@@ -132,7 +132,7 @@ trait IsMethods
         /**
          * @alias isBusinessOpen
          *
-         * Returns true if the business is open and not an holiday now (or current date and time) according to current
+         * Returns true if the business is open and not a holiday now (or current date and time) according to current
          * opening hours.
          *
          * @return bool
@@ -141,7 +141,7 @@ trait IsMethods
     }
 
     /**
-     * Returns true if the business is closed or an holiday now (or current date and time) according to current
+     * Returns true if the business is closed or a holiday now (or current date and time) according to current
      * opening hours.
      *
      * @return \Closure<bool>
@@ -149,7 +149,7 @@ trait IsMethods
     public function isBusinessClosed()
     {
         /**
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * Returns true if the business is closed or a holiday now (or current date and time) according to current
          * opening hours.
          *
          * @return bool
@@ -167,7 +167,7 @@ trait IsMethods
     /**
      * @alias isBusinessClosed
      *
-     * Returns true if the business is closed or an holiday now (or current date and time) according to current
+     * Returns true if the business is closed or a holiday now (or current date and time) according to current
      * opening hours.
      *
      * @return \Closure<bool>
@@ -177,7 +177,7 @@ trait IsMethods
         /**
          * @alias isBusinessClosed
          *
-         * Returns true if the business is closed or an holiday now (or current date and time) according to current
+         * Returns true if the business is closed or a holiday now (or current date and time) according to current
          * opening hours.
          *
          * @return bool

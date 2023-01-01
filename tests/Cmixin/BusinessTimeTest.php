@@ -2,15 +2,20 @@
 
 namespace Tests\Cmixin;
 
+use BadMethodCallException;
 use BusinessTime\DefinitionParser;
 use BusinessTime\Exceptions\InvalidArgumentException;
+use BusinessTime\Normalizer;
+use BusinessTime\Schedule;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
 
@@ -199,6 +204,18 @@ class BusinessTimeTest extends TestCase
         $carbon = static::CARBON_CLASS;
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours([]));
         $this->assertInstanceOf(OpeningHours::class, $carbon::convertOpeningHours(OpeningHours::create([])));
+        $carbon::macro('normalizeDay', static function ($day) {
+            if ($day === 'lundi') {
+                return 'monday';
+            }
+
+            return Normalizer::normalizeDay($day);
+        });
+        $hours = $carbon::convertOpeningHours([
+            'lundi' => ['08:00-12:00'],
+        ]);
+        $this->assertInstanceOf(OpeningHours::class, $hours);
+        $this->assertSame('Monday', $hours->asStructuredData()[0]['dayOfWeek']);
     }
 
     public function testBadOpeningHoursInput()
@@ -1436,6 +1453,120 @@ class BusinessTimeTest extends TestCase
         $date = $carbon::parse('2020-09-21 23:50')->getCurrentOpenTimeRangeEnd();
         self::assertInstanceOf($carbon, $date);
         self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
+    }
+
+    public function testSchedule()
+    {
+        $us = Schedule::create([
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-20:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'us-ny',
+                'with'   => [
+                    'labor-day'               => null,
+                    'company-special-holiday' => '04-07',
+                ],
+            ],
+        ]);
+
+        $fr = Schedule::create([
+            'monday'            => ['08:00-12:00', '13:00-17:00'],
+            'tuesday'           => ['08:00-12:00', '13:00-17:00'],
+            'wednesday'         => ['08:00-12:00'],
+            'thursday'          => ['08:00-12:00', '13:00-17:00'],
+            'friday'            => ['08:00-12:00', '13:00-17:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'fr-national',
+                'with'   => [
+                    'company-special-holiday' => '24/8',
+                ],
+            ],
+        ]);
+
+        $d = CarbonImmutable::parse('2022-10-21 06:40:00');
+        self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
+        self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
+        $d = CarbonImmutable::parse('2022-10-20 17:30:00');
+        self::assertTrue($us->isOpen($d));
+        self::assertFalse($fr->isOpen($d));
+
+        $d = new class() extends CarbonImmutable {
+            public function __construct($time = null, $tz = null)
+            {
+                parent::__construct($time ?? '2022-10-20', $tz);
+            }
+
+            public function hasLocalMacro($name)
+            {
+                if ($name === 'isHoliday') {
+                    throw new BadMethodCallException('Broken/old version');
+                }
+
+                return parent::hasLocalMacro($name);
+            }
+        };
+        self::assertFalse($us->isOpen($d));
+
+        self::assertSame('monday', $us->normalizeDay('Monday'));
+        self::assertSame('tuesday', $us->normalizeDay(CarbonInterface::TUESDAY));
+
+        $hours = $us->convertOpeningHours([CarbonInterface::WEDNESDAY => ['00:30-05:00']]);
+        self::assertInstanceOf(OpeningHours::class, $hours);
+        self::assertSame('00:30-05:00', (string) $hours->forWeek()['wednesday']);
+    }
+
+    public function testNonDateException()
+    {
+        self::expectExceptionObject(new InvalidArgumentException(
+            'First parameter must be a '.CarbonInterface::class.' instance.'
+        ));
+
+        Schedule::create([])->isOpen('2022-10-20');
+    }
+
+    public function testNonMacroException()
+    {
+        self::expectExceptionObject(new InvalidArgumentException(
+            'getMethods cannot be called on a '.Schedule::class.'.'
+        ));
+
+        Schedule::create([])->getMethods();
+    }
+
+    public function testOldVersionWithoutBindMacroContext()
+    {
+        $calculateBindMacroContextMethod = new ReflectionMethod(
+            Schedule::class,
+            'calculateBindMacroContext'
+        );
+        $callInContextMethod = new ReflectionMethod(
+            Schedule::class,
+            'callInContext'
+        );
+
+        if (PHP_VERSION < 8.1) {
+            $calculateBindMacroContextMethod->setAccessible(true);
+            $callInContextMethod->setAccessible(true);
+        }
+
+        self::assertNull($calculateBindMacroContextMethod->invoke(Schedule::create([]), \stdClass::class));
+
+        $dateMock = self::getMockBuilder(CarbonImmutable::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethodsExcept(['bindMacroContext'])
+            ->getMock();
+
+        self::assertSame(42, $callInContextMethod->invoke(Schedule::create([]), null, $dateMock, static function () {
+            return 42;
+        }, []));
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void
