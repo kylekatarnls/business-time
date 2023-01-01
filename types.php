@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use Cmixin\BusinessTime;
+
 include __DIR__.'/vendor/autoload.php';
 include __DIR__.'/vendor/cmixin/business-day/src/Types/Generator.php';
 
@@ -22,7 +25,7 @@ final class TypeGenerator extends \Types\Generator
      */
     public function getScheduleDoc($defaultClass, $source, $boot)
     {
-        $methods = '';
+        $methods = [];
         $source = str_replace('\\', '/', realpath($source));
         $sourceLength = strlen($source);
 
@@ -59,56 +62,8 @@ final class TypeGenerator extends \Types\Generator
             $className = '\\'.str_replace('/', '\\', substr($file, 0, -4));
             $return = 'mixed';
 
-            for ($i = $length - 1; $i >= 0; $i--) {
-                if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
-                    if ($name !== $match[2]) {
-                        try {
-                            $method = new ReflectionMethod($className, $name);
-                        } catch (ReflectionException $e) {
-                            $method = new ReflectionMethod($defaultClass, $name);
-                        }
-
-                        $methodFile = $method->getFileName();
-
-                        if (!isset($files[$methodFile])) {
-                            $files[$methodFile] = file($methodFile);
-                        }
-
-                        $length = $method->getEndLine() - 1;
-                        $lines = $files[$methodFile];
-
-                        if ($length > 3 && preg_match('/^\s*\*+\/\s*$/', $lines[$length - 2])) {
-                            $doc = '';
-
-                            for ($i = $length - 2; $i >= max(0, $length - 42); $i--) {
-                                $doc = $lines[$i].$doc;
-
-                                if (preg_match('/\s*\/\*{2,}\s*/', $lines[$i])) {
-                                    $methodDocBlock = trim($doc);
-
-                                    break;
-                                }
-                            }
-                        }
-
-                        $code = array_slice($lines, 0, $length);
-
-                        for ($i = $length - 1; $i >= 0; $i--) {
-                            if (preg_match('/^\s*(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', $code[$i], $match)) {
-                                break;
-                            }
-                        }
-
-                        $code = implode('', array_slice($code, $i));
-
-                        if (preg_match('/(\/\*\*[\s\S]+\*\/)\s+return\s/U', $code, $match)) {
-                            $methodDocBlock = $match[1];
-                        }
-                    }
-
-                    break;
-                }
-            }
+            $methodDocBlock = $this->parseMethodDoc($name, $length, $className, $defaultClass, $code, $files)
+                ?: $methodDocBlock;
 
             $methodDocBlock = preg_replace('/\/\*\*\s+(\S[\s\S]*\S)\s+\*\//', '$1', $methodDocBlock);
             $methodDocBlock = preg_replace('/^\s*\*$/m', '', $methodDocBlock);
@@ -124,24 +79,104 @@ final class TypeGenerator extends \Types\Generator
                 $parameters = ', '.$parameters;
             }
 
-            $start = " * @method $return $name(CarbonInterface \$date$parameters) ";
-            $methodDocBlock = strtr($methodDocBlock, ["\n" => "\n *".str_repeat(' ', strlen($start) - 2)]);
-            $methods .= "$start$methodDocBlock\n";
+            $start = "$name(CarbonInterface \$date$parameters) ";
+            $methods[] = [$return, $start, $methodDocBlock];
         }
 
-        return $methods;
+        $maxReturn = max(array_map(static function ($data) {
+            return mb_strlen($data[0]);
+        }, $methods));
+        $maxStart = max(array_map(static function ($data) {
+            return mb_strlen($data[1]);
+        }, $methods));
+        $newLine = "\n *".str_repeat(' ', $maxStart + $maxReturn + 10);
+
+        return implode('', array_map(static function ($data) use ($maxReturn, $maxStart, $newLine) {
+            [$return, $start, $methodDocBlock] = $data;
+
+            return "\n * @method ".str_pad($return, $maxReturn + 1).str_pad($start, $maxStart).
+                strtr($methodDocBlock, [
+                    '('  => '（',
+                    ')'  => '）',
+                    "\n" => $newLine,
+                ]);
+        }, $methods));
+    }
+
+    private function parseMethodDoc(
+        string $name,
+        int $length,
+        string $className,
+        string $defaultClass,
+        array $code,
+        array &$files
+    ): ?string {
+        $methodDocBlock = null;
+
+        for ($i = $length - 1; $i >= 0; $i--) {
+            if (preg_match('/^(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', trim($code[$i]), $match)) {
+                if ($name !== $match[2]) {
+                    try {
+                        $method = new ReflectionMethod($className, $name);
+                    } catch (ReflectionException $e) {
+                        $method = new ReflectionMethod($defaultClass, $name);
+                    }
+
+                    $methodFile = $method->getFileName();
+
+                    if (!isset($files[$methodFile])) {
+                        $files[$methodFile] = file($methodFile);
+                    }
+
+                    $length = $method->getEndLine() - 1;
+                    $lines = $files[$methodFile];
+
+                    if ($length > 3 && preg_match('/^\s*\*+\/\s*$/', $lines[$length - 2])) {
+                        $doc = '';
+
+                        for ($i = $length - 2; $i >= max(0, $length - 42); $i--) {
+                            $doc = $lines[$i].$doc;
+
+                            if (preg_match('/\s*\/\*{2,}\s*/', $lines[$i])) {
+                                $methodDocBlock = trim($doc) ?: $methodDocBlock;
+
+                                break;
+                            }
+                        }
+                    }
+
+                    $code = array_slice($lines, 0, $length);
+
+                    for ($i = $length - 1; $i >= 0; $i--) {
+                        if (preg_match('/^(public|protected)\s+function\s+(\S+)\(.*\)(\s*\{)?$/', trim($code[$i]), $match)) {
+                            break;
+                        }
+                    }
+
+                    $code = implode('', array_slice($code, $i));
+
+                    if (preg_match('/(\/\*\*[\s\S]+\*\/)\s+return\s/U', $code, $match)) {
+                        $methodDocBlock = trim($match[1]) ?: $methodDocBlock;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        return $methodDocBlock;
     }
 }
 
 $generator = new TypeGenerator();
 $boot = static function () {
-    \Cmixin\BusinessTime::enable(\Carbon\Carbon::class);
+    BusinessTime::enable(Carbon::class);
 };
-$generator->writeHelpers(\Cmixin\BusinessTime::class, __DIR__.'/src', __DIR__.'/types', '_ide_business_time', $boot);
+$generator->writeHelpers(BusinessTime::class, __DIR__.'/src', __DIR__.'/types', '_ide_business_time', $boot);
 $scheduleFile = __DIR__.'/src/BusinessTime/Schedule.php';
 $contents = file_get_contents($scheduleFile);
-$contents = preg_replace('/(<autodoc>)([\s\S]*)(<\/autodoc>)/', "<autodoc>\n{{AUTODOC-CONTENT}}\n *</autodoc>", $contents);
+$contents = preg_replace('/(<autodoc([^>]*>))([\s\S]*)(<\/autodoc>)/', "<autodoc$1>\n *{{AUTODOC-CONTENT}}\n *</autodoc>", $contents);
 $contents = strtr($contents, [
-    '{{AUTODOC-CONTENT}}' => $generator->getScheduleDoc(\Cmixin\BusinessTime::class, __DIR__.'/src', $boot),
+    '{{AUTODOC-CONTENT}}' => $generator->getScheduleDoc(BusinessTime::class, __DIR__.'/src', $boot),
 ]);
 file_put_contents($scheduleFile, $contents);

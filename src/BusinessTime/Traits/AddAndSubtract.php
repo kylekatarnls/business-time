@@ -39,7 +39,7 @@ trait AddAndSubtract
      * Get the maximum of loop turns to run before throwing an exception where trying to add
      * or subtract open/closed time.
      *
-     * @return int|\Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     * @return int|\Closure<int>
      */
     public function getMaxIteration()
     {

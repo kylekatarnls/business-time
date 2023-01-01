@@ -123,6 +123,17 @@ class MixinBase extends BusinessDay
         };
     }
 
+    /**
+     * Returns the mixin for the given class or an array where the key is the class and value the mixin
+     * if an array (of classes) was passed in.
+     *
+     * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
+     *                                                                     definition
+     *
+     * @throws InvalidArgumentException if $defaultOpeningHours has an invalid type
+     *
+     * @return array|static
+     */
     public static function enable($carbonClass = null, $defaultOpeningHours = null)
     {
         if ($carbonClass === null) {
@@ -157,6 +168,10 @@ class MixinBase extends BusinessDay
 
             if ($defaultOpeningHours) {
                 $mixin->openingHours = $carbonClass::convertOpeningHours($defaultOpeningHours);
+            }
+
+            if ($isArray) {
+                $mixins[$carbonClass] = $mixin;
             }
         }
 
