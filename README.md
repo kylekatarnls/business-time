@@ -133,7 +133,57 @@ Carbon::parse('2019-01-01 11:00')->isOpen(); // false closed all day long
 Carbon::parse('2019-01-02 11:00')->isOpen(); // true  not an holiday in us-national region, so it's open as any common wednesday
 ```
 
-[Try in the live editor](https://try-carbon.herokuapp.com/?input=BusinessTime%3A%3Aenable(Carbon%3A%3Aclass%2C%20%5B%0D%0A%20%20%27monday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27tuesday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27wednesday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%5D%2C%0D%0A%20%20%27thursday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27friday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-20%3A00%27%5D%2C%0D%0A%20%20%27saturday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-16%3A00%27%5D%2C%0D%0A%20%20%27sunday%27%20%3D%3E%20%5B%5D%2C%0D%0A%20%20%27exceptions%27%20%3D%3E%20%5B%0D%0A%20%20%20%20function%20(Carbon%20%24date)%20%7B%0D%0A%20%20%20%20%20%20if%20(%24date-%3EisHoliday())%20%7B%0D%0A%20%20%20%20%20%20%20%20%2F%2F%20Or%20use%20-%3EisObservedHoliday()%20and%20set%20observed%20holidays%3A%0D%0A%20%20%20%20%20%20%20%20%2F%2F%20https%3A%2F%2Fgithub.com%2Fkylekatarnls%2Fbusiness-day%23setobservedholidayszone%0D%0A%20%20%20%20%20%20%20%20switch%20(%24date-%3EgetHolidayId())%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%2F%2F%20If%20the%20ID%20%22christmas%22%20exists%20in%20the%20selected%20holidays%20region%20and%20matches%20the%20current%20date%3A%0D%0A%20%20%20%20%20%20%20%20%20%20case%20%27christmas%27%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%2710%3A00-12%3A00%27%5D%3B%0D%0A%20%20%20%20%20%20%20%20%20%20default%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%5D%3B%20%2F%2F%20All%20other%20holidays%20are%20closed%20all%20day%20long%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20Here%20you%20can%20also%20pass%20context%20data%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27hours%27%20%3D%3E%20%5B%5D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27data%27%20%20%3D%3E%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27reason%27%20%3D%3E%20%27Today%20is%20%27%20.%20%24date-%3EgetHolidayName()%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%3B%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%2F%2F%20Else%2C%20typical%20day%20%3D%3E%20use%20days%20of%20week%20settings%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%5D%2C%0D%0A%5D)%3B%0D%0A%0D%0ACarbon%3A%3AsetHolidaysRegion(%27us-national%27)%3B%0D%0A%0D%0Avar_dump(Carbon%3A%3Aparse(%272018-12-25%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20true%20%20matches%20custom%20opening%20hours%20of%20Christmas%0D%0Avar_dump(Carbon%3A%3Aparse(%272018-12-25%2013%3A00%27)-%3EisOpen())%3B%20%2F%2F%20false%0D%0Avar_dump(Carbon%3A%3Aparse(%272019-01-01%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20false%20closed%20all%20day%20long%0D%0Avar_dump(Carbon%3A%3Aparse(%272019-01-02%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20true%20%20not%20an%20holiday%20in%20us-national%20region%2C%20so%20it%27s%20open%20as%20any%20common%20wednesday)
+[Try in the live editor](https://play.phpsandbox.io/embed/nesbot/carbon?input=BusinessTime%3A%3Aenable(Carbon%3A%3Aclass%2C%20%5B%0D%0A%20%20%27monday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27tuesday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27wednesday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%5D%2C%0D%0A%20%20%27thursday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0D%0A%20%20%27friday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-20%3A00%27%5D%2C%0D%0A%20%20%27saturday%27%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-16%3A00%27%5D%2C%0D%0A%20%20%27sunday%27%20%3D%3E%20%5B%5D%2C%0D%0A%20%20%27exceptions%27%20%3D%3E%20%5B%0D%0A%20%20%20%20function%20(Carbon%20%24date)%20%7B%0D%0A%20%20%20%20%20%20if%20(%24date-%3EisHoliday())%20%7B%0D%0A%20%20%20%20%20%20%20%20%2F%2F%20Or%20use%20-%3EisObservedHoliday()%20and%20set%20observed%20holidays%3A%0D%0A%20%20%20%20%20%20%20%20%2F%2F%20https%3A%2F%2Fgithub.com%2Fkylekatarnls%2Fbusiness-day%23setobservedholidayszone%0D%0A%20%20%20%20%20%20%20%20switch%20(%24date-%3EgetHolidayId())%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%2F%2F%20If%20the%20ID%20%22christmas%22%20exists%20in%20the%20selected%20holidays%20region%20and%20matches%20the%20current%20date%3A%0D%0A%20%20%20%20%20%20%20%20%20%20case%20%27christmas%27%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%2710%3A00-12%3A00%27%5D%3B%0D%0A%20%20%20%20%20%20%20%20%20%20default%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%5D%3B%20%2F%2F%20All%20other%20holidays%20are%20closed%20all%20day%20long%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20Here%20you%20can%20also%20pass%20context%20data%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27hours%27%20%3D%3E%20%5B%5D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27data%27%20%20%3D%3E%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27reason%27%20%3D%3E%20%27Today%20is%20%27%20.%20%24date-%3EgetHolidayName()%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%3B%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%2F%2F%20Else%2C%20typical%20day%20%3D%3E%20use%20days%20of%20week%20settings%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%5D%2C%0D%0A%5D)%3B%0D%0A%0D%0ACarbon%3A%3AsetHolidaysRegion(%27us-national%27)%3B%0D%0A%0D%0Avar_dump(Carbon%3A%3Aparse(%272018-12-25%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20true%20%20matches%20custom%20opening%20hours%20of%20Christmas%0D%0Avar_dump(Carbon%3A%3Aparse(%272018-12-25%2013%3A00%27)-%3EisOpen())%3B%20%2F%2F%20false%0D%0Avar_dump(Carbon%3A%3Aparse(%272019-01-01%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20false%20closed%20all%20day%20long%0D%0Avar_dump(Carbon%3A%3Aparse(%272019-01-02%2011%3A00%27)-%3EisOpen())%3B%20%2F%2F%20true%20%20not%20an%20holiday%20in%20us-national%20region%2C%20so%20it%27s%20open%20as%20any%20common%20wednesday)
+
+### Multiple business-hours
+
+To work with multiple schedules or to use all the features without loading globally the mixin into `Carbon`,
+you can create `Schedule` instances:
+
+```php
+use Carbon\CarbonImmutable;
+use BusinessTime\Schedule;
+
+$us = Schedule::create([
+    'monday'            => ['09:00-12:00', '13:00-18:00'],
+    'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+    'wednesday'         => ['09:00-12:00'],
+    'thursday'          => ['09:00-12:00', '13:00-18:00'],
+    'friday'            => ['09:00-12:00', '13:00-20:00'],
+    'holidaysAreClosed' => true,
+    'holidays'          => [
+        'region' => 'us-ny',
+        'with'   => [
+            'labor-day'               => null,
+            'company-special-holiday' => '04-07',
+        ],
+    ],
+]);
+
+$fr = Schedule::create([
+    'monday'            => ['08:00-12:00', '13:00-17:00'],
+    'tuesday'           => ['08:00-12:00', '13:00-17:00'],
+    'wednesday'         => ['08:00-12:00'],
+    'thursday'          => ['08:00-12:00', '13:00-17:00'],
+    'friday'            => ['08:00-12:00', '13:00-17:00'],
+    'holidaysAreClosed' => true,
+    'holidays'          => [
+        'region' => 'fr-national',
+        'with'   => [
+            'company-special-holiday' => '24/8',
+        ],
+    ],
+]);
+
+$d = CarbonImmutable::parse('2022-10-21 06:40:00');
+echo $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'); // 2022-10-20 17:00:00
+echo $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'); // 2022-10-20 16:00:00
+
+$d = CarbonImmutable::parse('2022-10-20 17:30:00');
+var_dump($us->isOpen($d)); // true
+var_dump($fr->isOpen($d)); // false
+```
+[Try in the live editor](https://play.phpsandbox.io/embed/nesbot/carbon?input=%3C%3Fphp%0A%0Ause%20Carbon%5CCarbonImmutable%3B%0Ause%20BusinessTime%5CSchedule%3B%0A%0A%24us%20%3D%20Schedule%3A%3Acreate(%5B%0A%20%20%20%20%27monday%27%20%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0A%20%20%20%20%27tuesday%27%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0A%20%20%20%20%27wednesday%27%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2709%3A00-12%3A00%27%5D%2C%0A%20%20%20%20%27thursday%27%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-18%3A00%27%5D%2C%0A%20%20%20%20%27friday%27%20%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2709%3A00-12%3A00%27%2C%20%2713%3A00-20%3A00%27%5D%2C%0A%20%20%20%20%27holidaysAreClosed%27%20%3D%3E%20true%2C%0A%20%20%20%20%27holidays%27%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%0A%20%20%20%20%20%20%20%20%27region%27%20%3D%3E%20%27us-ny%27%2C%0A%20%20%20%20%20%20%20%20%27with%27%20%20%20%3D%3E%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%27labor-day%27%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20null%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27company-special-holiday%27%20%3D%3E%20%2704-07%27%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%5D%2C%0A%5D)%3B%0A%0A%24fr%20%3D%20Schedule%3A%3Acreate(%5B%0A%20%20%20%20%27monday%27%20%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2708%3A00-12%3A00%27%2C%20%2713%3A00-17%3A00%27%5D%2C%0A%20%20%20%20%27tuesday%27%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2708%3A00-12%3A00%27%2C%20%2713%3A00-17%3A00%27%5D%2C%0A%20%20%20%20%27wednesday%27%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2708%3A00-12%3A00%27%5D%2C%0A%20%20%20%20%27thursday%27%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2708%3A00-12%3A00%27%2C%20%2713%3A00-17%3A00%27%5D%2C%0A%20%20%20%20%27friday%27%20%20%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%2708%3A00-12%3A00%27%2C%20%2713%3A00-17%3A00%27%5D%2C%0A%20%20%20%20%27holidaysAreClosed%27%20%3D%3E%20true%2C%0A%20%20%20%20%27holidays%27%20%20%20%20%20%20%20%20%20%20%3D%3E%20%5B%0A%20%20%20%20%20%20%20%20%27region%27%20%3D%3E%20%27fr-national%27%2C%0A%20%20%20%20%20%20%20%20%27with%27%20%20%20%3D%3E%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%27company-special-holiday%27%20%3D%3E%20%2724%2F8%27%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%5D%2C%0A%5D)%3B%0A%0A%24d%20%3D%20CarbonImmutable%3A%3Aparse(%272022-10-21%2006%3A40%3A00%27)%3B%0Avar_dump(%24us-%3EsubOpenHours(%24d%2C%201)-%3Eformat(%27Y-m-d%20H%3Ai%3As%27)%29%3B%0Avar_dump(%24fr-%3EsubOpenHours(%24d%2C%201)-%3Eformat(%27Y-m-d%20H%3Ai%3As%27)%29%3B%0A%0A%24d%20%3D%20CarbonImmutable%3A%3Aparse(%272022-10-20%2017%3A30%3A00%27)%3B%0Avar_dump(%24us-%3EisOpen(%24d)%29%3B%0Avar_dump(%24fr-%3EisOpen(%24d)%29%3B)
 
 ### isOpenOn
 
