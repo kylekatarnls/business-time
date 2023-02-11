@@ -1492,8 +1492,8 @@ class BusinessTimeTest extends TestCase
         self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         $d = CarbonImmutable::parse('2022-10-20 17:30:00');
-        self::assertTrue($us->isOpen($d));
-        self::assertFalse($fr->isOpen($d));
+        self::assertTrue($us->isBusinessOpen($d));
+        self::assertFalse($fr->isBusinessOpen($d));
 
         $d = new class() extends CarbonImmutable {
             public function __construct($time = null, $tz = null)
@@ -1510,7 +1510,7 @@ class BusinessTimeTest extends TestCase
                 return parent::hasLocalMacro($name);
             }
         };
-        self::assertFalse($us->isOpen($d));
+        self::assertFalse($us->isBusinessOpen($d));
 
         self::assertSame('monday', $us->normalizeDay('Monday'));
         self::assertSame('tuesday', $us->normalizeDay(CarbonInterface::TUESDAY));
@@ -1518,6 +1518,40 @@ class BusinessTimeTest extends TestCase
         $hours = $us->convertOpeningHours([CarbonInterface::WEDNESDAY => ['00:30-05:00']]);
         self::assertInstanceOf(OpeningHours::class, $hours);
         self::assertSame('00:30-05:00', (string) $hours->forWeek()['wednesday']);
+
+        $us = Schedule::create([
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-20:00'],
+            'exceptions'        => [
+                '2022-04-07' => [],
+            ],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'us-national',
+                'with'   => [
+                    'labor-day'               => null,
+                    'company-special-holiday' => '2022-04-08',
+                ],
+            ],
+        ]);
+
+        $d = CarbonImmutable::parse('2023-12-25 09:40:00');
+        self::assertTrue($us->isHoliday($d));
+        self::assertFalse($us->isOpen($d));
+        self::assertFalse($us->isBusinessOpen($d));
+
+        $d = CarbonImmutable::parse('2022-04-08 09:40:00');
+        self::assertTrue($us->isHoliday($d));
+        self::assertFalse($us->isOpen($d));
+        self::assertFalse($us->isBusinessOpen($d));
+
+        $e = CarbonImmutable::parse('2022-04-07 09:40:00');
+        self::assertTrue($us->isHoliday($d));
+        self::assertFalse($us->isOpen($e));
+        self::assertFalse($us->isBusinessOpen($e));
     }
 
     public function testNonDateException()

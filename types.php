@@ -9,9 +9,10 @@ include __DIR__.'/vendor/cmixin/business-day/src/Types/Generator.php';
 final class TypeGenerator extends \Types\Generator
 {
     private $skipped = [
-        'normalizeDay'        => true,
-        'convertOpeningHours' => true,
-        'enable'              => true,
+        'normalizeDay'             => true,
+        'convertOpeningHours'      => true,
+        'enable'                   => true,
+        'initializeHolidaysRegion' => true,
     ];
 
     /**
@@ -28,6 +29,8 @@ final class TypeGenerator extends \Types\Generator
         $methods = [];
         $source = str_replace('\\', '/', realpath($source));
         $sourceLength = strlen($source);
+        $businessDaySource = str_replace('\\', '/', realpath(dirname($source).'/vendor/cmixin/business-day/src'));
+        $businessDaySourceLength = strlen($businessDaySource);
 
         foreach ($this->getMethods($boot) as $name => $closure) {
             if (!$closure || isset($this->skipped[$name])) {
@@ -49,7 +52,9 @@ final class TypeGenerator extends \Types\Generator
             $lines = $files[$file];
             $file = str_replace('\\', '/', $file);
 
-            if (substr($file, 0, $sourceLength + 1) !== "$source/") {
+            if (substr($file, 0, $sourceLength + 1) !== "$source/" &&
+                substr($file, 0, $businessDaySourceLength + 1) !== "$businessDaySource/"
+            ) {
                 continue;
             }
 
