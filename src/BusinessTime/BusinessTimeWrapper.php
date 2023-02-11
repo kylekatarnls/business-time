@@ -32,7 +32,19 @@ final class BusinessTimeWrapper extends BusinessTime
 
             return $className::instance($date)->isHoliday();
         });
-        $businessTime->openingHours = $parser->getEmbeddedOpeningHours($businessTime);
+        $openingHours = $parser->getEmbeddedOpeningHours($businessTime);
+        $businessTime->openingHours = $openingHours;
+        $region = $openingHours->getData()[self::HOLIDAYS_OPTION_KEY][self::REGION_OPTION_KEY] ?? null;
+        $with = $openingHours->getData()[self::HOLIDAYS_OPTION_KEY][self::ADDITIONAL_HOLIDAYS_OPTION_KEY] ?? null;
+        $without = $openingHours->getData()[self::HOLIDAYS_OPTION_KEY]['without'] ?? null;
+
+        if ($region) {
+            ($businessTime->setHolidaysRegion())($region);
+
+            if ($with || $without) {
+                ($businessTime->addHolidays())($region, $with, $without);
+            }
+        }
 
         return $businessTime;
     }
