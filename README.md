@@ -861,6 +861,19 @@ To enable business-time globally in Laravel, set default openning hours and holi
 ];
 ```
 
+If you use Laravel but don't plan to use this global config to enable business-time,
+you may remove it from auto-discovery using:
+```json
+"extra": {
+    "laravel": {
+        "dont-discover": [
+            "cmixin/business-day",
+            "cmixin/business-time"
+        ]
+    }
+},
+```
+
 ### Note about timezones
 
 When you set an holidays region, it does not change the timezone, so if January 1st is an holiday,
