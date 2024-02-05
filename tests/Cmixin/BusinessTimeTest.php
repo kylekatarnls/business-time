@@ -1496,12 +1496,14 @@ class BusinessTimeTest extends TestCase
         self::assertFalse($fr->isBusinessOpen($d));
 
         $d = new class() extends CarbonImmutable {
+            #[\ReturnTypeWillChange]
             public function __construct($time = null, $tz = null)
             {
                 parent::__construct($time ?? '2022-10-20', $tz);
             }
 
-            public function hasLocalMacro($name)
+            #[\ReturnTypeWillChange]
+            public function hasLocalMacro($name): bool
             {
                 if ($name === 'isHoliday') {
                     throw new BadMethodCallException('Broken/old version');

@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "cmixin/business-day": "^1.16.1",
-    "spatie/opening-hours": "^2.9 || ^3@dev"
+    "spatie/opening-hours": "^2.9 || ^3.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5.20 || ^8.5.31 || ^9.5.27"
