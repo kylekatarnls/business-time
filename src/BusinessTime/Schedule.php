@@ -346,7 +346,7 @@ final class Schedule
         $bindMacroContextMethod = new ReflectionMethod($class, 'bindMacroContext');
 
         if (PHP_VERSION < 8.1) {
-            $bindMacroContextMethod->setAccessible(true);
+            $bindMacroContextMethod->setAccessible(true); // @codeCoverageIgnore
         }
 
         return $bindMacroContextMethod;
