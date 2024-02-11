@@ -1,4 +1,4 @@
-name: Tests
+name: Coverage
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         php: ['8.3']
         setup: ['stable']
 
-    name: Coverage - PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }}
 
     steps:
     - uses: actions/checkout@v2
