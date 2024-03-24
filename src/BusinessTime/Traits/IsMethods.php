@@ -21,6 +21,8 @@ trait IsMethods
         /**
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         return static function ($day) use ($method) {

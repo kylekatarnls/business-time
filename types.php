@@ -79,13 +79,14 @@ final class TypeGenerator extends \Types\Generator
             }
 
             $methodDocBlock = trim(preg_replace('/^(@|\s{6}).*$/m', '', $methodDocBlock));
+            $first = in_array($name, ['isOpenOn', 'isClosedOn']) ? '' : 'CarbonInterface $date';
 
-            if (!empty($parameters)) {
-                $parameters = ', '.$parameters;
+            if ($first !== '' && !empty($parameters)) {
+                $first .= ', ';
             }
 
-            $start = "$name(CarbonInterface \$date$parameters) ";
-            $methods[] = [$return, $start, $methodDocBlock];
+            $start = "$name($first$parameters) ";
+            $methods[] = [$return, $start, rtrim($methodDocBlock, " \n\r\t\v\0*")];
         }
 
         $maxReturn = max(array_map(static function ($data) {
@@ -96,7 +97,7 @@ final class TypeGenerator extends \Types\Generator
         }, $methods));
         $newLine = "\n *".str_repeat(' ', $maxStart + $maxReturn + 10);
 
-        return implode('', array_map(static function ($data) use ($maxReturn, $maxStart, $newLine) {
+        $docChunk = implode('', array_map(static function ($data) use ($maxReturn, $maxStart, $newLine) {
             [$return, $start, $methodDocBlock] = $data;
 
             return "\n * @method ".str_pad($return, $maxReturn + 1).str_pad($start, $maxStart).
@@ -106,6 +107,8 @@ final class TypeGenerator extends \Types\Generator
                     "\n" => $newLine,
                 ]);
         }, $methods));
+
+        return preg_replace('/^(\s*\*)\s+\n/m', '', $docChunk);
     }
 
     private function parseMethodDoc(
@@ -180,7 +183,7 @@ $boot = static function () {
 $generator->writeHelpers(BusinessTime::class, __DIR__.'/src', __DIR__.'/types', '_ide_business_time', $boot);
 $scheduleFile = __DIR__.'/src/BusinessTime/Schedule.php';
 $contents = file_get_contents($scheduleFile);
-$contents = preg_replace('/(<autodoc([^>]*>))([\s\S]*)(<\/autodoc>)/', "<autodoc$1>\n *{{AUTODOC-CONTENT}}\n *</autodoc>", $contents);
+$contents = preg_replace('/(<autodoc([^>]*>))([\s\S]*)(<\/autodoc>)/', "$1\n *{{AUTODOC-CONTENT}}\n *</autodoc>", $contents);
 $contents = strtr($contents, [
     '{{AUTODOC-CONTENT}}' => $generator->getScheduleDoc(BusinessTime::class, __DIR__.'/src', $boot),
 ]);
