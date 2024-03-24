@@ -9,6 +9,8 @@ namespace Carbon
          *
          * Returns day English name in lower case.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
          *                        string with any case.
          *
@@ -16,7 +18,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:78
+            // Content, see src/BusinessTime/MixinBase.php:80
         }
 
         /**
@@ -24,6 +26,8 @@ namespace Carbon
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -34,7 +38,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:102
+            // Content, see src/BusinessTime/MixinBase.php:106
         }
 
         /**
@@ -42,6 +46,8 @@ namespace Carbon
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -52,7 +58,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:140
+            // Content, see src/BusinessTime/MixinBase.php:144
         }
 
         /**
@@ -66,7 +72,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:216
+            // Content, see src/BusinessTime/MixinBase.php:220
         }
 
         /**
@@ -78,7 +84,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:262
+            // Content, see src/BusinessTime/MixinBase.php:266
         }
 
         /**
@@ -92,7 +98,7 @@ namespace Carbon
          */
         public function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:302
+            // Content, see src/BusinessTime/MixinBase.php:306
         }
 
         /**
@@ -104,7 +110,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:334
+            // Content, see src/BusinessTime/MixinBase.php:338
         }
 
         /**
@@ -119,7 +125,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -134,7 +140,7 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -150,7 +156,7 @@ namespace Carbon
          */
         public function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -436,7 +442,7 @@ namespace Carbon
          */
         public function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -451,7 +457,7 @@ namespace Carbon
          */
         public function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -466,7 +472,7 @@ namespace Carbon
          */
         public function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -481,7 +487,7 @@ namespace Carbon
          */
         public function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -494,7 +500,7 @@ namespace Carbon
          */
         public function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -507,7 +513,7 @@ namespace Carbon
          */
         public function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -522,7 +528,7 @@ namespace Carbon
          */
         public function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -537,7 +543,7 @@ namespace Carbon
          */
         public function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -552,7 +558,7 @@ namespace Carbon
          */
         public function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -567,7 +573,7 @@ namespace Carbon
          */
         public function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -582,7 +588,7 @@ namespace Carbon
          */
         public function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -597,7 +603,7 @@ namespace Carbon
          */
         public function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -612,7 +618,7 @@ namespace Carbon
          */
         public function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -627,7 +633,7 @@ namespace Carbon
          */
         public function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -640,7 +646,7 @@ namespace Carbon
          */
         public function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -653,7 +659,7 @@ namespace Carbon
          */
         public function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -666,7 +672,7 @@ namespace Carbon
          */
         public function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -679,7 +685,7 @@ namespace Carbon
          */
         public function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -820,7 +826,7 @@ namespace Carbon
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -832,7 +838,7 @@ namespace Carbon
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -844,7 +850,7 @@ namespace Carbon
          */
         public function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -856,7 +862,7 @@ namespace Carbon
          */
         public function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -868,7 +874,7 @@ namespace Carbon
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -880,7 +886,7 @@ namespace Carbon
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -892,7 +898,7 @@ namespace Carbon
          */
         public function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -904,7 +910,7 @@ namespace Carbon
          */
         public function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -912,11 +918,13 @@ namespace Carbon
          *
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         public function isOpenOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -928,7 +936,7 @@ namespace Carbon
          */
         public function isClosedOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -942,7 +950,7 @@ namespace Carbon
          */
         public function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -956,7 +964,7 @@ namespace Carbon
          */
         public function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -969,7 +977,7 @@ namespace Carbon
          */
         public function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -984,7 +992,7 @@ namespace Carbon
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -997,7 +1005,7 @@ namespace Carbon
          */
         public function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -1012,7 +1020,7 @@ namespace Carbon
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -1026,7 +1034,7 @@ namespace Carbon
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1040,7 +1048,7 @@ namespace Carbon
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1054,7 +1062,7 @@ namespace Carbon
          */
         public function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1068,7 +1076,7 @@ namespace Carbon
          */
         public function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1083,7 +1091,7 @@ namespace Carbon
          */
         public function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1098,7 +1106,7 @@ namespace Carbon
          */
         public function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1113,7 +1121,7 @@ namespace Carbon
          */
         public function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1128,7 +1136,7 @@ namespace Carbon
          */
         public function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1141,7 +1149,7 @@ namespace Carbon
          */
         public function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1154,7 +1162,7 @@ namespace Carbon
          */
         public function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1218,7 +1226,7 @@ namespace Carbon
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1232,7 +1240,7 @@ namespace Carbon
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1244,7 +1252,7 @@ namespace Carbon
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1256,7 +1264,7 @@ namespace Carbon
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
     }
 }
@@ -1270,6 +1278,8 @@ namespace Carbon
          *
          * Returns day English name in lower case.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
          *                        string with any case.
          *
@@ -1277,7 +1287,7 @@ namespace Carbon
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:78
+            // Content, see src/BusinessTime/MixinBase.php:80
         }
 
         /**
@@ -1285,6 +1295,8 @@ namespace Carbon
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -1295,7 +1307,7 @@ namespace Carbon
          */
         public function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:102
+            // Content, see src/BusinessTime/MixinBase.php:106
         }
 
         /**
@@ -1303,6 +1315,8 @@ namespace Carbon
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -1313,7 +1327,7 @@ namespace Carbon
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:140
+            // Content, see src/BusinessTime/MixinBase.php:144
         }
 
         /**
@@ -1327,7 +1341,7 @@ namespace Carbon
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:216
+            // Content, see src/BusinessTime/MixinBase.php:220
         }
 
         /**
@@ -1339,7 +1353,7 @@ namespace Carbon
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:262
+            // Content, see src/BusinessTime/MixinBase.php:266
         }
 
         /**
@@ -1353,7 +1367,7 @@ namespace Carbon
          */
         public function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:302
+            // Content, see src/BusinessTime/MixinBase.php:306
         }
 
         /**
@@ -1365,7 +1379,7 @@ namespace Carbon
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:334
+            // Content, see src/BusinessTime/MixinBase.php:338
         }
 
         /**
@@ -1380,7 +1394,7 @@ namespace Carbon
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -1395,7 +1409,7 @@ namespace Carbon
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -1411,7 +1425,7 @@ namespace Carbon
          */
         public function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1697,7 +1711,7 @@ namespace Carbon
          */
         public function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1712,7 +1726,7 @@ namespace Carbon
          */
         public function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1727,7 +1741,7 @@ namespace Carbon
          */
         public function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1742,7 +1756,7 @@ namespace Carbon
          */
         public function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1755,7 +1769,7 @@ namespace Carbon
          */
         public function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1768,7 +1782,7 @@ namespace Carbon
          */
         public function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1783,7 +1797,7 @@ namespace Carbon
          */
         public function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1798,7 +1812,7 @@ namespace Carbon
          */
         public function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1813,7 +1827,7 @@ namespace Carbon
          */
         public function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1828,7 +1842,7 @@ namespace Carbon
          */
         public function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1843,7 +1857,7 @@ namespace Carbon
          */
         public function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1858,7 +1872,7 @@ namespace Carbon
          */
         public function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1873,7 +1887,7 @@ namespace Carbon
          */
         public function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1888,7 +1902,7 @@ namespace Carbon
          */
         public function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1901,7 +1915,7 @@ namespace Carbon
          */
         public function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1914,7 +1928,7 @@ namespace Carbon
          */
         public function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1927,7 +1941,7 @@ namespace Carbon
          */
         public function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -1940,7 +1954,7 @@ namespace Carbon
          */
         public function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2081,7 +2095,7 @@ namespace Carbon
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2093,7 +2107,7 @@ namespace Carbon
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2105,7 +2119,7 @@ namespace Carbon
          */
         public function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2117,7 +2131,7 @@ namespace Carbon
          */
         public function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2129,7 +2143,7 @@ namespace Carbon
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2141,7 +2155,7 @@ namespace Carbon
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2153,7 +2167,7 @@ namespace Carbon
          */
         public function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2165,7 +2179,7 @@ namespace Carbon
          */
         public function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2173,11 +2187,13 @@ namespace Carbon
          *
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         public function isOpenOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -2189,7 +2205,7 @@ namespace Carbon
          */
         public function isClosedOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -2203,7 +2219,7 @@ namespace Carbon
          */
         public function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -2217,7 +2233,7 @@ namespace Carbon
          */
         public function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -2230,7 +2246,7 @@ namespace Carbon
          */
         public function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -2245,7 +2261,7 @@ namespace Carbon
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -2258,7 +2274,7 @@ namespace Carbon
          */
         public function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -2273,7 +2289,7 @@ namespace Carbon
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -2287,7 +2303,7 @@ namespace Carbon
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2301,7 +2317,7 @@ namespace Carbon
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2315,7 +2331,7 @@ namespace Carbon
          */
         public function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2329,7 +2345,7 @@ namespace Carbon
          */
         public function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2344,7 +2360,7 @@ namespace Carbon
          */
         public function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2359,7 +2375,7 @@ namespace Carbon
          */
         public function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2374,7 +2390,7 @@ namespace Carbon
          */
         public function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2389,7 +2405,7 @@ namespace Carbon
          */
         public function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2402,7 +2418,7 @@ namespace Carbon
          */
         public function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2415,7 +2431,7 @@ namespace Carbon
          */
         public function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2479,7 +2495,7 @@ namespace Carbon
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2493,7 +2509,7 @@ namespace Carbon
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2505,7 +2521,7 @@ namespace Carbon
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2517,7 +2533,7 @@ namespace Carbon
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
     }
 }
@@ -2531,6 +2547,8 @@ namespace Illuminate\Support
          *
          * Returns day English name in lower case.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
          *                        string with any case.
          *
@@ -2538,7 +2556,7 @@ namespace Illuminate\Support
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:78
+            // Content, see src/BusinessTime/MixinBase.php:80
         }
 
         /**
@@ -2546,6 +2564,8 @@ namespace Illuminate\Support
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -2556,7 +2576,7 @@ namespace Illuminate\Support
          */
         public function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:102
+            // Content, see src/BusinessTime/MixinBase.php:106
         }
 
         /**
@@ -2564,6 +2584,8 @@ namespace Illuminate\Support
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -2574,7 +2596,7 @@ namespace Illuminate\Support
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:140
+            // Content, see src/BusinessTime/MixinBase.php:144
         }
 
         /**
@@ -2588,7 +2610,7 @@ namespace Illuminate\Support
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:216
+            // Content, see src/BusinessTime/MixinBase.php:220
         }
 
         /**
@@ -2600,7 +2622,7 @@ namespace Illuminate\Support
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:262
+            // Content, see src/BusinessTime/MixinBase.php:266
         }
 
         /**
@@ -2614,7 +2636,7 @@ namespace Illuminate\Support
          */
         public function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:302
+            // Content, see src/BusinessTime/MixinBase.php:306
         }
 
         /**
@@ -2626,7 +2648,7 @@ namespace Illuminate\Support
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:334
+            // Content, see src/BusinessTime/MixinBase.php:338
         }
 
         /**
@@ -2641,7 +2663,7 @@ namespace Illuminate\Support
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -2656,7 +2678,7 @@ namespace Illuminate\Support
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -2672,7 +2694,7 @@ namespace Illuminate\Support
          */
         public function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2958,7 +2980,7 @@ namespace Illuminate\Support
          */
         public function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2973,7 +2995,7 @@ namespace Illuminate\Support
          */
         public function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -2988,7 +3010,7 @@ namespace Illuminate\Support
          */
         public function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3003,7 +3025,7 @@ namespace Illuminate\Support
          */
         public function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3016,7 +3038,7 @@ namespace Illuminate\Support
          */
         public function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3029,7 +3051,7 @@ namespace Illuminate\Support
          */
         public function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3044,7 +3066,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3059,7 +3081,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3074,7 +3096,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3089,7 +3111,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3104,7 +3126,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3119,7 +3141,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3134,7 +3156,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3149,7 +3171,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3162,7 +3184,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3175,7 +3197,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3188,7 +3210,7 @@ namespace Illuminate\Support
          */
         public function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3201,7 +3223,7 @@ namespace Illuminate\Support
          */
         public function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3342,7 +3364,7 @@ namespace Illuminate\Support
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3354,7 +3376,7 @@ namespace Illuminate\Support
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3366,7 +3388,7 @@ namespace Illuminate\Support
          */
         public function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3378,7 +3400,7 @@ namespace Illuminate\Support
          */
         public function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3390,7 +3412,7 @@ namespace Illuminate\Support
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3402,7 +3424,7 @@ namespace Illuminate\Support
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3414,7 +3436,7 @@ namespace Illuminate\Support
          */
         public function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3426,7 +3448,7 @@ namespace Illuminate\Support
          */
         public function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3434,11 +3456,13 @@ namespace Illuminate\Support
          *
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         public function isOpenOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -3450,7 +3474,7 @@ namespace Illuminate\Support
          */
         public function isClosedOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -3464,7 +3488,7 @@ namespace Illuminate\Support
          */
         public function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -3478,7 +3502,7 @@ namespace Illuminate\Support
          */
         public function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -3491,7 +3515,7 @@ namespace Illuminate\Support
          */
         public function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -3506,7 +3530,7 @@ namespace Illuminate\Support
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -3519,7 +3543,7 @@ namespace Illuminate\Support
          */
         public function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -3534,7 +3558,7 @@ namespace Illuminate\Support
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -3548,7 +3572,7 @@ namespace Illuminate\Support
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3562,7 +3586,7 @@ namespace Illuminate\Support
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3576,7 +3600,7 @@ namespace Illuminate\Support
          */
         public function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3590,7 +3614,7 @@ namespace Illuminate\Support
          */
         public function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3605,7 +3629,7 @@ namespace Illuminate\Support
          */
         public function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3620,7 +3644,7 @@ namespace Illuminate\Support
          */
         public function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3635,7 +3659,7 @@ namespace Illuminate\Support
          */
         public function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3650,7 +3674,7 @@ namespace Illuminate\Support
          */
         public function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3663,7 +3687,7 @@ namespace Illuminate\Support
          */
         public function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3676,7 +3700,7 @@ namespace Illuminate\Support
          */
         public function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -3740,7 +3764,7 @@ namespace Illuminate\Support
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3754,7 +3778,7 @@ namespace Illuminate\Support
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3766,7 +3790,7 @@ namespace Illuminate\Support
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3778,7 +3802,7 @@ namespace Illuminate\Support
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
     }
 }
@@ -3792,6 +3816,8 @@ namespace Illuminate\Support\Facades
          *
          * Returns day English name in lower case.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
          *                        string with any case.
          *
@@ -3799,7 +3825,7 @@ namespace Illuminate\Support\Facades
          */
         public function normalizeDay($day)
         {
-            // Content, see src/BusinessTime/MixinBase.php:78
+            // Content, see src/BusinessTime/MixinBase.php:80
         }
 
         /**
@@ -3807,6 +3833,8 @@ namespace Illuminate\Support\Facades
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -3817,7 +3845,7 @@ namespace Illuminate\Support\Facades
          */
         public function convertOpeningHours($defaultOpeningHours, $data = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:102
+            // Content, see src/BusinessTime/MixinBase.php:106
         }
 
         /**
@@ -3825,6 +3853,8 @@ namespace Illuminate\Support\Facades
          *
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
@@ -3835,7 +3865,7 @@ namespace Illuminate\Support\Facades
          */
         public function enable()
         {
-            // Content, see src/BusinessTime/MixinBase.php:140
+            // Content, see src/BusinessTime/MixinBase.php:144
         }
 
         /**
@@ -3849,7 +3879,7 @@ namespace Illuminate\Support\Facades
          */
         public function setOpeningHours($openingHours)
         {
-            // Content, see src/BusinessTime/MixinBase.php:216
+            // Content, see src/BusinessTime/MixinBase.php:220
         }
 
         /**
@@ -3861,7 +3891,7 @@ namespace Illuminate\Support\Facades
          */
         public function resetOpeningHours()
         {
-            // Content, see src/BusinessTime/MixinBase.php:262
+            // Content, see src/BusinessTime/MixinBase.php:266
         }
 
         /**
@@ -3875,7 +3905,7 @@ namespace Illuminate\Support\Facades
          */
         public function getOpeningHours($mode = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:302
+            // Content, see src/BusinessTime/MixinBase.php:306
         }
 
         /**
@@ -3887,7 +3917,7 @@ namespace Illuminate\Support\Facades
          */
         public function safeCallOnOpeningHours($method, ...$arguments)
         {
-            // Content, see src/BusinessTime/MixinBase.php:334
+            // Content, see src/BusinessTime/MixinBase.php:338
         }
 
         /**
@@ -3902,7 +3932,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCalleeAsMethod($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -3917,7 +3947,7 @@ namespace Illuminate\Support\Facades
          */
         public function getMethodLoopOnHoliday()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -3933,7 +3963,7 @@ namespace Illuminate\Support\Facades
          */
         public function getTernaryMethod()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4219,7 +4249,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4234,7 +4264,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4249,7 +4279,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4264,7 +4294,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4277,7 +4307,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4290,7 +4320,7 @@ namespace Illuminate\Support\Facades
          */
         public function closedOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4305,7 +4335,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4320,7 +4350,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4335,7 +4365,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4350,7 +4380,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4365,7 +4395,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4380,7 +4410,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4395,7 +4425,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4410,7 +4440,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4423,7 +4453,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4436,7 +4466,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4449,7 +4479,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4462,7 +4492,7 @@ namespace Illuminate\Support\Facades
          */
         public function currentOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4603,7 +4633,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4615,7 +4645,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4627,7 +4657,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4639,7 +4669,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousBusinessOpen()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4651,7 +4681,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4663,7 +4693,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4675,7 +4705,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4687,7 +4717,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:390
+            // Content, see src/BusinessTime/MixinBase.php:394
         }
 
         /**
@@ -4695,11 +4725,13 @@ namespace Illuminate\Support\Facades
          *
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         public function isOpenOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -4711,7 +4743,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosedOn($day)
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:23
+            // Content, see src/BusinessTime/Traits/IsMethods.php:28
         }
 
         /**
@@ -4725,7 +4757,7 @@ namespace Illuminate\Support\Facades
          */
         public function isOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -4739,7 +4771,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:69
+            // Content, see src/BusinessTime/Traits/IsMethods.php:80
         }
 
         /**
@@ -4752,7 +4784,7 @@ namespace Illuminate\Support\Facades
          */
         public function isBusinessOpen()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -4767,7 +4799,7 @@ namespace Illuminate\Support\Facades
          */
         public function isOpenExcludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:112
+            // Content, see src/BusinessTime/Traits/IsMethods.php:123
         }
 
         /**
@@ -4780,7 +4812,7 @@ namespace Illuminate\Support\Facades
          */
         public function isBusinessClosed()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -4795,7 +4827,7 @@ namespace Illuminate\Support\Facades
          */
         public function isClosedIncludingHolidays()
         {
-            // Content, see src/BusinessTime/Traits/IsMethods.php:157
+            // Content, see src/BusinessTime/Traits/IsMethods.php:168
         }
 
         /**
@@ -4809,7 +4841,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -4823,7 +4855,7 @@ namespace Illuminate\Support\Facades
          */
         public function nextClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -4837,7 +4869,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousOpen($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -4851,7 +4883,7 @@ namespace Illuminate\Support\Facades
          */
         public function previousClose($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -4866,7 +4898,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrNextCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4881,7 +4913,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrNextBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4896,7 +4928,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrPreviousCloseIncludingHolidays()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4911,7 +4943,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrPreviousBusinessClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4924,7 +4956,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrNextClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -4937,7 +4969,7 @@ namespace Illuminate\Support\Facades
          */
         public function openOrPreviousClose()
         {
-            // Content, see src/BusinessTime/MixinBase.php:425
+            // Content, see src/BusinessTime/MixinBase.php:429
         }
 
         /**
@@ -5001,7 +5033,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCurrentOpenTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -5015,7 +5047,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCurrentOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -5027,7 +5059,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCurrentBusinessTimeRangeStart($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
 
         /**
@@ -5039,7 +5071,7 @@ namespace Illuminate\Support\Facades
          */
         public function getCurrentBusinessOpenTimeRangeEnd($method = null)
         {
-            // Content, see src/BusinessTime/MixinBase.php:359
+            // Content, see src/BusinessTime/MixinBase.php:363
         }
     }
 }

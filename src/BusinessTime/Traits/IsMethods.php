@@ -2,6 +2,9 @@
 
 namespace BusinessTime\Traits;
 
+use BusinessTime\Normalizer;
+use Carbon\CarbonInterface;
+
 trait IsMethods
 {
     /**
@@ -18,11 +21,19 @@ trait IsMethods
         /**
          * Returns true if the business is open on a given day according to current opening hours.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @return bool
          */
         return static function ($day) use ($method) {
             $date = end(static::$macroContextStack);
-            $day = static::normalizeDay($day);
+            $day = ($date instanceof CarbonInterface) && $date->hasLocalMacro('normalizeDay')
+                ? $date->normalizeDay($day)
+                : (
+                    is_a(static::class, CarbonInterface::class, true) && static::hasMacro('normalizeDay')
+                        ? static::normalizeDay($day)
+                        : Normalizer::normalizeDay($day)
+                );
             $openingHours = $date
                 ? $date->getOpeningHours()
                 : static::getOpeningHours();

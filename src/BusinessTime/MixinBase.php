@@ -70,6 +70,8 @@ class MixinBase extends BusinessDay
         /**
          * Returns day English name in lower case.
          *
+         * @SuppressWarnings(PHPMD.StaticAccess)
+         *
          * @param string|int $day can be a day number, 0 is Sunday, 1 is Monday, etc. or the day name as
          *                        string with any case.
          *
@@ -91,6 +93,8 @@ class MixinBase extends BusinessDay
         /**
          * Returns an OpeningHours instance (the one given if already an instance of OpeningHours, or else create
          * a new one from array definition given).
+         *
+         * @SuppressWarnings(PHPMD.StaticAccess)
          *
          * @param array|\Spatie\OpeningHours\OpeningHours $defaultOpeningHours opening hours instance or array
          *                                                                     definition
