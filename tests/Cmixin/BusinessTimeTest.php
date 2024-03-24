@@ -1461,7 +1461,6 @@ class BusinessTimeTest extends TestCase
             'monday'            => ['09:00-12:00', '13:00-18:00'],
             'tuesday'           => ['09:00-12:00', '13:00-18:00'],
             'wednesday'         => ['09:00-12:00'],
-            'thursday'          => ['09:00-12:00', '13:00-18:00'],
             'friday'            => ['09:00-12:00', '13:00-20:00'],
             'holidaysAreClosed' => true,
             'holidays'          => [
@@ -1471,6 +1470,7 @@ class BusinessTimeTest extends TestCase
                     'company-special-holiday' => '04-07',
                 ],
             ],
+            'data' => ['a' => 42],
         ]);
 
         $fr = Schedule::create([
@@ -1489,6 +1489,28 @@ class BusinessTimeTest extends TestCase
         ]);
 
         $d = CarbonImmutable::parse('2022-10-21 06:40:00');
+        self::assertFalse($us->isOpenOn('Thursday'));
+        self::assertTrue($fr->isOpenOn('Thursday'));
+        self::assertFalse($us->isOpenOn('Saturday'));
+        self::assertFalse($fr->isOpenOn('Saturday'));
+
+        $us = Schedule::create([
+            'monday'            => ['09:00-12:00', '13:00-18:00'],
+            'tuesday'           => ['09:00-12:00', '13:00-18:00'],
+            'wednesday'         => ['09:00-12:00'],
+            'thursday'          => ['09:00-12:00', '13:00-18:00'],
+            'friday'            => ['09:00-12:00', '13:00-20:00'],
+            'holidaysAreClosed' => true,
+            'holidays'          => [
+                'region' => 'us-ny',
+                'with'   => [
+                    'labor-day'               => null,
+                    'company-special-holiday' => '04-07',
+                ],
+            ],
+            'data' => ['a' => 42],
+        ]);
+
         self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         $d = CarbonImmutable::parse('2022-10-20 17:30:00');
@@ -1554,15 +1576,6 @@ class BusinessTimeTest extends TestCase
         self::assertTrue($us->isHoliday($d));
         self::assertFalse($us->isOpen($e));
         self::assertFalse($us->isBusinessOpen($e));
-    }
-
-    public function testNonDateException()
-    {
-        self::expectExceptionObject(new InvalidArgumentException(
-            'First parameter must be a '.CarbonInterface::class.' instance.'
-        ));
-
-        Schedule::create([])->isOpen('2022-10-20');
     }
 
     public function testNonMacroException()

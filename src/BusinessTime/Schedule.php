@@ -3,6 +3,7 @@
 namespace BusinessTime;
 
 use BusinessTime\Exceptions\InvalidArgumentException;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Closure;
 use ReflectionMethod;
@@ -281,19 +282,24 @@ final class Schedule
             );
         }
 
+        $arguments = array_map(function ($value) {
+            if ($value instanceof CarbonInterface) {
+                if (!$value->isMutable()) {
+                    $value = $value->copy();
+                }
+
+                return $value->settings(['macros' => $this->businessTime->getMethods()]);
+            }
+
+            return $value;
+        }, $arguments);
+        $initialArguments = $arguments;
         $date = array_shift($arguments);
 
         if (!($date instanceof CarbonInterface)) {
-            throw new InvalidArgumentException(
-                'First parameter must be a '.CarbonInterface::class.' instance.'
-            );
+            $arguments = $initialArguments;
+            $date = CarbonImmutable::now()->settings(['macros' => $this->businessTime->getMethods()]);
         }
-
-        if (!$date->isMutable()) {
-            $date = $date->copy();
-        }
-
-        $date = $date->settings(['macros' => $this->businessTime->getMethods()]);
 
         return $this->callInMacroContext($date, $closure, $arguments);
     }
