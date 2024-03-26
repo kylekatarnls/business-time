@@ -1455,8 +1455,17 @@ class BusinessTimeTest extends TestCase
         self::assertSame('2020-09-22 02:00:00', $date->format('Y-m-d H:i:s'));
     }
 
-    public function testSchedule()
+    /**
+     * @testWith [true]
+     *           [false]
+     */
+    public function testSchedule(bool $resetMacros)
     {
+        if ($resetMacros) {
+            $carbon = static::CARBON_CLASS;
+            $carbon::resetMacros();
+        }
+
         $us = Schedule::create([
             'monday'            => ['09:00-12:00', '13:00-18:00'],
             'tuesday'           => ['09:00-12:00', '13:00-18:00'],
@@ -1470,7 +1479,6 @@ class BusinessTimeTest extends TestCase
                     'company-special-holiday' => '04-07',
                 ],
             ],
-            'data' => ['a' => 42],
         ]);
 
         $fr = Schedule::create([
@@ -1488,7 +1496,8 @@ class BusinessTimeTest extends TestCase
             ],
         ]);
 
-        $d = CarbonImmutable::parse('2022-10-21 06:40:00');
+        self::assertFalse($us->isOpenOn('2023-02-15'));
+        self::assertTrue($fr->isOpenOn('2023-02-15'));
         self::assertFalse($us->isOpenOn('Thursday'));
         self::assertTrue($fr->isOpenOn('Thursday'));
         self::assertFalse($us->isOpenOn('Saturday'));
@@ -1511,6 +1520,7 @@ class BusinessTimeTest extends TestCase
             'data' => ['a' => 42],
         ]);
 
+        $d = CarbonImmutable::parse('2022-10-21 06:40:00');
         self::assertSame('2022-10-20 17:00:00', $us->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         self::assertSame('2022-10-20 16:00:00', $fr->subOpenHours($d, 1)->format('Y-m-d H:i:s'));
         $d = CarbonImmutable::parse('2022-10-20 17:30:00');
