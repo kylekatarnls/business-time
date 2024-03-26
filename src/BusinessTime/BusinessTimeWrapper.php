@@ -15,7 +15,7 @@ final class BusinessTimeWrapper extends BusinessTime
     public static function create(array $openingHours): self
     {
         $businessTime = new self();
-        $parser = new DefinitionParser($businessTime, $openingHours, function ($date) {
+        $parser = new DefinitionParser($businessTime, $openingHours, function ($date) use ($businessTime) {
             if ($date instanceof CarbonInterface) {
                 try {
                     $hasMacro = $date->hasLocalMacro('isHoliday');
@@ -30,7 +30,9 @@ final class BusinessTimeWrapper extends BusinessTime
 
             $className = method_exists(static::class, 'instance') ? static::class : CarbonImmutable::class;
 
-            return $className::instance($date)->isHoliday();
+            return $className::instance($date)
+                ->settings(['macros' => $businessTime->getMethods()])
+                ->isHoliday();
         });
         $openingHours = $parser->getEmbeddedOpeningHours($businessTime);
         $businessTime->openingHours = $openingHours;

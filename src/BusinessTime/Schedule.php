@@ -283,25 +283,28 @@ final class Schedule
         }
 
         $arguments = array_map(function ($value) {
-            if ($value instanceof CarbonInterface) {
-                if (!$value->isMutable()) {
-                    $value = $value->copy();
-                }
-
-                return $value->settings(['macros' => $this->businessTime->getMethods()]);
-            }
-
-            return $value;
+            return ($value instanceof CarbonInterface)
+                ? $this->passBusinessTimeMethods($value)
+                : $value;
         }, $arguments);
         $initialArguments = $arguments;
         $date = array_shift($arguments);
 
         if (!($date instanceof CarbonInterface)) {
             $arguments = $initialArguments;
-            $date = CarbonImmutable::now()->settings(['macros' => $this->businessTime->getMethods()]);
+            $date = $this->passBusinessTimeMethods(CarbonImmutable::now());
         }
 
         return $this->callInMacroContext($date, $closure, $arguments);
+    }
+
+    private function passBusinessTimeMethods(CarbonInterface $date): CarbonInterface
+    {
+        if (!$date->isMutable()) {
+            $date = $date->copy();
+        }
+
+        return $date->settings(['macros' => $this->businessTime->getMethods()]);
     }
 
     private function callInMacroContext(CarbonInterface $date, Closure $closure, array $arguments)
