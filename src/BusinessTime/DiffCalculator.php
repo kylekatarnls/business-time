@@ -6,6 +6,7 @@ use BusinessTime\Exceptions\InvalidArgumentException;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
+use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 
 class DiffCalculator
@@ -40,10 +41,10 @@ class DiffCalculator
      */
     protected $methodPrefix;
 
-    public function __construct(string $unit, string $methodPrefix = 'floatDiffIn')
+    public function __construct(string $unit, ?string $methodPrefix = null)
     {
         $this->unit = ucfirst(Carbon::pluralUnit($unit));
-        $this->methodPrefix = $methodPrefix;
+        $this->methodPrefix = $methodPrefix ?? self::checkUtcPrefixSupport() ? 'diffIn' : 'floatDiffIn';
     }
 
     public function setFlags(bool $open, bool $absolute, bool $holidaysAreClosed, bool $useDst)
@@ -75,7 +76,7 @@ class DiffCalculator
         }
 
         $time = 0;
-        $floatDiff = $this->methodPrefix.($this->useDst ? '' : 'Real').$this->unit;
+        $floatDiff = $this->methodPrefix.($this->useDst ? '' : (self::checkUtcPrefixSupport() ? 'UTC' : 'Real')).$this->unit;
         $isWrongState = 'is'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Closed' : 'Open');
         $nextWrongState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Close' : 'Open');
         $nextCorrectState = 'next'.($this->holidaysAreClosed ? 'Business' : '').($this->open ? 'Open' : 'Close');
@@ -90,7 +91,7 @@ class DiffCalculator
             }
 
             $nextDate = $this->withOpeningHours($this->copy($date)->$nextWrongState(), $hours);
-            $time += $date->$floatDiff(min($end, $nextDate));
+            $time += $date->$floatDiff(min($end, $nextDate), true);
             $date = $nextDate;
         }
 
@@ -118,5 +119,18 @@ class DiffCalculator
         } catch (InvalidArgumentException $exception) {
             return null;
         }
+    }
+
+    private static function checkUtcPrefixSupport(): bool
+    {
+        static $utcSupport = null;
+
+        if ($utcSupport === null) {
+            $method = new ReflectionMethod(Carbon::class, 'diffInDays');
+
+            $utcSupport = (\count($method->getParameters()) > 2);
+        }
+
+        return $utcSupport;
     }
 }
