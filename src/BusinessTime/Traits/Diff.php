@@ -5,7 +5,6 @@ namespace BusinessTime\Traits;
 use BusinessTime\DiffCalculator;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
-use Cmixin\BusinessDay;
 use Cmixin\BusinessTime;
 
 trait Diff

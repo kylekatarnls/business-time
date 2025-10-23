@@ -1635,6 +1635,11 @@ class BusinessTimeTest extends TestCase
         $before = Carbon::parse('2024-12-01');
 
         set_error_handler(static function (int $error, string $message, string $file, int $line) {
+            if ($message === 'reset(): Calling reset() on an object is deprecated') {
+                // Ignore reset() from old versions
+                return;
+            }
+
             if ($message === 'Cannot bind an instance to a static closure') {
                 // Allowed for macro check
                 return;
