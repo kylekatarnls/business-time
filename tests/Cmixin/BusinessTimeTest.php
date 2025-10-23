@@ -1631,6 +1631,9 @@ class BusinessTimeTest extends TestCase
 
     public function testRelativeDiff(): void
     {
+        $after = Carbon::parse('2024-12-13 16:00');
+        $before = Carbon::parse('2024-12-01');
+
         set_error_handler(static function (int $error, string $message, string $file, int $line) {
             if ($message === 'Cannot bind an instance to a static closure') {
                 // Allowed for macro check
@@ -1647,14 +1650,19 @@ class BusinessTimeTest extends TestCase
         });
 
         try {
-            $after = Carbon::parse('2024-12-13 16:00');
-            $before = Carbon::parse('2024-12-01');
-            self::assertSame(-10, $after->diffInBusinessDays($before));
-            self::assertSame(10, $before->diffInBusinessDays($after));
+            self::assertSame(10, $after->diffInBusinessDays($before));
+            self::assertSame(-10, $after->diffInBusinessDays($before, BusinessTime::RELATIVE_DIFF));
+            self::assertSame(10, $before->diffInBusinessDays($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(76.0, $after->diffInBusinessHours($before));
             self::assertSame(-76.0, $after->diffInBusinessHours($before, BusinessTime::RELATIVE_DIFF));
             self::assertSame(76.0, $before->diffInBusinessHours($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(4560.0, $after->diffInBusinessMinutes($before));
             self::assertSame(-4560.0, $after->diffInBusinessMinutes($before, BusinessTime::RELATIVE_DIFF));
             self::assertSame(4560.0, $before->diffInBusinessMinutes($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(273600.0, $after->diffInBusinessSeconds($before));
             self::assertSame(-273600.0, $after->diffInBusinessSeconds($before, BusinessTime::RELATIVE_DIFF));
             self::assertSame(273600.0, $before->diffInBusinessSeconds($after, BusinessTime::RELATIVE_DIFF));
         } finally {

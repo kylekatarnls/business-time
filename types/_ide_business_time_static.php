@@ -691,7 +691,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
          *
-         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * Return an interval/count of given unit with open/closed business time between the current date and another
          * given date.
          *
          * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
@@ -720,7 +720,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
          *
-         * Return an interval with open/closed business time between the current date and an other
+         * Return an interval with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -745,7 +745,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
          *
-         * Return a number of seconds with open/closed business time between the current date and an other
+         * Return a number of seconds with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -770,7 +770,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
          *
-         * Return a number of minutes with open/closed business time between the current date and an other
+         * Return a number of minutes with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -795,7 +795,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessHours
          *
-         * Return a number of hours with open/closed business time between the current date and an other
+         * Return a number of hours with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -1960,7 +1960,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
          *
-         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * Return an interval/count of given unit with open/closed business time between the current date and another
          * given date.
          *
          * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
@@ -1989,7 +1989,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
          *
-         * Return an interval with open/closed business time between the current date and an other
+         * Return an interval with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -2014,7 +2014,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
          *
-         * Return a number of seconds with open/closed business time between the current date and an other
+         * Return a number of seconds with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -2039,7 +2039,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
          *
-         * Return a number of minutes with open/closed business time between the current date and an other
+         * Return a number of minutes with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -2064,7 +2064,7 @@ namespace Carbon
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessHours
          *
-         * Return a number of hours with open/closed business time between the current date and an other
+         * Return a number of hours with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -3229,7 +3229,7 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
          *
-         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * Return an interval/count of given unit with open/closed business time between the current date and another
          * given date.
          *
          * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
@@ -3258,7 +3258,7 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
          *
-         * Return an interval with open/closed business time between the current date and an other
+         * Return an interval with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -3283,7 +3283,7 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
          *
-         * Return a number of seconds with open/closed business time between the current date and an other
+         * Return a number of seconds with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -3308,7 +3308,7 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
          *
-         * Return a number of minutes with open/closed business time between the current date and an other
+         * Return a number of minutes with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -3333,7 +3333,7 @@ namespace Illuminate\Support
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessHours
          *
-         * Return a number of hours with open/closed business time between the current date and an other
+         * Return a number of hours with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -4498,7 +4498,7 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessUnit
          *
-         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * Return an interval/count of given unit with open/closed business time between the current date and another
          * given date.
          *
          * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
@@ -4527,7 +4527,7 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\Traits\Diff::diffAsBusinessInterval
          *
-         * Return an interval with open/closed business time between the current date and an other
+         * Return an interval with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -4552,7 +4552,7 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessSeconds
          *
-         * Return a number of seconds with open/closed business time between the current date and an other
+         * Return a number of seconds with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -4577,7 +4577,7 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessMinutes
          *
-         * Return a number of minutes with open/closed business time between the current date and an other
+         * Return a number of minutes with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -4602,7 +4602,7 @@ namespace Illuminate\Support\Facades
         /**
          * @see \BusinessTime\Traits\Diff::diffInBusinessHours
          *
-         * Return a number of hours with open/closed business time between the current date and an other
+         * Return a number of hours with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
