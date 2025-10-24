@@ -189,7 +189,7 @@ trait Diff
         $diffInBusinessDays = parent::diffInBusinessDays();
 
         /**
-         * Return a number of hours with open/closed business time between the current date and another
+         * Return a number of days with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -199,17 +199,19 @@ trait Diff
          *                                                                        return open time else
          *                                                                        - BusinessTime::RELATIVE_DIFF
          *                                                                        => return negative value if start is before end
-         *                                                                        - BusinessTime::HOLIDAYS_ARE_CLOSED
-         *                                                                        => holidays are automatically considered as closed
-         *                                                                        - BusinessTime::USE_DAYLIGHT_SAVING_TIME
-         *                                                                        => use DST native PHP diff result instead of real time (timestamp)
          *
-         * @return float
+         * @return int
          */
         return static function ($date = null, int $options = 0) use ($diffInBusinessDays): int {
+            /** @var CarbonInterface $current */
             $current = static::this();
             $callee = $diffInBusinessDays->bindTo(null, get_class($current));
             $diff = abs($callee($date));
+
+            if ($options & BusinessTime::CLOSED_TIME) {
+                $total = abs(floor($current->diffInDays($date)));
+                $diff = max(0, $total - $diff);
+            }
 
             if ($current > $date && ($options & BusinessTime::RELATIVE_DIFF)) {
                 return -$diff;

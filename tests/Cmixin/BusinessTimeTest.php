@@ -1670,6 +1670,22 @@ class BusinessTimeTest extends TestCase
             self::assertSame(273600.0, $after->diffInBusinessSeconds($before));
             self::assertSame(-273600.0, $after->diffInBusinessSeconds($before, BusinessTime::RELATIVE_DIFF));
             self::assertSame(273600.0, $before->diffInBusinessSeconds($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(2, $after->diffInBusinessDays($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-2, $after->diffInBusinessDays($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(2, $before->diffInBusinessDays($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(228.0, $after->diffInBusinessHours($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-228.0, $after->diffInBusinessHours($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(228.0, $before->diffInBusinessHours($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(13680.0, $after->diffInBusinessMinutes($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-13680.0, $after->diffInBusinessMinutes($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(13680.0, $before->diffInBusinessMinutes($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(820800.0, $after->diffInBusinessSeconds($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-820800.0, $after->diffInBusinessSeconds($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(820800.0, $before->diffInBusinessSeconds($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
         } finally {
             restore_error_handler();
         }
