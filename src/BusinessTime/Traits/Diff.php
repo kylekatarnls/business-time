@@ -10,7 +10,7 @@ use Cmixin\BusinessTime;
 trait Diff
 {
     /**
-     * Return an interval/count of given unit with open/closed business time between the current date and an other
+     * Return an interval/count of given unit with open/closed business time between the current date and another
      * given date.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
@@ -18,7 +18,7 @@ trait Diff
     public function diffInBusinessUnit()
     {
         /**
-         * Return an interval/count of given unit with open/closed business time between the current date and an other
+         * Return an interval/count of given unit with open/closed business time between the current date and another
          * given date.
          *
          * @param string                                                 $unit    Unit such as 'hour', 'minute' to use
@@ -55,7 +55,7 @@ trait Diff
     }
 
     /**
-     * Return an interval with open/closed business time between the current date and an other
+     * Return an interval with open/closed business time between the current date and another
      * given date.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
@@ -63,7 +63,7 @@ trait Diff
     public function diffAsBusinessInterval()
     {
         /**
-         * Return an interval with open/closed business time between the current date and an other
+         * Return an interval with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -86,7 +86,7 @@ trait Diff
     }
 
     /**
-     * Return a number of seconds with open/closed business time between the current date and an other
+     * Return a number of seconds with open/closed business time between the current date and another
      * given date.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
@@ -94,7 +94,7 @@ trait Diff
     public function diffInBusinessSeconds()
     {
         /**
-         * Return a number of seconds with open/closed business time between the current date and an other
+         * Return a number of seconds with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -117,7 +117,7 @@ trait Diff
     }
 
     /**
-     * Return a number of minutes with open/closed business time between the current date and an other
+     * Return a number of minutes with open/closed business time between the current date and another
      * given date.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
@@ -125,7 +125,7 @@ trait Diff
     public function diffInBusinessMinutes()
     {
         /**
-         * Return a number of minutes with open/closed business time between the current date and an other
+         * Return a number of minutes with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -148,7 +148,7 @@ trait Diff
     }
 
     /**
-     * Return a number of hours with open/closed business time between the current date and an other
+     * Return a number of hours with open/closed business time between the current date and another
      * given date.
      *
      * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
@@ -156,7 +156,7 @@ trait Diff
     public function diffInBusinessHours()
     {
         /**
-         * Return a number of hours with open/closed business time between the current date and an other
+         * Return a number of hours with open/closed business time between the current date and another
          * given date.
          *
          * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
@@ -175,6 +175,49 @@ trait Diff
          */
         return static function ($date = null, int $options = 0): float {
             return static::this()->diffInBusinessUnit('hour', $date, $options);
+        };
+    }
+
+    /**
+     * Return a number of days with open/closed business time between the current date and another
+     * given date.
+     *
+     * @return \Closure<\Carbon\Carbon|\Carbon\CarbonImmutable|\Carbon\CarbonInterface>
+     */
+    public function diffInBusinessDays()
+    {
+        $diffInBusinessDays = parent::diffInBusinessDays();
+
+        /**
+         * Return a number of days with open/closed business time between the current date and another
+         * given date.
+         *
+         * @param \Carbon\CarbonInterface|\DateTimeInterface|string|null $date
+         * @param int                                                    $options options (as bytes-union) such as:
+         *                                                                        - BusinessTime::CLOSED_TIME
+         *                                                                        => return the interval of for closed time,
+         *                                                                        return open time else
+         *                                                                        - BusinessTime::RELATIVE_DIFF
+         *                                                                        => return negative value if start is before end
+         *
+         * @return int
+         */
+        return static function ($date = null, int $options = 0) use ($diffInBusinessDays): int {
+            /** @var CarbonInterface $current */
+            $current = static::this();
+            $callee = $diffInBusinessDays->bindTo(null, get_class($current));
+            $diff = abs($callee($date));
+
+            if ($options & BusinessTime::CLOSED_TIME) {
+                $total = (int) abs($current->diffInDays($date));
+                $diff = max(0, $total - $diff);
+            }
+
+            if ($current > $date && ($options & BusinessTime::RELATIVE_DIFF)) {
+                return -$diff;
+            }
+
+            return $diff;
         };
     }
 }

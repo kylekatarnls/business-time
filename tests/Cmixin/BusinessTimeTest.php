@@ -13,6 +13,7 @@ use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
+use ErrorException;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
@@ -1626,6 +1627,68 @@ class BusinessTimeTest extends TestCase
         self::assertSame(42, $callInContextMethod->invoke(Schedule::create([]), null, $dateMock, static function () {
             return 42;
         }, []));
+    }
+
+    public function testRelativeDiff(): void
+    {
+        $after = Carbon::parse('2024-12-13 16:00');
+        $before = Carbon::parse('2024-12-01');
+
+        set_error_handler(static function (int $error, string $message, string $file, int $line) {
+            if ($message === 'reset(): Calling reset() on an object is deprecated') {
+                // Ignore reset() from old versions
+                return;
+            }
+
+            if ($message === 'Cannot bind an instance to a static closure') {
+                // Allowed for macro check
+                return;
+            }
+
+            throw new ErrorException(
+                "This test should not raise any error nor deprecation notice, but the following happened:\n$message",
+                0,
+                $error,
+                $file,
+                $line
+            );
+        });
+
+        try {
+            self::assertSame(10, $after->diffInBusinessDays($before));
+            self::assertSame(-10, $after->diffInBusinessDays($before, BusinessTime::RELATIVE_DIFF));
+            self::assertSame(10, $before->diffInBusinessDays($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(76.0, $after->diffInBusinessHours($before));
+            self::assertSame(-76.0, $after->diffInBusinessHours($before, BusinessTime::RELATIVE_DIFF));
+            self::assertSame(76.0, $before->diffInBusinessHours($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(4560.0, $after->diffInBusinessMinutes($before));
+            self::assertSame(-4560.0, $after->diffInBusinessMinutes($before, BusinessTime::RELATIVE_DIFF));
+            self::assertSame(4560.0, $before->diffInBusinessMinutes($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(273600.0, $after->diffInBusinessSeconds($before));
+            self::assertSame(-273600.0, $after->diffInBusinessSeconds($before, BusinessTime::RELATIVE_DIFF));
+            self::assertSame(273600.0, $before->diffInBusinessSeconds($after, BusinessTime::RELATIVE_DIFF));
+
+            self::assertSame(2, $after->diffInBusinessDays($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-2, $after->diffInBusinessDays($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(2, $before->diffInBusinessDays($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(228.0, $after->diffInBusinessHours($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-228.0, $after->diffInBusinessHours($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(228.0, $before->diffInBusinessHours($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(13680.0, $after->diffInBusinessMinutes($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-13680.0, $after->diffInBusinessMinutes($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(13680.0, $before->diffInBusinessMinutes($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+
+            self::assertSame(820800.0, $after->diffInBusinessSeconds($before, BusinessTime::CLOSED_TIME));
+            self::assertSame(-820800.0, $after->diffInBusinessSeconds($before, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+            self::assertSame(820800.0, $before->diffInBusinessSeconds($after, BusinessTime::RELATIVE_DIFF | BusinessTime::CLOSED_TIME));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void

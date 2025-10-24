@@ -19,7 +19,7 @@ jobs:
     name: PHP ${{ matrix.php }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -51,23 +51,15 @@ jobs:
       run: |
         composer update --prefer-dist ${{ matrix.setup != 'next' && format('--prefer-{0}', matrix.setup) || '' }} --no-progress --no-suggest
 
-    - name: Code Climate Test Reporter Preparation
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
-        chmod +x ./cc-test-reporter;
-        ./cc-test-reporter before-build;
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
     - name: Run test suite with coverage
       run: vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml
       env:
         MATRIX_CONFIG: ${{ matrix.php }}-${{ matrix.setup }}
 
-    - name: Code Climate Test Reporter
-      run: ./cc-test-reporter after-build --exit-code 0;
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    - uses: qltysh/qlty-action/coverage@v2
+      with:
+        token: {{secrets.QLTY_COVERAGE_TOKEN}}
+        files: coverage/clover.xml
 
     - name: Coverage
       run: bash <(curl -s https://codecov.io/bash);
