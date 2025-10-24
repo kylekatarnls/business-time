@@ -209,7 +209,7 @@ trait Diff
             $diff = abs($callee($date));
 
             if ($options & BusinessTime::CLOSED_TIME) {
-                $total = abs(floor($current->diffInDays($date)));
+                $total = (int) abs($current->diffInDays($date));
                 $diff = max(0, $total - $diff);
             }
 
