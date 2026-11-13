@@ -144,7 +144,13 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::isClosedOn('tuesday'));
         $this->assertTrue($date->isOpenOn('tuesday'));
         $this->assertTrue($date->isClosedOn('sunday'));
-        $date->resetOpeningHours();
+
+        if (PHP_VERSION_ID >= 80500) {
+            (void) $date->resetOpeningHours();
+        } else {
+            $date->resetOpeningHours();
+        }
+
         $this->assertTrue($date->isOpenOn('sunday'));
         $this->assertTrue($date->isClosedOn('tuesday'));
 
@@ -235,7 +241,13 @@ class BusinessTimeTest extends TestCase
         self::expectExceptionMessage('Opening hours have not been set.');
 
         $carbon = static::CARBON_CLASS;
-        $carbon::resetOpeningHours();
+
+        if (PHP_VERSION_ID >= 80500) {
+            (void) $carbon::resetOpeningHours();
+        } else {
+            $carbon::resetOpeningHours();
+        }
+
         BusinessTime::enable($carbon);
         $carbon::getOpeningHours();
     }
