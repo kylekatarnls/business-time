@@ -16,6 +16,6 @@ class VoidCaller
 
     public function __invoke()
     {
-        (void) ($this->closure)();
+        (void)($this->closure)();
     }
 }
