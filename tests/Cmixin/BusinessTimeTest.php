@@ -19,6 +19,8 @@ use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
+use Tests\Util\VerbatimCaller;
+use Tests\Util\VoidCaller;
 
 /**
  * @group mutable
@@ -144,13 +146,9 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::isClosedOn('tuesday'));
         $this->assertTrue($date->isOpenOn('tuesday'));
         $this->assertTrue($date->isClosedOn('sunday'));
-
-        if (PHP_VERSION_ID >= 80500) {
-            (void) $date->resetOpeningHours();
-        } else {
-            $date->resetOpeningHours();
-        }
-
+        $this->voidCall(function () use ($date) {
+            return $date->resetOpeningHours();
+        });
         $this->assertTrue($date->isOpenOn('sunday'));
         $this->assertTrue($date->isClosedOn('tuesday'));
 
@@ -241,13 +239,9 @@ class BusinessTimeTest extends TestCase
         self::expectExceptionMessage('Opening hours have not been set.');
 
         $carbon = static::CARBON_CLASS;
-
-        if (PHP_VERSION_ID >= 80500) {
-            (void) $carbon::resetOpeningHours();
-        } else {
-            $carbon::resetOpeningHours();
-        }
-
+        $this->voidCall(function () use ($carbon) {
+            return $carbon::resetOpeningHours();
+        });
         BusinessTime::enable($carbon);
         $carbon::getOpeningHours();
     }
@@ -1720,5 +1714,11 @@ class BusinessTimeTest extends TestCase
                 [1000000, 2000000]
             ), $message);
         }
+    }
+
+    private function voidCall(\Closure $closure): void
+    {
+        $caller = PHP_VERSION_ID >= 80500 ? new VoidCaller($closure) : new VerbatimCaller($closure);
+        $caller();
     }
 }
