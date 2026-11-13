@@ -192,9 +192,11 @@ class BusinessTimeTest extends TestCase
         $this->assertInstanceOf(OpeningHours::class, $carbon::getOpeningHours());
         $now = $carbon::now();
         $this->assertInstanceOf(OpeningHours::class, $now->getOpeningHours());
-        $now->setOpeningHours([
-            $carbon::TUESDAY => ['12:30-15:00'],
-        ]);
+        $this->voidCall(function () use ($now, $carbon) {
+            return $now->setOpeningHours([
+                $carbon::TUESDAY => ['12:30-15:00'],
+            ]);
+        });
         $this->assertInstanceOf(OpeningHours::class, $now->getOpeningHours());
     }
 
@@ -1114,7 +1116,9 @@ class BusinessTimeTest extends TestCase
 
         $try = function (string $string, ...$params) use ($getDate) {
             try {
-                $getDate($string)->applyBusinessInterval(...$params);
+                $this->voidCall(function () use ($getDate, $string, $params) {
+                    return $getDate($string)->applyBusinessInterval(...$params);
+                });
 
                 return true;
             } catch (InvalidArgumentException $exception) {
@@ -1205,14 +1209,16 @@ class BusinessTimeTest extends TestCase
         };
 
         $date = $getDate('2020-07-14 10:00');
-        $date->setOpeningHours([
-            'monday'    => ['09:00-12:00', '13:00-18:00'],
-            'tuesday'   => ['09:00-12:10', '13:00-17:00'],
-            'wednesday' => ['09:00-12:00'],
-            'thursday'  => ['09:00-12:00', '13:00-18:00'],
-            'friday'    => ['09:00-12:00', '13:00-20:00'],
-            'saturday'  => ['09:00-12:00', '13:00-16:00'],
-        ]);
+        $this->voidCall(function () use ($date) {
+            return $date->setOpeningHours([
+                'monday'    => ['09:00-12:00', '13:00-18:00'],
+                'tuesday'   => ['09:00-12:10', '13:00-17:00'],
+                'wednesday' => ['09:00-12:00'],
+                'thursday'  => ['09:00-12:00', '13:00-18:00'],
+                'friday'    => ['09:00-12:00', '13:00-20:00'],
+                'saturday'  => ['09:00-12:00', '13:00-16:00'],
+            ]);
+        });
 
         $this->assertSame('2020-07-16 13:50', $date->addOpenHours(13)->format('Y-m-d H:i'));
     }
