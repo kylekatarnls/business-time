@@ -1682,7 +1682,7 @@ class BusinessTimeTest extends TestCase
 
         $dateMock = $this->createPartialMock(
             CarbonImmutable::class,
-            self::mockableMethods(CarbonImmutable::class, ['bindMacroContext']),
+            self::mockableMethods(CarbonImmutable::class, ['bindMacroContext'])
         );
 
         CarbonImmutable::setTestNow('2026-07-14 09:00:00');
