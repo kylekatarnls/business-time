@@ -14,11 +14,16 @@ use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
 use ErrorException;
+use Generator;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
+use Tests\Util\VerbatimCaller;
+use Tests\Util\VoidCaller;
 
 /**
  * @group mutable
@@ -144,7 +149,9 @@ class BusinessTimeTest extends TestCase
         $this->assertTrue($carbon::isClosedOn('tuesday'));
         $this->assertTrue($date->isOpenOn('tuesday'));
         $this->assertTrue($date->isClosedOn('sunday'));
-        $date->resetOpeningHours();
+        $this->voidCall(function () use ($date) {
+            return $date->resetOpeningHours();
+        });
         $this->assertTrue($date->isOpenOn('sunday'));
         $this->assertTrue($date->isClosedOn('tuesday'));
 
@@ -188,9 +195,11 @@ class BusinessTimeTest extends TestCase
         $this->assertInstanceOf(OpeningHours::class, $carbon::getOpeningHours());
         $now = $carbon::now();
         $this->assertInstanceOf(OpeningHours::class, $now->getOpeningHours());
-        $now->setOpeningHours([
-            $carbon::TUESDAY => ['12:30-15:00'],
-        ]);
+        $this->voidCall(function () use ($now, $carbon) {
+            return $now->setOpeningHours([
+                $carbon::TUESDAY => ['12:30-15:00'],
+            ]);
+        });
         $this->assertInstanceOf(OpeningHours::class, $now->getOpeningHours());
     }
 
@@ -235,7 +244,9 @@ class BusinessTimeTest extends TestCase
         self::expectExceptionMessage('Opening hours have not been set.');
 
         $carbon = static::CARBON_CLASS;
-        $carbon::resetOpeningHours();
+        $this->voidCall(function () use ($carbon) {
+            return $carbon::resetOpeningHours();
+        });
         BusinessTime::enable($carbon);
         $carbon::getOpeningHours();
     }
@@ -1108,7 +1119,9 @@ class BusinessTimeTest extends TestCase
 
         $try = function (string $string, ...$params) use ($getDate) {
             try {
-                $getDate($string)->applyBusinessInterval(...$params);
+                $this->voidCall(function () use ($getDate, $string, $params) {
+                    return $getDate($string)->applyBusinessInterval(...$params);
+                });
 
                 return true;
             } catch (InvalidArgumentException $exception) {
@@ -1199,14 +1212,16 @@ class BusinessTimeTest extends TestCase
         };
 
         $date = $getDate('2020-07-14 10:00');
-        $date->setOpeningHours([
-            'monday'    => ['09:00-12:00', '13:00-18:00'],
-            'tuesday'   => ['09:00-12:10', '13:00-17:00'],
-            'wednesday' => ['09:00-12:00'],
-            'thursday'  => ['09:00-12:00', '13:00-18:00'],
-            'friday'    => ['09:00-12:00', '13:00-20:00'],
-            'saturday'  => ['09:00-12:00', '13:00-16:00'],
-        ]);
+        $this->voidCall(function () use ($date) {
+            return $date->setOpeningHours([
+                'monday'    => ['09:00-12:00', '13:00-18:00'],
+                'tuesday'   => ['09:00-12:10', '13:00-17:00'],
+                'wednesday' => ['09:00-12:00'],
+                'thursday'  => ['09:00-12:00', '13:00-18:00'],
+                'friday'    => ['09:00-12:00', '13:00-20:00'],
+                'saturday'  => ['09:00-12:00', '13:00-16:00'],
+            ]);
+        });
 
         $this->assertSame('2020-07-16 13:50', $date->addOpenHours(13)->format('Y-m-d H:i'));
     }
@@ -1598,6 +1613,56 @@ class BusinessTimeTest extends TestCase
         Schedule::create([])->getMethods();
     }
 
+    /**
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10.
+     *
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     * @param list<string>    $except
+     *
+     * @return T&MockObject
+     */
+    protected function createMockExcept(string $class, array $except): MockObject
+    {
+        return $this->getMockBuilder($class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->onlyMethods(self::mockableMethods($class, $except))
+            ->getMock();
+    }
+
+    /**
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10.
+     *
+     * @param class-string $class
+     * @param list<string> $except
+     *
+     * @return list<string>
+     */
+    private static function mockableMethods(string $class, array $except): array
+    {
+        $candidates = (new ReflectionClass($class))
+            ->getMethods(ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED);
+
+        $names = [];
+
+        foreach ($candidates as $method) {
+            // static/final/abstract-intern + ctor/dtor kann PHPUnit nicht doubeln
+            if ($method->isStatic() || $method->isFinal()
+                || $method->isConstructor() || $method->isDestructor()
+            ) {
+                continue;
+            }
+
+            $names[] = $method->getName();
+        }
+
+        return array_values(array_diff(array_unique($names), $except));
+    }
+
     public function testOldVersionWithoutBindMacroContext()
     {
         $calculateBindMacroContextMethod = new ReflectionMethod(
@@ -1616,13 +1681,12 @@ class BusinessTimeTest extends TestCase
 
         self::assertNull($calculateBindMacroContextMethod->invoke(Schedule::create([]), \stdClass::class));
 
-        $dateMock = self::getMockBuilder(CarbonImmutable::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
-            ->setMethodsExcept(['bindMacroContext'])
-            ->getMock();
+        $dateMock = $this->createPartialMock(
+            CarbonImmutable::class,
+            self::mockableMethods(CarbonImmutable::class, ['bindMacroContext'])
+        );
+
+        CarbonImmutable::setTestNow('2026-07-14 09:00:00');
 
         self::assertSame(42, $callInContextMethod->invoke(Schedule::create([]), null, $dateMock, static function () {
             return 42;
@@ -1634,15 +1698,10 @@ class BusinessTimeTest extends TestCase
         $after = Carbon::parse('2024-12-13 16:00');
         $before = Carbon::parse('2024-12-01');
 
-        set_error_handler(static function (int $error, string $message, string $file, int $line) {
-            if (\in_array($message, [
-                // Ignore reset() from old versions
-                'reset(): Calling reset() on an object is deprecated',
+        $ignoredMessages = iterator_to_array(self::getAcknowledgedDeprecations());
 
-                // Allowed for macro check
-                'Cannot bind an instance to a static closure',
-                'Cannot bind an instance to a static closure, this will be an error in PHP 9',
-            ], true)) {
+        set_error_handler(static function (int $error, string $message, string $file, int $line) use ($ignoredMessages) {
+            if (\in_array($message, $ignoredMessages, true)) {
                 return;
             }
 
@@ -1692,6 +1751,34 @@ class BusinessTimeTest extends TestCase
         }
     }
 
+    /**
+     * Messages acknowledged for the current CI matrix entry (see matrix.include in tests.yml),
+     * one exact message per line.
+     *
+     * @return string[]
+     */
+    private static function getAcknowledgedDeprecations(): Generator
+    {
+        if (
+            PHP_VERSION_ID >= 80600
+            && preg_match('/-lowest$/', (string) getenv('MATRIX_CONFIG'))
+        ) {
+            yield 'Function spl_object_hash() is deprecated since 8.6, consider using spl_object_id() instead';
+        }
+
+        // Ignore reset() from old versions
+        yield 'reset(): Calling reset() on an object is deprecated';
+
+        // Allowed for macro check
+        yield 'Cannot bind an instance to a static closure';
+        yield 'Cannot bind an instance to a static closure, this will be an error in PHP 9';
+
+        yield from array_filter(array_map(
+            'trim',
+            explode("\n", (string) getenv('ACKNOWLEDGED_DEPRECATIONS'))
+        ));
+    }
+
     private function assertDateMatch($expected, $actual, string $message = ''): void
     {
         try {
@@ -1708,5 +1795,11 @@ class BusinessTimeTest extends TestCase
                 [1000000, 2000000]
             ), $message);
         }
+    }
+
+    private function voidCall(\Closure $closure): void
+    {
+        $caller = PHP_VERSION_ID >= 80500 ? new VoidCaller($closure) : new VerbatimCaller($closure);
+        $caller();
     }
 }
