@@ -1613,7 +1613,7 @@ class BusinessTimeTest extends TestCase
     }
 
     /**
-     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10.
      *
      * @template T of object
      *
@@ -1634,10 +1634,10 @@ class BusinessTimeTest extends TestCase
     }
 
     /**
-     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10.
      *
-     * @param class-string  $class
-     * @param list<string>  $except
+     * @param class-string $class
+     * @param list<string> $except
      *
      * @return list<string>
      */
