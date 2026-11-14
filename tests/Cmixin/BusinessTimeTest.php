@@ -15,7 +15,9 @@ use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
 use ErrorException;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionMethod;
 use Spatie\OpeningHours\OpeningHours;
 use Spatie\OpeningHours\TimeRange;
@@ -1610,6 +1612,56 @@ class BusinessTimeTest extends TestCase
         Schedule::create([])->getMethods();
     }
 
+    /**
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10
+     *
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     * @param list<string>    $except
+     *
+     * @return T&MockObject
+     */
+    protected function createMockExcept(string $class, array $except): MockObject
+    {
+        return $this->getMockBuilder($class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->onlyMethods(self::mockableMethods($class, $except))
+            ->getMock();
+    }
+
+    /**
+     * As drop-in replacement for removed setMethodsExcept() in PHPUnit 10
+     *
+     * @param class-string  $class
+     * @param list<string>  $except
+     *
+     * @return list<string>
+     */
+    private static function mockableMethods(string $class, array $except): array
+    {
+        $candidates = (new ReflectionClass($class))
+            ->getMethods(ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED);
+
+        $names = [];
+
+        foreach ($candidates as $method) {
+            // static/final/abstract-intern + ctor/dtor kann PHPUnit nicht doubeln
+            if ($method->isStatic() || $method->isFinal()
+                || $method->isConstructor() || $method->isDestructor()
+            ) {
+                continue;
+            }
+
+            $names[] = $method->getName();
+        }
+
+        return array_values(array_diff(array_unique($names), $except));
+    }
+
     public function testOldVersionWithoutBindMacroContext()
     {
         $calculateBindMacroContextMethod = new ReflectionMethod(
@@ -1628,13 +1680,12 @@ class BusinessTimeTest extends TestCase
 
         self::assertNull($calculateBindMacroContextMethod->invoke(Schedule::create([]), \stdClass::class));
 
-        $dateMock = self::getMockBuilder(CarbonImmutable::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
-            ->setMethodsExcept(['bindMacroContext'])
-            ->getMock();
+        $dateMock = $this->createPartialMock(
+            CarbonImmutable::class,
+            self::mockableMethods(CarbonImmutable::class, ['bindMacroContext']),
+        );
+
+        CarbonImmutable::setTestNow('2026-07-14 09:00:00');
 
         self::assertSame(42, $callInContextMethod->invoke(Schedule::create([]), null, $dateMock, static function () {
             return 42;
