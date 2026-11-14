@@ -14,6 +14,7 @@ use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Cmixin\BusinessTime;
 use ErrorException;
+use Generator;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -1697,15 +1698,10 @@ class BusinessTimeTest extends TestCase
         $after = Carbon::parse('2024-12-13 16:00');
         $before = Carbon::parse('2024-12-01');
 
-        set_error_handler(static function (int $error, string $message, string $file, int $line) {
-            if (\in_array($message, [
-                // Ignore reset() from old versions
-                'reset(): Calling reset() on an object is deprecated',
+        $ignoredMessages = iterator_to_array(self::getAcknowledgedDeprecations());
 
-                // Allowed for macro check
-                'Cannot bind an instance to a static closure',
-                'Cannot bind an instance to a static closure, this will be an error in PHP 9',
-            ], true)) {
+        set_error_handler(static function (int $error, string $message, string $file, int $line) use ($ignoredMessages) {
+            if (\in_array($message, $ignoredMessages, true)) {
                 return;
             }
 
@@ -1753,6 +1749,34 @@ class BusinessTimeTest extends TestCase
         } finally {
             restore_error_handler();
         }
+    }
+
+    /**
+     * Messages acknowledged for the current CI matrix entry (see matrix.include in tests.yml),
+     * one exact message per line.
+     *
+     * @return string[]
+     */
+    private static function getAcknowledgedDeprecations(): Generator
+    {
+        if (
+            PHP_VERSION_ID >= 80600
+            && preg_match('/-lowest$/', (string) getenv('MATRIX_CONFIG'))
+        ) {
+            yield 'Function spl_object_hash() is deprecated since 8.6, consider using spl_object_id() instead';
+        }
+
+        // Ignore reset() from old versions
+        yield 'reset(): Calling reset() on an object is deprecated';
+
+        // Allowed for macro check
+        yield 'Cannot bind an instance to a static closure';
+        yield 'Cannot bind an instance to a static closure, this will be an error in PHP 9';
+
+        yield from array_filter(array_map(
+            'trim',
+            explode("\n", (string) getenv('ACKNOWLEDGED_DEPRECATIONS'))
+        ));
     }
 
     private function assertDateMatch($expected, $actual, string $message = ''): void
